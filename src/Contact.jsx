@@ -6,25 +6,10 @@ export default function Contact() {
     <section className="w-full min-h-screen flex flex-col items-center justify-center px-[5vw] py-[6vh]" id="contact">
       <div className="flex flex-col md:flex-row w-full max-w-[1100px] gap-8 md:gap-12 items-stretch">
         {/* Left: Contact Form */}
-        <div className="flex-1 rounded-3xl border-2 border-[#444] p-8 md:p-12 flex flex-col justify-start shadow-lg" style={{ minWidth: 320, maxWidth: 650, background: 'transparent' }}>
-          <h2 style={{
-            fontFamily: 'Space Grotesk, Montserrat, sans-serif',
-            fontWeight: 800,
-            fontSize: '2.6rem',
-            color: '#fff',
-            marginBottom: '-0.2rem',
-            lineHeight: 1.1,
-            letterSpacing: '-1px',
-          }}>
+        <div className="flex-1 rounded-3xl border-2 border-[#444] p-8 md:p-12 flex flex-col justify-start shadow-lg min-w-[320px] max-w-[650px] bg-transparent">
+          <h2 className="font-[Space Grotesk,Montserrat,sans-serif] font-extrabold text-[2.6rem] text-white mb-[-0.2rem] leading-[1.1] tracking-[-1px]">
             Let's create something <br />
-            <span style={{
-              color: '#F5C76A',
-              fontFamily: 'Pacifico, cursive',
-              fontWeight: 700,
-              fontSize: '2.2rem',
-              display: 'inline-block',
-              marginTop: '0.2rem',
-            }}>extraordinary together.</span>
+            <span className="text-[#F5C76A] font-[Pacifico,cursive] font-bold text-[2.2rem] inline-block mt-[0.2rem]">extraordinary together.</span>
           </h2>
           <form className="flex flex-col gap-5 mt-8">
             <div className="flex flex-col sm:flex-row gap-4">
@@ -32,18 +17,12 @@ export default function Contact() {
               <input type="email" placeholder="Email Address" className="flex-1 bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33]" />
             </div>
             <textarea placeholder="Message" rows={6} className="bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33] resize-none" />
-            <button type="submit" className="mt-2 bg-[#FB4D19] hover:bg-[#ff6a36] transition-colors text-white font-bold text-lg rounded-xl py-3 shadow-md" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Send Message</button>
+            <button type="submit" className="mt-2 bg-[#FB4D19] hover:bg-[#ff6a36] transition-colors text-white font-bold text-lg rounded-xl py-3 shadow-md font-[Space Grotesk,sans-serif]">Send Message</button>
           </form>
         </div>
         {/* Right: Socials */}
-        <div className="flex flex-col rounded-xl border-2 border-[#444] p-7 md:p-8 w-full max-w-[340px] shadow-lg justify-start" style={{ background: 'transparent', height: 'fit-content', minHeight: 'unset' }}>
-          <h3 style={{
-            fontFamily: 'Space Grotesk, Montserrat, sans-serif',
-            fontWeight: 700,
-            fontSize: '1.45rem',
-            color: '#fff',
-            marginBottom: '1.2rem',
-          }}>My Socials</h3>
+        <div className="flex flex-col rounded-xl border-2 border-[#444] p-7 md:p-8 w-full max-w-[340px] shadow-lg justify-start bg-transparent h-fit min-h-0">
+          <h3 className="font-[Space Grotesk,Montserrat,sans-serif] font-bold text-[1.45rem] text-white mb-[1.2rem]">My Socials</h3>
           <div className="flex flex-col gap-5 w-full">
             <style>{`
               .contact-social-icon {
@@ -83,60 +62,17 @@ export default function Contact() {
         </div>
       </div> {/* close socials/form flex row */}
       {/* Contact Me Directly (top right, above the right socials rectangle) */}
-      <div style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginTop: '-5.5rem',
-      }}>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          marginRight: 'calc((100vw - 1100px)/2)',
-        }}>
-          <div style={{
-            fontFamily: 'Space Grotesk, Montserrat, sans-serif',
-            fontWeight: 700,
-            fontSize: '1.32rem',
-            color: '#fff',
-            textAlign: 'right',
-            marginBottom: '0.7rem',
-          }}>Contact Me Directly</div>
+      <div className="w-full flex flex-row justify-end mt-[-5.5rem]">
+        <div className="flex flex-col items-end mr-[calc((100vw-1100px)/2)]">
+          <div className="font-[Space Grotesk,Montserrat,sans-serif] font-bold text-[1.32rem] text-white text-right mb-[0.7rem]">Contact Me Directly</div>
           <a
             href="mailto:yarlagaddavijay859@gmail.com"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              background: '#14162C',
-              border: '1.7px solid #FB983D33',
-              borderRadius: '12px',
-              padding: '0.85rem 1.2rem',
-              gap: '1.1rem',
-              width: 'fit-content',
-              minWidth: 320,
-              maxWidth: 480,
-              marginRight: '-5rem',
-              textDecoration: 'none',
-            }}
+            className="flex items-center bg-[#14162C] border border-[1.7px] border-[#FB983D33] rounded-[12px] py-[0.85rem] px-[1.2rem] gap-[1.1rem] w-fit min-w-[320px] max-w-[480px] mr-[-5rem] no-underline"
           >
-            <span style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
+            <span className="flex items-center justify-center">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FB983D" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="m4 6 8 7 8-7"/></svg>
             </span>
-            <span style={{
-              fontFamily: 'Space Grotesk, Montserrat, sans-serif',
-              fontWeight: 700,
-              fontSize: '1.08rem',
-              color: '#c6c3c3',
-              letterSpacing: '0.04em',
-              display: 'block',
-              textAlign: 'right',
-            }}>yarlagaddavijay859@gmail.com</span>
+            <span className="font-[Space Grotesk,Montserrat,sans-serif] font-bold text-[1.08rem] text-[#c6c3c3] tracking-[0.04em] block text-right">yarlagaddavijay859@gmail.com</span>
           </a>
         </div>
       </div>
