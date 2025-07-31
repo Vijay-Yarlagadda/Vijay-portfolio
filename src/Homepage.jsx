@@ -115,6 +115,17 @@ function Homepage() {
       handleScrollToEducation(e);
     } else if (href === '#skills') {
       handleScrollToSkills(e);
+    } else if (href === '#contact') {
+      e.preventDefault();
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.classList.add('animate-fadeIn', 'duration-700'); // Tailwind animate
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(function() {
+          contactSection.classList.remove('animate-fadeIn', 'duration-700');
+          window.location.hash = '#contact';
+        }, 700);
+      }
     } else {
       e.preventDefault();
       window.location.hash = href;
