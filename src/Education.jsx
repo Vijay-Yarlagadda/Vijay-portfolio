@@ -167,12 +167,12 @@ function Education() {
             .moving-dot {
               position: absolute;
               width: 24px;
-              height: 2px;
+              height: 1px;
               border-radius: 6px;
               background: #FB983D;
               z-index: 10;
               box-shadow: 0 0 8px 2px #FB983D99;
-              animation: move-dot 5s linear infinite;
+              animation: move-dot 8s linear infinite;
               /* The following makes the dot move along the border using percentages and border-radius */
               offset-path: inset(0 round 22px);
               top: 0;
