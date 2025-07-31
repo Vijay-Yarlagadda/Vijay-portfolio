@@ -132,6 +132,24 @@ function Homepage() {
     }
   }
 
+  // Up-arrow logic: show in every section except home
+  const [showUpArrow, setShowUpArrow] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      const homeSection = document.querySelector('.name-block');
+      if (homeSection) {
+        const homeBottom = homeSection.offsetTop + homeSection.offsetHeight;
+        setShowUpArrow(window.pageYOffset >= homeBottom - 1); // 1px buffer for instant visibility
+      } else {
+        setShowUpArrow(window.pageYOffset > 200); // fallback
+      }
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll(); // run once on mount
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <>
       {/* Navbar (animated) */}
@@ -302,6 +320,37 @@ function Homepage() {
         </a>
       </div>
     </div>
+
+      {/* Up Arrow Button (sticky, bottom right, simple chevron, no circle, smaller, matches scroll style) */}
+      {showUpArrow && (
+        <button
+          onClick={() => {
+            const homeSection = document.querySelector('.name-block');
+            if (homeSection) {
+              homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          aria-label="Scroll to home"
+          className="fixed bottom-7 right-7 z-50 bg-transparent shadow-lg cursor-pointer transition-opacity duration-500 flex items-center justify-center"
+          style={{
+            outline: 'none',
+            border: 'none',
+            padding: 0,
+            opacity: showUpArrow ? 1 : 0,
+            pointerEvents: showUpArrow ? 'auto' : 'none',
+            transition: 'opacity 0.5s',
+            width: '40px',
+            height: '40px',
+            background: 'none',
+          }}
+        >
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="8,20 16,12 24,20" stroke="#FFD700" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+          </svg>
+        </button>
+      )}
     </>
   );
 // Inject keyframes for bounceArrow if not present
