@@ -11,13 +11,20 @@ export default function Contact() {
             Let's create something <br />
             <span className="text-[#F5C76A] font-[Pacifico,cursive] font-bold text-[2.2rem] inline-block mt-[0.2rem]">extraordinary together.</span>
           </h2>
-          <form className="flex flex-col gap-5 mt-8">
+          <form className="flex flex-col gap-5 mt-8" action="https://formspree.io/f/mqalljon" method="POST">
+            <input type="hidden" name="_captcha" value="false" />
             <div className="flex flex-col sm:flex-row gap-4">
-              <input type="text" placeholder="Your Name" className="flex-1 bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33]" />
-              <input type="email" placeholder="Email Address" className="flex-1 bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33]" />
+              <input type="text" name="name" required placeholder="Your Name" className="flex-1 bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33]" />
+              <input type="email" name="email" required placeholder="Email Address" className="flex-1 bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33]" />
             </div>
-            <textarea placeholder="Message" rows={6} className="bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33] resize-none" />
-            <button type="submit" className="mt-2 bg-[#FB4D19] hover:bg-[#ff6a36] transition-colors text-white font-bold text-lg rounded-xl py-3 shadow-md font-[Space Grotesk,sans-serif]">Send Message</button>
+            <textarea name="message" required placeholder="Message" rows={6} className="bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33] resize-none" />
+            <button
+              type="submit"
+              className="bg-[#FB4D19] hover:bg-[#ff6a36] transition-colors text-white font-bold text-lg rounded-xl py-3 shadow-md font-[Space Grotesk,sans-serif] cursor-pointer w-full flex items-center justify-center select-none border-none"
+              style={{ minHeight: '3.2rem', overflow: 'visible', marginTop: '0', boxSizing: 'border-box' }}
+            >
+              Send Message
+            </button>
           </form>
         </div>
         {/* Right: Socials */}
