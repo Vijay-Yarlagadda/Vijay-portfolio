@@ -26,7 +26,14 @@ const TicTacToe = () => {
     const newBoard = board.slice();
     newBoard[i] = "O";
     setBoard(newBoard);
-    // Prevent user from winning: if user would win, block it
+
+    // Check if user wins after their move
+    if (checkWin(newBoard, "O")) {
+      setMessage("You win! 🥳");
+      return;
+    }
+
+    // Prevent user from winning: if user would win next, block it
     let userCanWin = false;
     const empties = newBoard.map((v, idx) => v ? null : idx).filter(v => v !== null);
     for (let idx of empties) {
