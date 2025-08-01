@@ -13,25 +13,35 @@ const Footer = () => {
       zIndex: 2,
       overflow: 'visible',
     }}>
-      <div style={{ width: '100vw', height: '36px', overflow: 'hidden' }}>
+      <div style={{ width: '100vw', height: '14px', overflow: 'hidden' }}>
         <svg
           width="100%"
-          height="36"
-          viewBox="0 0 1440 36"
+          height="14"
+          viewBox="0 0 1440 14"
           style={{ display: 'block' }}
           className="footer-wave-svg"
         >
+          <defs>
+            <filter id="wave-glow" x="-20%" y="-50%" width="140%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
           <g>
             <g>
               <g id="waveGroup">
-                {/* Render enough wave segments to cover 2x the width for seamless looping */}
-                {Array.from({ length: 48 }).map((_, i) => (
+                {/* Render enough wave segments to cover 2x the width for seamless looping, with smaller wavelength and height */}
+                {Array.from({ length: 96 }).map((_, i) => (
                   <path
                     key={i}
-                    d={`M${-64 + i * 64} 18 Q ${-48 + i * 64} 0 ${-32 + i * 64} 18 T ${i * 64} 18`}
+                    d={`M${-32 + i * 32} 7 Q ${-24 + i * 32} 0 ${-16 + i * 32} 7 T ${i * 32} 7`}
                     fill="none"
-                    stroke="#f6f5e6"
-                    strokeWidth="4"
+                    stroke="#00ffe7"
+                    strokeWidth="2.2"
+                    filter="url(#wave-glow)"
                   />
                 ))}
               </g>
@@ -40,8 +50,8 @@ const Footer = () => {
                 attributeName="transform"
                 type="translate"
                 from="0 0"
-                to="-64 0"
-                dur="2.5s"
+                to="-32 0"
+                dur="4.5s"
                 repeatCount="indefinite"
               />
             </g>
