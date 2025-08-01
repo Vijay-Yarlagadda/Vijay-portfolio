@@ -63,7 +63,7 @@ const Footer = () => {
         width: '100vw',
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'flex-end',
+        alignItems: 'center',
         justifyContent: 'space-between',
         fontFamily: 'Space Grotesk, sans-serif',
         color: '#f6f5e6',
@@ -78,9 +78,11 @@ const Footer = () => {
         position: 'relative',
         zIndex: 2
       }}>
-        <div style={{ marginLeft: '3vw', textAlign: 'left' }}>
-          Designed & Built by<br />
-          <span style={{ fontWeight: 700, color: '#fff' }}>Vijay Yarlagadda</span>
+        <div style={{ marginLeft: '3vw', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
+          <div style={{ textAlign: 'center', alignSelf: 'flex-start' }}>
+            Designed & Built by<br />
+            <span style={{ fontWeight: 700, color: '#fff' }}>Vijay Yarlagadda</span>
+          </div>
         </div>
         <TicTacToe />
       </div>
