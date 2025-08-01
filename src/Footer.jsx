@@ -1,4 +1,5 @@
 import React from "react";
+import TicTacToe from "./TicTacToe";
 
 const Footer = () => {
   return (
@@ -60,19 +61,28 @@ const Footer = () => {
       </div>
       <div style={{
         width: '100vw',
-        textAlign: 'left',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
         fontFamily: 'Space Grotesk, sans-serif',
         color: '#f6f5e6',
         fontSize: '1.18rem',
         fontWeight: 400,
         letterSpacing: '0.01em',
         marginTop: '0.2rem',
-        marginLeft: '3vw',
+        marginLeft: 0,
         textShadow: '0 1px 6px #000a',
         pointerEvents: 'auto',
         userSelect: 'none',
+        position: 'relative',
+        zIndex: 2
       }}>
-        Designed & Built by <span style={{ fontWeight: 700, color: '#fff' }}>Vijay Yarlagadda</span>
+        <div style={{ marginLeft: '3vw', textAlign: 'left' }}>
+          Designed & Built by<br />
+          <span style={{ fontWeight: 700, color: '#fff' }}>Vijay Yarlagadda</span>
+        </div>
+        <TicTacToe />
       </div>
     </footer>
   );
