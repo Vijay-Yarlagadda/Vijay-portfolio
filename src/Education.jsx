@@ -22,7 +22,6 @@ if (typeof document !== 'undefined' && !document.getElementById('mera-pro-font')
   link.id = 'mera-pro-font';
   link.rel = 'stylesheet';
   link.href = '/fonts/MeraPro-Regular.woff2'; // Adjust path if needed
-  document.head.appendChild(link);
 }
 
 const cardBg = '#14162C';
@@ -95,8 +94,8 @@ function Education() {
         }}
       >
         <h1
+          className="section-heading"
           style={{
-            fontFamily: 'Mera Pro',
             fontWeight: 400,
             fontSize: '2rem',
             background: 'linear-gradient(to bottom, #FFD700, #F5C542, #7A5B1F)',
