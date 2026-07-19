@@ -1,34 +1,62 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Cinzel';
-  src: url('../fonts/cinzel/Cinzel-Regular.otf') format('opentype');
+  font-family: 'PorscheNext'; /* We'll use Inter/Outfit as fallback, but call it PorscheNext for the vibe */
+  src: local('Inter'), local('Segoe UI'), sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Mera Pro';
-  src: url('/fonts/MeraPro-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-body {
-  background-color: #0B0B2D;
-  background-image: radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-@media (min-width: 601px) {
-  .section-heading {
-    font-family: 'Mera Pro', 'Space Grotesk', sans-serif !important;
+@layer base {
+  :root {
+    --porsche-red: #D5001C;
+    --porsche-black: #0A0A0A;
+    --porsche-silver: #D3D3D3;
+    --porsche-dark-grey: #1A1A1A;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--porsche-black);
+    color: var(--porsche-silver);
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Inter', 'Outfit', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
   }
 }
 
-@media (max-width: 600px) {
-  .section-heading {
-    font-family: 'Space Grotesk', sans-serif !important;
-  }
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--porsche-black);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--porsche-red);
+}
+
+.glass-panel {
+  background: rgba(26, 26, 26, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #FFFFFF, #888888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
