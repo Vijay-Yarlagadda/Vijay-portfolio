@@ -4,26 +4,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 const projects = [
   {
     id: 1,
-    title: "High-Performance Trading Dashboard",
-    description: "Architected a real-time analytics dashboard processing millions of data points with sub-millisecond latency. Built with React, WebGL, and Go.",
+    title: "D-Portfolio",
+    description: "A highly interactive, performance-optimized personal portfolio featuring complex 3D WebGL rendering, custom framer-motion physics, and a premium aesthetic designed to showcase high-end engineering capabilities.",
     link: "#"
   },
   {
     id: 2,
-    title: "Automotive Telemetry System",
-    description: "Developed a distributed system for collecting and analyzing vehicle telemetry data in real-time. Features advanced predictive maintenance algorithms.",
+    title: "DFlex",
+    description: "An AI-powered fitness platform that generates personalized diet plans and workout guidance based on users' goals, body metrics, and preferences.",
     link: "#"
   },
   {
     id: 3,
-    title: "E-Commerce Reimagined",
-    description: "Built a headless e-commerce platform using Next.js and Shopify, resulting in a 40% increase in conversion rates and blazing fast load times.",
+    title: "DocEase",
+    description: "A secure healthcare platform that enables hospitals, doctors, and patients to manage appointments and medical records with role-based access control.",
     link: "#"
   },
   {
     id: 4,
-    title: "Precision Security Protocol",
-    description: "Designed and implemented a zero-trust security protocol for an enterprise client, ensuring end-to-end encryption and compliance.",
+    title: "DSwap",
+    description: "A campus-based cash exchange platform that helps students quickly find others to exchange small currency denominations within their college.",
     link: "#"
   }
 ];
