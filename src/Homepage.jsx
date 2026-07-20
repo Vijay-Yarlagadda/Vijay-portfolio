@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { ChevronDown, Send, Folder } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Send, Folder, MoreHorizontal, X } from "lucide-react";
 
 function Homepage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showNav, setShowNav] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -35,8 +36,8 @@ function Homepage() {
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] border border-[#333] backdrop-blur-md overflow-hidden ${
           scrolled 
-            ? "top-6 w-[95%] max-w-[1000px] rounded-full py-3 px-8 bg-[#111]/95 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
-            : "top-0 w-full rounded-none py-6 px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
+            ? "top-6 w-[95%] max-w-[1000px] rounded-full py-3 px-6 md:px-8 bg-[#111]/95 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
         }`}
       >
         <div className="flex items-center justify-between w-full">
@@ -52,10 +53,10 @@ function Homepage() {
             </div>
           </div>
 
-          {/* Separator 1 */}
+          {/* Separator 1 (Desktop only) */}
           <div className="hidden lg:block w-[1px] h-8 border-l border-dashed border-[#555] mx-4 transition-all duration-500"></div>
 
-          {/* Middle: Links */}
+          {/* Middle: Links (Desktop) */}
           <ul className="hidden lg:flex flex-grow justify-center gap-8 text-sm font-medium tracking-[0.1em] text-[#888]">
             {['About', 'Education', 'Skills', 'Projects'].map((item) => (
               <li key={item}>
@@ -70,11 +71,11 @@ function Homepage() {
             ))}
           </ul>
 
-          {/* Separator 2 */}
+          {/* Separator 2 (Desktop only) */}
           <div className="hidden lg:block w-[1px] h-8 border-l border-dashed border-[#555] mx-4 transition-all duration-500"></div>
 
-          {/* Right: Buttons */}
-          <div className="flex-shrink-0 md:pl-6 hidden md:flex items-center gap-4">
+          {/* Right: Buttons (Desktop) */}
+          <div className="flex-shrink-0 md:pl-6 hidden lg:flex items-center gap-4">
             <button 
               onClick={() => scrollTo('contact')}
               className="px-5 py-2.5 border border-[#555] text-white font-medium tracking-[0.1em] uppercase text-[10px] rounded-full hover:border-white transition-colors duration-300 cursor-pointer pointer-events-auto flex items-center gap-2"
@@ -90,8 +91,64 @@ function Homepage() {
               Resume <Folder className="w-3 h-3 fill-current" />
             </a>
           </div>
+
+          {/* Mobile Menu Toggle (3 dots) */}
+          <div className="lg:hidden flex items-center">
+             <button 
+               onClick={() => setMobileMenuOpen(true)}
+               className="p-2 text-white hover:text-[#D5001C] transition-colors"
+             >
+               <MoreHorizontal className="w-6 h-6" />
+             </button>
+          </div>
         </div>
       </motion.nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center"
+          >
+            <button 
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-8 right-8 p-2 text-white hover:text-[#D5001C] transition-colors"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            
+            <ul className="flex flex-col items-center gap-8 text-2xl font-bold tracking-[0.15em] text-white uppercase">
+              {['About', 'Education', 'Skills', 'Projects', 'Contact'].map((item) => (
+                <li key={item}>
+                  <button 
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setTimeout(() => scrollTo(item.toLowerCase()), 300);
+                    }}
+                    className="hover:text-[#D5001C] transition-colors duration-300"
+                  >
+                    {item}
+                  </button>
+                </li>
+              ))}
+              <li className="mt-4">
+                <a 
+                  href="https://drive.google.com/file/d/1XnEA7Q4qsgzvTCQU04GoA2YNvELIa8Eu/view?usp=drive_link" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="px-8 py-3 bg-[#D5001C] text-white font-bold tracking-[0.1em] uppercase text-xs rounded-full hover:bg-white hover:text-black transition-colors duration-300 flex items-center gap-2"
+                >
+                  Resume <Folder className="w-4 h-4 fill-current" />
+                </a>
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Content Overlays */}
       <div className="relative z-10 w-full h-full flex flex-col justify-center px-[8vw] md:px-[14vw] pointer-events-none">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const projects = [
@@ -110,6 +110,14 @@ const TiltMockup = ({ project }) => {
 const Projects = () => {
   const [active, setActive] = useState(1);
   const [hovered, setHovered] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section id="projects" className="relative w-full min-h-screen bg-transparent py-24 px-8 overflow-hidden z-10">
@@ -129,26 +137,28 @@ const Projects = () => {
           <h3 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tighter">Featured Projects</h3>
         </motion.div>
 
-        {/* Horizontal Accordion */}
-        <div className="flex flex-col md:flex-row gap-4 w-full h-[600px] md:h-[650px]">
+        {/* Horizontal Accordion (Desktop) / Vertical Stack (Mobile) */}
+        <div className={`flex flex-col lg:flex-row gap-4 w-full ${isMobile ? 'h-auto' : 'h-[650px]'}`}>
           {projects.map((project) => {
-            const isActive = active === project.id;
+            const isActive = isMobile ? true : active === project.id;
             const isHovered = hovered === project.id;
             
             return (
               <motion.div
                 key={project.id}
                 initial={false}
-                animate={{ 
-                  flex: isActive ? (window.innerWidth > 768 ? 7 : 4) : (isHovered ? 1.5 : 1) 
-                }}
+                animate={
+                  isMobile 
+                    ? { height: "auto" } 
+                    : { flex: isActive ? 7 : (isHovered ? 1.5 : 1) }
+                }
                 transition={smoothTransition}
                 onMouseEnter={() => setHovered(project.id)}
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => setActive(project.id)}
-                className={`relative rounded-[2rem] overflow-hidden cursor-pointer transition-colors duration-500 border border-[#333] ${
+                onClick={() => !isMobile && setActive(project.id)}
+                className={`relative rounded-[2rem] overflow-hidden transition-colors duration-500 border border-[#333] ${
                   isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
-                }`}
+                } ${!isMobile ? "cursor-pointer" : ""}`}
               >
                 <AnimatePresence>
                   {/* INACTIVE STATE - CLIPPED NUMBER */}
@@ -178,7 +188,7 @@ const Projects = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ delay: 0.1, duration: 0.4 }}
-                      className="absolute inset-0 p-8 md:p-12 flex flex-col lg:flex-row gap-12 justify-between"
+                      className={`${isMobile ? 'relative' : 'absolute inset-0'} p-8 md:p-12 flex flex-col lg:flex-row gap-12 justify-between`}
                     >
                       {/* Left Side: Info */}
                       <div className="flex-1 flex flex-col justify-between h-full">
