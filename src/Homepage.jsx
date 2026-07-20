@@ -159,7 +159,12 @@ function Homepage() {
           className="text-[18vw] font-bold text-white whitespace-nowrap tracking-widest"
           style={{ fontFamily: "'Syncopate', sans-serif" }}
         >
-          PORSCHE
+          <motion.div
+            animate={{ x: ["-5%", "5%", "-5%"] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          >
+            PORSCHE
+          </motion.div>
         </motion.div>
       </div>
 

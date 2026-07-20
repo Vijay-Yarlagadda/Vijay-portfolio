@@ -35,9 +35,9 @@ const Intro = () => {
               className="absolute inset-0 rounded-full bg-[#D5001C] blur-lg"
             />
             <img 
-              src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Porsche_logo.svg/200px-Porsche_logo.svg.png" 
+              src="/porsche.png" 
               alt="Porsche Logo" 
-              className="relative z-10 w-10 h-14 object-contain mb-2 opacity-90 drop-shadow-lg"
+              className="relative z-10 w-12 h-16 object-contain mb-2 opacity-90 drop-shadow-lg"
             />
             <div className="relative z-10 text-[#D5001C] font-mono text-[10px] tracking-[0.2em] uppercase font-bold text-center leading-tight">
               Engine Start
