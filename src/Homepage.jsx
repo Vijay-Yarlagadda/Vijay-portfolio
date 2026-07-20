@@ -56,7 +56,7 @@ function Homepage() {
 
           {/* Middle: Links */}
           <ul className="hidden lg:flex flex-grow justify-center gap-8 text-sm font-medium tracking-[0.1em] text-[#888]">
-            {['Home', 'About', 'Education', 'Skills', 'Projects', 'Contact'].map((item) => (
+            {['About', 'Education', 'Skills', 'Projects'].map((item) => (
               <li key={item}>
                 <button 
                   onClick={() => scrollTo(item.toLowerCase())}
