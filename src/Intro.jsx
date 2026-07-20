@@ -5,10 +5,10 @@ const Intro = () => {
   const [showHomepage, setShowHomepage] = useState(false);
 
   useEffect(() => {
-    // Ignition sequence duration
+    // Ignition sequence duration (decreased for faster load)
     const timer = setTimeout(() => {
       setShowHomepage(true);
-    }, 2500); 
+    }, 1200); 
 
     return () => clearTimeout(timer);
   }, []);

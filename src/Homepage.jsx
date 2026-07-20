@@ -7,8 +7,8 @@ function Homepage() {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setShowNav(true), 1500);
-    setTimeout(() => setShowContent(true), 3500);
+    setTimeout(() => setShowNav(true), 500);
+    setTimeout(() => setShowContent(true), 1500);
   }, []);
 
   const scrollTo = (id) => {
