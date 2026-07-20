@@ -1,156 +1,99 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
+import { Environment, Sparkles } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
-import gsap from 'gsap';
 
-function DottedMatrix({ position }) {
-  // A grid of tiny dots for the bottom of the headlight housing
-  const dots = useMemo(() => {
-    const arr = [];
-    for (let x = -0.4; x <= 0.4; x += 0.05) {
-      for (let y = -0.3; y <= 0; y += 0.05) {
-        // Shape it like a triangle/trapezoid
-        if (Math.abs(x) < 0.4 + y) {
-          arr.push(new THREE.Vector3(x, y, 0));
-        }
-      }
+function LightTrails() {
+  const trailCount = 40;
+  
+  // Pre-generate trail data
+  const trails = useMemo(() => {
+    const data = [];
+    for (let i = 0; i < trailCount; i++) {
+      data.push({
+        x: Math.random() * 40 - 20, // Start randomly across the screen
+        y: (Math.random() - 0.5) * 4 + 1, // Vertical spread
+        z: (Math.random() - 0.5) * 6 - 2, // Depth spread
+        speed: Math.random() * 0.4 + 0.1, // High speed
+        length: Math.random() * 4 + 2, // Long streaks
+        thickness: Math.random() * 0.015 + 0.005, // Razor thin
+        color: Math.random() > 0.2 ? '#00e5ff' : '#ffffff', // Mostly ice blue, some white
+        intensity: Math.random() * 3 + 2
+      });
     }
-    return arr;
+    return data;
   }, []);
 
+  const linesRef = useRef([]);
+
+  useFrame(() => {
+    linesRef.current.forEach((mesh, i) => {
+      const data = trails[i];
+      // Move left
+      mesh.position.x -= data.speed;
+      
+      // Aerodynamic dip (flyline simulation)
+      // As it passes the center (x=0), it dips and rises slightly
+      const distFromCenter = mesh.position.x;
+      const aerodynamicCurve = Math.sin(distFromCenter * 0.5) * 0.5 * Math.exp(-Math.abs(distFromCenter * 0.2));
+      mesh.position.y = data.y + aerodynamicCurve;
+
+      // Reset when out of bounds
+      if (mesh.position.x < -20) {
+        mesh.position.x = 20;
+      }
+    });
+  });
+
   return (
-    <group position={position} rotation={[-0.2, 0, 0]}>
-      {dots.map((pos, i) => (
-        <mesh key={i} position={pos}>
-          <boxGeometry args={[0.02, 0.02, 0.02]} />
-          <meshStandardMaterial color="#888888" metalness={1} roughness={0.2} />
+    <group>
+      {trails.map((data, i) => (
+        <mesh 
+          key={i} 
+          ref={el => linesRef.current[i] = el}
+          position={[data.x, data.y, data.z]}
+          rotation={[0, 0, Math.PI / 2]}
+        >
+          <cylinderGeometry args={[data.thickness, data.thickness, data.length, 8]} />
+          <meshBasicMaterial color={data.color} />
         </mesh>
       ))}
     </group>
   );
 }
 
-function DetailedPorscheHeadlight({ groupRef, position, rotation, scale = 1 }) {
-  const ledMaterial = useMemo(() => new THREE.MeshStandardMaterial({ 
-    color: "#ffffff", 
-    emissive: "#ffffff", 
-    emissiveIntensity: 0,
-    toneMapped: false 
-  }), []);
-
-  // Save the ledMaterial to the ref so we can animate it later
-  useEffect(() => {
-    if (groupRef.current) {
-      groupRef.current.userData.ledMaterial = ledMaterial;
-    }
-  }, [groupRef, ledMaterial]);
+function SmoothFlyline() {
+  // A single, elegant, glowing curve that perfectly mimics the 911 roofline (the "Flyline")
+  const flylineGeo = useMemo(() => {
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(5, -0.5, -3),    // Front bumper
+      new THREE.Vector3(3, 0.5, -3),     // Hood nose
+      new THREE.Vector3(1, 1.2, -3),     // Windshield base
+      new THREE.Vector3(-0.5, 2.0, -3),  // Roof peak
+      new THREE.Vector3(-3, 1.2, -3),    // Rear slope (fastback)
+      new THREE.Vector3(-5, 0.5, -3),    // Rear deck
+      new THREE.Vector3(-5.5, -0.5, -3)  // Rear bumper
+    ]);
+    return new THREE.TubeGeometry(curve, 128, 0.02, 8, false);
+  }, []);
 
   return (
-    <group position={position} rotation={rotation} scale={scale} ref={groupRef}>
-      
-      {/* Outer Glass Cover */}
-      <mesh position={[0, 0, 0.4]}>
-        <sphereGeometry args={[1.02, 64, 64, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshPhysicalMaterial 
-          color="#ffffff" 
-          transmission={0.9} 
-          opacity={1} 
-          metalness={0.1} 
-          roughness={0} 
-          clearcoat={1} 
-          clearcoatRoughness={0.1} 
-          transparent={true}
-        />
-      </mesh>
-
-      {/* Dark Inner Housing */}
-      <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[1, 64, 64, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshPhysicalMaterial color="#050505" metalness={0.9} roughness={0.4} />
-      </mesh>
-
-      {/* Central Projector Housing */}
-      <mesh position={[0, 0.1, 0.5]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.3, 0.35, 0.4, 32]} />
-        <meshPhysicalMaterial color="#111111" metalness={0.8} roughness={0.5} />
-      </mesh>
-
-      {/* Central Projector Lens */}
-      <mesh position={[0, 0.1, 0.7]}>
-        <sphereGeometry args={[0.25, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2.5]} />
-        <meshPhysicalMaterial color="#0a1526" metalness={0.9} roughness={0.1} transmission={0.5} thickness={0.5} />
-      </mesh>
-
-      {/* 4-Point LED Daytime Running Lights (Thick angled bars) */}
-      <group position={[0, 0.1, 0.65]}>
-        {/* Top Left */}
-        <mesh position={[-0.4, 0.25, 0]} rotation={[0, 0, 0.2]} material={ledMaterial}>
-          <capsuleGeometry args={[0.04, 0.2, 8, 16]} />
-        </mesh>
-        {/* Top Right */}
-        <mesh position={[0.4, 0.25, 0]} rotation={[0, 0, -0.2]} material={ledMaterial}>
-          <capsuleGeometry args={[0.04, 0.2, 8, 16]} />
-        </mesh>
-        {/* Bottom Left */}
-        <mesh position={[-0.4, -0.25, 0]} rotation={[0, 0, -0.2]} material={ledMaterial}>
-          <capsuleGeometry args={[0.04, 0.2, 8, 16]} />
-        </mesh>
-        {/* Bottom Right */}
-        <mesh position={[0.4, -0.25, 0]} rotation={[0, 0, 0.2]} material={ledMaterial}>
-          <capsuleGeometry args={[0.04, 0.2, 8, 16]} />
-        </mesh>
-      </group>
-
-      {/* Dotted Matrix at the bottom */}
-      <DottedMatrix position={[0, -0.5, 0.7]} />
-      
-    </group>
+    <mesh geometry={flylineGeo}>
+      <meshBasicMaterial color="#ffffff" transparent opacity={0.15} />
+    </mesh>
   );
 }
 
 export default function CarRevealScene({ scrollProgress }) {
   const { camera } = useThree();
-  const leftLightRef = useRef();
-  const rightLightRef = useRef();
-
-  useEffect(() => {
-    // Initial camera position
-    camera.position.set(0, 0, 6);
-    camera.lookAt(0, 0, 0);
-
-    const leds = [
-      leftLightRef.current?.userData.ledMaterial,
-      rightLightRef.current?.userData.ledMaterial
-    ].filter(Boolean);
-
-    if (leds.length > 0) {
-      // Cinematic Eye startup sequence
-      const tl = gsap.timeline();
-      tl.to({}, { duration: 1.0 })
-        .to(leds, {
-          emissiveIntensity: 2, 
-          duration: 0.1,
-        })
-        .to(leds, {
-          emissiveIntensity: 0,
-          duration: 0.1,
-        })
-        .to(leds, {
-          emissiveIntensity: 8, // Very bright final state
-          duration: 2.0,
-          ease: "power2.inOut",
-        });
-    }
-  }, [camera]);
 
   useFrame(() => {
     const progress = scrollProgress.get(); 
     
-    // Subtle parallax effect on scroll
-    const targetZ = 6 - progress * 1.5; 
-    const targetY = progress * 1.0;
+    // Subtle camera drift on scroll
+    const targetZ = 8 - progress * 2; 
+    const targetY = 1.0 - progress * 1.0;
     
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.05);
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.05);
@@ -159,41 +102,41 @@ export default function CarRevealScene({ scrollProgress }) {
 
   return (
     <>
-      <color attach="background" args={['#050505']} />
+      <color attach="background" args={['#020202']} />
       
-      {/* Lighting to illuminate the glossy housings */}
-      <directionalLight position={[0, 5, 5]} intensity={3} color="#ffffff" />
-      <directionalLight position={[-5, -5, 5]} intensity={1} color="#333333" />
-      <directionalLight position={[5, -5, 5]} intensity={1} color="#333333" />
-      <ambientLight intensity={0.2} />
-      
-      <Environment preset="studio" environmentIntensity={0.8} />
+      {/* Ambient lighting */}
+      <ambientLight intensity={0.1} />
+      <directionalLight position={[0, 10, 5]} intensity={0.5} color="#00e5ff" />
+      <Environment preset="night" environmentIntensity={0.2} />
 
-      {/* Left Massive Headlight */}
-      {/* Positioned far left, rotated slightly inward */}
-      <DetailedPorscheHeadlight 
-        groupRef={leftLightRef} 
-        position={[-3.5, 0, 0]} 
-        rotation={[0, 0.3, 0]} 
-        scale={2.2} 
-      />
+      {/* Abstract Aerodynamic Elements */}
+      <LightTrails />
+      <SmoothFlyline />
 
-      {/* Right Massive Headlight */}
-      {/* Positioned far right, rotated slightly inward */}
-      <DetailedPorscheHeadlight 
-        groupRef={rightLightRef} 
-        position={[3.5, 0, 0]} 
-        rotation={[0, -0.3, 0]} 
-        scale={2.2} 
-      />
+      {/* Highly Reflective Studio Floor */}
+      <mesh position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[100, 100]} />
+        <meshPhysicalMaterial 
+          color="#000000" 
+          metalness={0.9} 
+          roughness={0.1} 
+          clearcoat={1.0}
+          clearcoatRoughness={0.05}
+        />
+      </mesh>
 
+      {/* Particle Dust simulating wind tunnel smoke */}
+      <Sparkles count={100} scale={20} size={1.5} speed={0.8} opacity={0.3} color="#00e5ff" />
+
+      {/* Post Processing for Cinematic Glow */}
       <EffectComposer disableNormalPass>
         <Bloom 
-          luminanceThreshold={0.6} 
+          luminanceThreshold={0.1} 
           mipmapBlur 
-          intensity={1.5} 
+          intensity={2.0} // High bloom for light trails
+          radius={0.8}
         />
-        <Vignette eskil={false} offset={0.2} darkness={1.2} />
+        <Vignette eskil={false} offset={0.3} darkness={1.2} />
       </EffectComposer>
     </>
   );
