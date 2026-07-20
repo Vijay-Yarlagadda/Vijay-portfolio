@@ -5,20 +5,10 @@ const CustomCursor = () => {
   const tireRef = useRef(null);
 
   useEffect(() => {
-    let currentRotation = 0;
-    
     const handleMouseMove = (e) => {
       // Direct DOM manipulation bypasses React state for buttery smooth 60fps
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
-      }
-      
-      // Calculate movement to determine rotation
-      const distance = e.movementX + e.movementY;
-      currentRotation += distance * 1.5; 
-      
-      if (tireRef.current) {
-        tireRef.current.style.transform = `rotate(${currentRotation}deg)`;
       }
     };
 
