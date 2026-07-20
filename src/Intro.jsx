@@ -37,7 +37,7 @@ const Intro = () => {
             <img 
               src="/porsche.png" 
               alt="Porsche Logo" 
-              className="absolute top-3 z-10 w-24 h-20 object-contain opacity-100 drop-shadow-[0_0_15px_rgba(213,0,28,0.5)]"
+              className="absolute -top-6 z-10 w-48 h-40 object-contain opacity-100 drop-shadow-[0_0_20px_rgba(213,0,28,0.6)] pointer-events-none"
             />
             <div className="absolute bottom-5 z-10 text-[#D5001C] font-mono text-[9px] tracking-[0.2em] uppercase font-bold text-center leading-tight">
               Engine Start
