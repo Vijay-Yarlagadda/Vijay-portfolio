@@ -1,104 +1,106 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Environment, Sparkles } from '@react-three/drei';
-import { EffectComposer, Bloom, DepthOfField, Vignette } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import gsap from 'gsap';
 
-function CarContours() {
-  const material = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#00e5ff',
-    emissive: '#00e5ff',
-    emissiveIntensity: 1.5,
-    transparent: true,
-    opacity: 0.8,
-    wireframe: false
+function SweepingWings() {
+  const wingMaterial = useMemo(() => new THREE.MeshPhysicalMaterial({
+    color: '#000000',
+    metalness: 1.0,
+    roughness: 0.1,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.1,
+    side: THREE.DoubleSide
   }), []);
 
-  const createCurveGeometry = (points) => {
+  const createWing = (points) => {
     const curve = new THREE.CatmullRomCurve3(points.map(p => new THREE.Vector3(...p)));
-    return new THREE.TubeGeometry(curve, 64, 0.015, 8, false);
+    return new THREE.TubeGeometry(curve, 128, 0.04, 16, false);
   };
 
-  // Center Roofline
-  const roofline = createCurveGeometry([
-    [0, 0.1, 2.5],     // Front bumper lower
-    [0, 0.35, 1.8],    // Hood nose
-    [0, 0.45, 1.0],    // Windshield base
-    [0, 0.9, -0.2],    // Roof peak
-    [0, 0.7, -1.2],    // Rear slope
-    [0, 0.4, -2.0],    // Rear deck
-    [0, 0.2, -2.2]     // Rear bumper
+  // Left sweeping wing
+  const leftWing = createWing([
+    [-2.5, 1.8, 0],       // Eye position (Top Left)
+    [-1.5, 0.5, 1.0],     // Sweeping in and forward
+    [-0.5, -1.0, 1.5],    // Curving down
+    [-0.1, -2.5, 1.2]     // Converging at bottom center
   ]);
 
-  // Left Fender & Beltline
-  const leftFender = createCurveGeometry([
-    [-0.6, 0.15, 2.4],   // Front bumper edge
-    [-0.8, 0.55, 1.5],   // Front wheel arch
-    [-0.9, 0.5, 0],      // Door beltline
-    [-0.95, 0.6, -1.2],  // Rear wheel arch (wide body)
-    [-0.7, 0.3, -2.1]    // Rear bumper edge
+  // Right sweeping wing
+  const rightWing = createWing([
+    [2.5, 1.8, 0],        // Eye position (Top Right)
+    [1.5, 0.5, 1.0],      // Sweeping in and forward
+    [0.5, -1.0, 1.5],     // Curving down
+    [0.1, -2.5, 1.2]      // Converging at bottom center
   ]);
-
-  // Right Fender & Beltline (Mirrored)
-  const rightFender = createCurveGeometry([
-    [0.6, 0.15, 2.4],
-    [0.8, 0.55, 1.5],
-    [0.9, 0.5, 0],
-    [0.95, 0.6, -1.2],
-    [0.7, 0.3, -2.1]
-  ]);
-
-  // Lower Side Skirts
-  const leftSkirt = createCurveGeometry([[-0.6, 0.1, 2.2], [-0.9, 0.1, 0], [-0.8, 0.15, -1.9]]);
-  const rightSkirt = createCurveGeometry([[0.6, 0.1, 2.2], [0.9, 0.1, 0], [0.8, 0.15, -1.9]]);
 
   return (
     <group>
-      <mesh geometry={roofline} material={material} />
-      <mesh geometry={leftFender} material={material} />
-      <mesh geometry={rightFender} material={material} />
-      <mesh geometry={leftSkirt} material={material} />
-      <mesh geometry={rightSkirt} material={material} />
+      <mesh geometry={leftWing} material={wingMaterial} />
+      <mesh geometry={rightWing} material={wingMaterial} />
       
-      {/* Front air intakes subtle line */}
-      <mesh geometry={createCurveGeometry([[-0.5, 0.15, 2.45], [0, 0.1, 2.52], [0.5, 0.15, 2.45]])} material={material} />
+      {/* Outer subtle glow/accent line following the same path */}
+      <mesh geometry={createWing([[-2.55, 1.85, -0.1], [-1.55, 0.55, 0.9], [-0.55, -0.95, 1.4], [-0.15, -2.45, 1.1]])}>
+        <meshBasicMaterial color="#333333" transparent opacity={0.3} />
+      </mesh>
+      <mesh geometry={createWing([[2.55, 1.85, -0.1], [1.55, 0.55, 0.9], [0.55, -0.95, 1.4], [0.15, -2.45, 1.1]])}>
+        <meshBasicMaterial color="#333333" transparent opacity={0.3} />
+      </mesh>
     </group>
   );
 }
 
-function PorscheHeadlights({ leftRef, rightRef }) {
+function PorscheEyes({ leftRef, rightRef }) {
   // 4-point LED signature
   const dotOffsets = [
-    [-0.04, 0.04, 0], [0.04, 0.04, 0],
-    [-0.04, -0.04, 0], [0.04, -0.04, 0]
+    [-0.08, 0.08, 0], [0.08, 0.08, 0],
+    [-0.08, -0.08, 0], [0.08, -0.08, 0]
   ];
   
   const ledMaterial = new THREE.MeshStandardMaterial({ 
     color: "#ffffff", 
-    emissive: "#00e5ff", 
+    emissive: "#ffffff", 
     emissiveIntensity: 0,
     toneMapped: false 
   });
 
   return (
     <group>
-      {/* Left Headlight */}
-      <group ref={leftRef} position={[-0.75, 0.52, 1.7]} rotation={[-0.2, 0.1, 0]}>
+      {/* Left Eye */}
+      <group ref={leftRef} position={[-2.5, 1.8, 0]} rotation={[0.2, 0.4, -0.2]}>
+        {/* Dark housing */}
+        <mesh position={[0, 0, -0.1]}>
+          <sphereGeometry args={[0.2, 32, 32]} />
+          <meshPhysicalMaterial color="#000000" metalness={0.9} roughness={0.1} />
+        </mesh>
         {dotOffsets.map((pos, i) => (
           <mesh key={`L-${i}`} position={pos} material={ledMaterial}>
-            <sphereGeometry args={[0.02, 16, 16]} />
+            <sphereGeometry args={[0.03, 16, 16]} />
           </mesh>
         ))}
+        {/* Central main beam (faint) */}
+        <mesh position={[0, 0, 0.02]} material={ledMaterial}>
+          <sphereGeometry args={[0.05, 16, 16]} />
+        </mesh>
       </group>
       
-      {/* Right Headlight */}
-      <group ref={rightRef} position={[0.75, 0.52, 1.7]} rotation={[-0.2, -0.1, 0]}>
+      {/* Right Eye */}
+      <group ref={rightRef} position={[2.5, 1.8, 0]} rotation={[0.2, -0.4, 0.2]}>
+        {/* Dark housing */}
+        <mesh position={[0, 0, -0.1]}>
+          <sphereGeometry args={[0.2, 32, 32]} />
+          <meshPhysicalMaterial color="#000000" metalness={0.9} roughness={0.1} />
+        </mesh>
         {dotOffsets.map((pos, i) => (
           <mesh key={`R-${i}`} position={pos} material={ledMaterial}>
-            <sphereGeometry args={[0.02, 16, 16]} />
+            <sphereGeometry args={[0.03, 16, 16]} />
           </mesh>
         ))}
+        <mesh position={[0, 0, 0.02]} material={ledMaterial}>
+          <sphereGeometry args={[0.05, 16, 16]} />
+        </mesh>
       </group>
     </group>
   );
@@ -110,19 +112,19 @@ export default function CarRevealScene({ scrollProgress }) {
   const rightLights = useRef();
 
   useEffect(() => {
-    // Initial camera position (front center, cinematic wide shot)
-    camera.position.set(0, 0.6, 5);
-    camera.lookAt(0, 0.4, 0);
+    // Initial camera position centered
+    camera.position.set(0, 0, 7);
+    camera.lookAt(0, 0, 0);
 
-    const leftGroup = leftLights.current.children;
-    const rightGroup = rightLights.current.children;
+    const leftGroup = leftLights.current.children.filter(c => c.material && c.material.emissive);
+    const rightGroup = rightLights.current.children.filter(c => c.material && c.material.emissive);
     const allLeds = [...leftGroup, ...rightGroup].map(m => m.material);
 
-    // Headlight startup sequence
+    // Engine/Eye startup sequence
     const tl = gsap.timeline();
-    tl.to({}, { duration: 1.0 }) // Shorter pause
+    tl.to({}, { duration: 1.0 })
       .to(allLeds, {
-        emissiveIntensity: 1, // Subtle blink
+        emissiveIntensity: 1, 
         duration: 0.1,
       })
       .to(allLeds, {
@@ -130,8 +132,8 @@ export default function CarRevealScene({ scrollProgress }) {
         duration: 0.1,
       })
       .to(allLeds, {
-        emissiveIntensity: 5, // Reduced from 10 to avoid blown-out glow
-        duration: 1.5,
+        emissiveIntensity: 4, 
+        duration: 2.0,
         ease: "power2.inOut",
       });
   }, [camera]);
@@ -139,42 +141,39 @@ export default function CarRevealScene({ scrollProgress }) {
   useFrame(() => {
     const progress = scrollProgress.get(); 
     
-    // Start from front (z=5), move back and rotate around
-    const targetZ = 5 - progress * 2; 
-    const targetY = 0.6 + progress * 1.0;
-    const targetX = progress * 4.5;
+    // Parallax effect on scroll
+    const targetZ = 7 - progress * 2; 
+    const targetY = progress * 2.0;
     
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.05);
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.05);
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, 0.05);
-    camera.lookAt(0, 0.4, 0);
+    camera.lookAt(0, 0, 0);
   });
 
   return (
     <>
-      <color attach="background" args={['#010101']} />
-      <Environment preset="night" environmentIntensity={0.1} />
-      <fog attach="fog" args={['#010101', 3, 10]} />
+      <color attach="background" args={['#050505']} />
+      
+      {/* Front lighting to illuminate the metallic wings */}
+      <directionalLight position={[0, 5, 5]} intensity={2} color="#ffffff" />
+      <directionalLight position={[-5, -5, 5]} intensity={0.5} color="#444444" />
+      <directionalLight position={[5, -5, 5]} intensity={0.5} color="#444444" />
+      
+      <Environment preset="studio" environmentIntensity={0.5} />
 
-      <group position={[0, -0.2, 0]}>
-        <CarContours />
-        <PorscheHeadlights leftRef={leftLights} rightRef={rightLights} />
+      <group position={[0, 0.5, 0]}>
+        <SweepingWings />
+        <PorscheEyes leftRef={leftLights} rightRef={rightLights} />
       </group>
 
-      <mesh position={[0, -0.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color="#020202" roughness={0.9} metalness={0.1} />
-      </mesh>
-
-      <Sparkles count={30} scale={10} size={1} speed={0.2} opacity={0.1} color="#00e5ff" />
+      <Sparkles count={40} scale={15} size={1.5} speed={0.2} opacity={0.15} color="#ffffff" />
 
       <EffectComposer disableNormalPass>
         <Bloom 
           luminanceThreshold={0.5} 
           mipmapBlur 
-          intensity={1.0} /* Reduced Bloom Intensity */
+          intensity={1.2} 
         />
-        <DepthOfField focusDistance={0.05} focalLength={0.1} bokehScale={2} height={480} />
         <Vignette eskil={false} offset={0.3} darkness={1.1} />
       </EffectComposer>
     </>
