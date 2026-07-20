@@ -156,18 +156,18 @@ function Homepage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.08 }}
           transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-          className="text-[18vw] font-bold text-white whitespace-nowrap tracking-widest flex"
+          className="text-[14vw] font-bold text-white whitespace-nowrap tracking-wider flex"
           style={{ fontFamily: "'Syncopate', sans-serif" }}
         >
           <motion.div
             animate={{ x: ["-50%", "0%"] }}
-            transition={{ duration: 500, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
             className="flex w-fit"
           >
-            <span className="pr-[10vw]">PORSCHE</span>
-            <span className="pr-[10vw]">PORSCHE</span>
-            <span className="pr-[10vw]">PORSCHE</span>
-            <span className="pr-[10vw]">PORSCHE</span>
+            <span className="pr-[5vw]">PORSCHE</span>
+            <span className="pr-[5vw]">PORSCHE</span>
+            <span className="pr-[5vw]">PORSCHE</span>
+            <span className="pr-[5vw]">PORSCHE</span>
           </motion.div>
         </motion.div>
       </div>
