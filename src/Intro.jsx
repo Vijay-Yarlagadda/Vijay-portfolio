@@ -26,15 +26,15 @@ const Intro = () => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative w-32 h-32 rounded-full border border-[#D5001C] flex items-center justify-center bg-[#111]"
+            className="relative w-32 h-32 rounded-full border border-[#00e5ff] flex items-center justify-center bg-[#111]"
           >
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.1, 1] }}
               transition={{ delay: 0.5, duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 rounded-full bg-[#D5001C] opacity-20 blur-xl"
+              className="absolute inset-0 rounded-full bg-[#00e5ff] opacity-20 blur-xl"
             />
-            <div className="text-[#D5001C] font-mono text-sm tracking-[0.2em] uppercase font-bold text-center leading-tight">
+            <div className="text-[#00e5ff] font-mono text-sm tracking-[0.2em] uppercase font-bold text-center leading-tight">
               Engine<br/>Start
             </div>
           </motion.div>
@@ -43,7 +43,7 @@ const Intro = () => {
             initial={{ width: 0 }}
             animate={{ width: "200px" }}
             transition={{ delay: 1, duration: 1, ease: "easeInOut" }}
-            className="h-[2px] bg-[#D5001C] mt-12"
+            className="h-[2px] bg-[#00e5ff] mt-12"
           />
 
           <motion.div

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'PorscheNext'; /* We'll use Inter/Outfit as fallback, but call it PorscheNext for the vibe */
+  font-family: 'PorscheNext';
   src: local('Inter'), local('Segoe UI'), sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -9,16 +9,16 @@
 
 @layer base {
   :root {
-    --porsche-red: #D5001C;
-    --porsche-black: #0A0A0A;
-    --porsche-silver: #D3D3D3;
-    --porsche-dark-grey: #1A1A1A;
+    --accent-color: #00e5ff;
+    --theme-black: #010101;
+    --theme-silver: #D3D3D3;
+    --theme-dark-grey: #111111;
   }
   
   html {
     scroll-behavior: smooth;
-    background-color: var(--porsche-black);
-    color: var(--porsche-silver);
+    background-color: var(--theme-black);
+    color: var(--theme-silver);
   }
   
   body {
@@ -26,7 +26,7 @@
     font-family: 'Inter', 'Outfit', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #0a0a0a 100%);
+    background: var(--theme-black);
     background-attachment: fixed;
     overflow-x: hidden;
   }
@@ -37,22 +37,22 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--porsche-black);
+  background: var(--theme-black);
 }
 ::-webkit-scrollbar-thumb {
   background: #333;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--porsche-red);
+  background: var(--accent-color);
 }
 
 .glass-panel {
-  background: rgba(26, 26, 26, 0.4);
+  background: rgba(10, 10, 10, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
 .text-gradient {
