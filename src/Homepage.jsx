@@ -150,6 +150,19 @@ function Homepage() {
         )}
       </AnimatePresence>
 
+      {/* Background PORSCHE Watermark */}
+      <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none select-none z-0">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 0.03, scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+          className="text-[20vw] font-bold text-white whitespace-nowrap"
+          style={{ fontFamily: "'Syncopate', sans-serif" }}
+        >
+          PORSCHE
+        </motion.div>
+      </div>
+
       {/* Hero Content Overlays */}
       <div className="relative z-10 w-full h-full flex flex-col justify-center px-[8vw] md:px-[14vw] pointer-events-none">
         
