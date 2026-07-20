@@ -18,7 +18,7 @@ const Footer = () => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            VK
+            <span className="text-[#D5001C]">V</span>K
           </div>
           <p className="text-[#666] font-mono text-xs uppercase tracking-widest">
             Performance & Precision Engineering

@@ -47,7 +47,7 @@ function Homepage() {
               style={{ fontFamily: "'Alex Brush', cursive", transform: "translateY(-4px)" }}
               onClick={() => scrollTo('home')}
             >
-              VK
+              <span className="text-[#D5001C]">V</span>K
             </div>
           </div>
 
@@ -56,7 +56,7 @@ function Homepage() {
 
           {/* Middle: Links */}
           <ul className="hidden lg:flex flex-grow justify-center gap-8 text-sm font-medium tracking-[0.1em] text-[#888]">
-            {['Home', 'About', 'Education', 'Skills', 'Contact'].map((item) => (
+            {['Home', 'About', 'Education', 'Skills', 'Projects', 'Contact'].map((item) => (
               <li key={item}>
                 <button 
                   onClick={() => scrollTo(item.toLowerCase())}

@@ -8,6 +8,7 @@ import Homepage from './Homepage.jsx';
 import About from './About.jsx';
 import Education from './Education.jsx';
 import Skills from './Skills.jsx';
+import Projects from './Projects.jsx';
 import Contact from './Contact.jsx';
 import Footer from './Footer.jsx';
 import CarRevealScene from './components/CarRevealScene.jsx';
@@ -33,6 +34,7 @@ function App() {
           <About />
           <Education />
           <Skills />
+          <Projects />
           <Contact />
           <Footer />
         </div>
