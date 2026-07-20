@@ -6,25 +6,29 @@ const projects = [
     id: 1,
     title: "D-Portfolio",
     description: "A highly interactive, performance-optimized personal portfolio featuring complex 3D WebGL rendering, custom framer-motion physics, and a premium aesthetic designed to showcase high-end engineering capabilities.",
-    link: "#"
+    website: "https://vijayportfolio-gilt.vercel.app/",
+    repo: "https://github.com/Vijay-Yarlagadda/Vijay-portfolio.git"
   },
   {
     id: 2,
     title: "DFlex",
     description: "An AI-powered fitness platform that generates personalized diet plans and workout guidance based on users' goals, body metrics, and preferences.",
-    link: "#"
+    website: "https://dflex.vercel.app/",
+    repo: "https://github.com/Vijay-Yarlagadda/DFlex.git"
   },
   {
     id: 3,
     title: "DocEase",
     description: "A secure healthcare platform that enables hospitals, doctors, and patients to manage appointments and medical records with role-based access control.",
-    link: "#"
+    website: "https://mydocease.vercel.app/",
+    repo: "https://github.com/Vijay-Yarlagadda/DocEase.git"
   },
   {
     id: 4,
     title: "DSwap",
     description: "A campus-based cash exchange platform that helps students quickly find others to exchange small currency denominations within their college.",
-    link: "#"
+    website: "https://d-swap.vercel.app/",
+    repo: "https://github.com/Vijay-Yarlagadda/DSwap.git"
   }
 ];
 
@@ -116,13 +120,22 @@ const Projects = () => {
                       </div>
                       
                       <div className="max-w-2xl">
-                        <p className="text-base md:text-lg text-[#888] font-light leading-relaxed border-l-2 border-[#D5001C] pl-6 mb-8">
-                          {project.description}
-                        </p>
-                        <a href={project.link} className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
-                          View Project
-                        </a>
+                      <p className="text-base md:text-lg text-[#888] font-light leading-relaxed border-l-2 border-[#D5001C] pl-6 mb-8">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-4">
+                        {project.website && (
+                          <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
+                            Live Site
+                          </a>
+                        )}
+                        {project.repo && (
+                          <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-[#555] text-white font-bold uppercase tracking-widest text-xs rounded-full hover:border-white hover:bg-white/10 transition-colors duration-300">
+                            GitHub Repo
+                          </a>
+                        )}
                       </div>
+                    </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
