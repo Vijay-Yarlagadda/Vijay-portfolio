@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { motion, useScroll } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { Canvas } from "@react-three/fiber";
 import { ReactLenis } from 'lenis/react';
 import CarRevealScene from "./components/CarRevealScene";
-import { FaGithub, FaLinkedinIn, FaInstagram, FaTwitter } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { ChevronDown } from "lucide-react";
 
 function Homepage() {
   const { scrollYProgress } = useScroll();
+  const [showNav, setShowNav] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    // Show content slightly after mount to allow 3D lights to blink on
-    setTimeout(() => setShowContent(true), 1500);
+    // Show nav shortly after mount
+    setTimeout(() => setShowNav(true), 1500);
+    // Show content after headlights stabilize (approx 3.5s)
+    setTimeout(() => setShowContent(true), 3500);
   }, []);
 
   const scrollTo = (id) => {
@@ -34,75 +35,68 @@ function Homepage() {
           </Canvas>
         </div>
 
-        {/* Navigation Layer */}
+        {/* Navigation */}
         <motion.nav 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          className="fixed top-0 left-0 w-full z-50 px-8 py-8 flex justify-between items-center"
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: showNav ? 1 : 0 }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center glass-panel border-t-0 border-l-0 border-r-0 rounded-none"
         >
-          <div className="text-xl font-bold tracking-tight text-white font-syncopate lowercase">
-            portfolio.
+          <div className="text-xl font-bold tracking-[0.2em] uppercase text-white">
+            <span className="text-[#00e5ff]">V</span>ijay.
           </div>
-          
-          <ul className="hidden md:flex gap-10 text-base font-medium text-white">
-            {['Education', 'Skills', 'Contact'].map((item) => (
+          <ul className="hidden md:flex gap-10 text-sm font-medium tracking-[0.1em] text-[#888]">
+            {['Home', 'About', 'Education', 'Skills', 'Contact'].map((item) => (
               <li key={item}>
                 <button 
                   onClick={() => scrollTo(item.toLowerCase())}
-                  className="hover:text-[#00e5ff] transition-colors duration-300 pointer-events-auto"
+                  className="hover:text-white transition-colors duration-300 uppercase relative group cursor-pointer pointer-events-auto"
                 >
                   {item}
+                  <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-[#00e5ff] transition-all duration-300 group-hover:w-full" />
                 </button>
               </li>
             ))}
           </ul>
         </motion.nav>
 
-        {/* Hero Content Overlay (Text & Socials) */}
-        <div className="relative z-10 w-full h-screen flex flex-col items-center justify-center pointer-events-none pt-[5vh]">
+        {/* Hero Content Overlays */}
+        <div className="relative z-10 w-full h-screen flex flex-col justify-center px-[8vw] md:px-[14vw] pointer-events-none">
           
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: showContent ? 1 : 0, scale: showContent ? 1 : 0.95 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            className="flex flex-col items-center text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 30 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col mt-[20vh]"
           >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-[2px] bg-[#00e5ff]" />
+              <p className="text-[#00e5ff] font-semibold tracking-[0.3em] uppercase text-xs md:text-sm">Precision Engineering</p>
+            </div>
             
-            {/* Title */}
-            <h1 className="font-syncopate font-bold leading-tight flex flex-col items-center">
-              <span className="text-[12vw] md:text-[7vw] text-gradient-metallic tracking-wider drop-shadow-lg">
-                YARLAGADDA
-              </span>
-              <span className="text-[8vw] md:text-[5vw] text-[#dcdcdc] tracking-widest mt-[-1vw] drop-shadow-md">
-                VIJAY KUMAR
-              </span>
+            <h1 className="text-[10vw] md:text-[6vw] leading-[0.9] font-bold text-white tracking-tighter uppercase">
+              <div className="flex items-baseline gap-4">
+                <span>Vijay</span>
+                <span className="text-transparent stroke-text" style={{ WebkitTextStroke: "2px #444", color: "transparent" }}>Kumar</span>
+              </div>
+              <div className="text-gradient mt-2">
+                Yarlagadda
+              </div>
             </h1>
             
-            <p className="mt-4 font-syncopate text-[#aaaaaa] tracking-[0.3em] text-sm md:text-base font-bold">
-              UI UX DESI
-            </p>
-
-            {/* Social Pill */}
-            <motion.div 
-              className="mt-10 social-pill px-10 py-4 flex items-center gap-8 pointer-events-auto border border-[#802a66]"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            <motion.p 
+              className="mt-8 text-base md:text-lg text-[#888] max-w-[500px] font-light leading-relaxed border-l-2 border-[#333] pl-6"
             >
-              <a href="#" className="flex flex-col items-center group">
-                <div className="w-10 h-10 rounded-full bg-[#1db954] flex items-center justify-center text-black text-xl mb-1 shadow-[0_0_15px_rgba(29,185,84,0.5)]">
-                  <FaGithub />
-                </div>
-                <span className="text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-4">Github</span>
-              </a>
-              <a href="#" className="text-[#a07490] hover:text-white text-2xl transition-colors"><FaLinkedinIn /></a>
-              <a href="#" className="text-[#a07490] hover:text-white text-3xl transition-colors"><MdEmail /></a>
-              <a href="#" className="text-[#a07490] hover:text-white text-2xl transition-colors"><FaInstagram /></a>
-              <a href="#" className="text-[#a07490] hover:text-white text-2xl transition-colors"><FaTwitter /></a>
-            </motion.div>
-
+              High-performance digital experiences crafted with uncompromising quality, speed, and elegance.
+            </motion.p>
+            
+            <motion.button 
+              className="mt-12 w-fit px-8 py-4 bg-transparent border border-[#333] hover:border-[#00e5ff] text-white tracking-[0.2em] uppercase text-sm font-medium transition-all duration-500 hover:bg-[#00e5ff]/10 hover:shadow-[0_0_20px_rgba(0,229,255,0.2)] pointer-events-auto"
+              onClick={() => scrollTo('about')}
+            >
+              Explore Portfolio
+            </motion.button>
           </motion.div>
-
         </div>
 
         {/* Scroll Indicator */}
@@ -110,19 +104,16 @@ function Homepage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: showContent ? 1 : 0 }}
           transition={{ duration: 2, delay: 1 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none"
         >
+          <span className="text-xs tracking-[0.3em] uppercase text-[#666]">Scroll to explore</span>
           <motion.div 
-            animate={{ y: [0, 8, 0] }} 
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center"
+            animate={{ y: [0, 10, 0] }} 
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <ChevronDown className="w-5 h-5 text-white mb-[-8px] opacity-70" />
-            <ChevronDown className="w-5 h-5 text-white" />
+            <ChevronDown className="w-5 h-5 text-[#00e5ff]" />
           </motion.div>
-          <span className="text-xs tracking-widest text-[#aaaaaa] mt-2 lowercase">scroll</span>
         </motion.div>
-
       </div>
     </ReactLenis>
   );

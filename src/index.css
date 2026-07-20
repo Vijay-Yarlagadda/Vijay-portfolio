@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap');
 
 @font-face {
   font-family: 'PorscheNext';
@@ -11,9 +10,9 @@
 @layer base {
   :root {
     --accent-color: #00e5ff;
-    --theme-black: #050505;
+    --theme-black: #010101;
     --theme-silver: #D3D3D3;
-    --social-pill: #5c1843;
+    --theme-dark-grey: #111111;
   }
   
   html {
@@ -24,14 +23,16 @@
   
   body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Outfit', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: var(--theme-black);
+    background-attachment: fixed;
     overflow-x: hidden;
   }
 }
 
+/* Custom Scrollbar for premium feel */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -46,18 +47,16 @@
   background: var(--accent-color);
 }
 
-.font-syncopate {
-  font-family: 'Syncopate', sans-serif;
+.glass-panel {
+  background: rgba(10, 10, 10, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
-.text-gradient-metallic {
-  background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+.text-gradient {
+  background: linear-gradient(90deg, #FFFFFF, #888888);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.social-pill {
-  background-color: var(--social-pill);
-  border-radius: 9999px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
