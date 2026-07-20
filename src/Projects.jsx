@@ -28,6 +28,9 @@ const projects = [
   }
 ];
 
+// Smooth cubic-bezier transition for a premium, non-glitchy feel
+const smoothTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
+
 const Projects = () => {
   const [active, setActive] = useState(1);
   const [hovered, setHovered] = useState(null);
@@ -40,7 +43,7 @@ const Projects = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1 }}
+          transition={smoothTransition}
           className="mb-12"
         >
           <div className="flex items-center gap-4 mb-4">
@@ -64,30 +67,31 @@ const Projects = () => {
                 animate={{ 
                   flex: isActive ? (window.innerWidth > 768 ? 6 : 4) : (isHovered ? 1.5 : 1) 
                 }}
+                transition={smoothTransition}
                 onMouseEnter={() => setHovered(project.id)}
                 onMouseLeave={() => setHovered(null)}
                 onClick={() => setActive(project.id)}
                 className={`relative rounded-[2rem] overflow-hidden cursor-pointer transition-colors duration-500 border border-[#333] ${
                   isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
                 }`}
-                transition={{ type: "spring", stiffness: 200, damping: 25 }}
               >
-                {/* INACTIVE STATE - CLIPPED NUMBER */}
+                {/* INACTIVE STATE - CLIPPED NUMBER (All numbers on the right, slide left on hover) */}
                 {!isActive && (
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className={`absolute top-8 ${project.id < active ? 'right-0' : 'left-0'}`}
+                    transition={smoothTransition}
+                    className="absolute top-8 right-0 bottom-0 flex items-start"
                   >
-                    <span 
-                      className={`block text-[80px] md:text-[100px] leading-none font-bold text-[#D5001C] opacity-90 select-none transition-transform duration-500 ease-out
-                      ${project.id < active 
-                         ? (isHovered ? '-translate-x-6' : 'translate-x-8') 
-                         : (isHovered ? 'translate-x-6' : '-translate-x-8')}`}
+                    <motion.span 
+                      initial={false}
+                      animate={{ x: isHovered ? -20 : 30 }}
+                      transition={smoothTransition}
+                      className="block text-[80px] md:text-[120px] leading-none font-bold text-[#D5001C] opacity-90 select-none"
                     >
                       {project.id}
-                    </span>
+                    </motion.span>
                   </motion.div>
                 )}
 
@@ -96,7 +100,7 @@ const Projects = () => {
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.15, duration: 0.4 }}
+                    transition={{ delay: 0.2, ...smoothTransition }}
                     className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between"
                   >
                     <div>
