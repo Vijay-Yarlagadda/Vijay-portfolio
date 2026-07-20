@@ -161,7 +161,7 @@ function Homepage() {
         >
           <motion.div
             animate={{ x: ["-50%", "0%"] }}
-            transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 500, repeat: Infinity, ease: "linear" }}
             className="flex w-fit"
           >
             <span className="pr-[10vw]">PORSCHE</span>
