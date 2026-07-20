@@ -5,10 +5,10 @@ const Intro = () => {
   const [showHomepage, setShowHomepage] = useState(false);
 
   useEffect(() => {
-    // Ignition sequence duration (decreased for faster load)
+    // Ignition sequence duration (decreased for ultra-fast load)
     const timer = setTimeout(() => {
       setShowHomepage(true);
-    }, 1200); 
+    }, 600); 
 
     return () => clearTimeout(timer);
   }, []);
@@ -30,11 +30,11 @@ const Intro = () => {
           >
             <motion.div 
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0.5, 1], scale: [1, 1.1, 1] }}
-              transition={{ delay: 0.5, duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 rounded-full bg-[#D5001C] opacity-20 blur-xl"
+              animate={{ opacity: [0, 0.3, 0.1, 0.3], scale: [1, 1.1, 1] }}
+              transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0 rounded-full bg-[#D5001C] blur-xl"
             />
-            <div className="text-[#D5001C] font-mono text-sm tracking-[0.2em] uppercase font-bold text-center leading-tight">
+            <div className="relative z-10 text-[#D5001C] font-mono text-sm tracking-[0.2em] uppercase font-bold text-center leading-tight">
               Engine<br/>Start
             </div>
           </motion.div>
