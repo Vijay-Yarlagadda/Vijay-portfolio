@@ -30,6 +30,7 @@ const projects = [
 
 const Projects = () => {
   const [active, setActive] = useState(1);
+  const [hovered, setHovered] = useState(null);
 
   return (
     <section id="projects" className="relative w-full min-h-screen bg-transparent py-24 px-8 overflow-hidden z-10">
@@ -53,6 +54,7 @@ const Projects = () => {
         <div className="flex flex-col md:flex-row gap-4 w-full h-[500px] md:h-[600px]">
           {projects.map((project) => {
             const isActive = active === project.id;
+            const isHovered = hovered === project.id;
             
             return (
               <motion.div
@@ -60,23 +62,30 @@ const Projects = () => {
                 layout
                 initial={false}
                 animate={{ 
-                  flex: isActive ? (window.innerWidth > 768 ? 6 : 4) : 1 
+                  flex: isActive ? (window.innerWidth > 768 ? 6 : 4) : (isHovered ? 1.5 : 1) 
                 }}
+                onMouseEnter={() => setHovered(project.id)}
+                onMouseLeave={() => setHovered(null)}
                 onClick={() => setActive(project.id)}
                 className={`relative rounded-[2rem] overflow-hidden cursor-pointer transition-colors duration-500 border border-[#333] ${
-                  isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/60"
+                  isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
                 }`}
                 transition={{ type: "spring", stiffness: 200, damping: 25 }}
               >
-                {/* INACTIVE STATE - HUGE NUMBER */}
+                {/* INACTIVE STATE - CLIPPED NUMBER */}
                 {!isActive && (
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 flex items-start justify-center pt-8 overflow-hidden pointer-events-none"
+                    className={`absolute top-8 ${project.id < active ? 'right-0' : 'left-0'}`}
                   >
-                    <span className="text-[120px] md:text-[180px] leading-none font-bold text-[#D5001C] opacity-80 select-none">
+                    <span 
+                      className={`block text-[80px] md:text-[100px] leading-none font-bold text-[#D5001C] opacity-90 select-none transition-transform duration-500 ease-out
+                      ${project.id < active 
+                         ? (isHovered ? '-translate-x-6' : 'translate-x-8') 
+                         : (isHovered ? 'translate-x-6' : '-translate-x-8')}`}
+                    >
                       {project.id}
                     </span>
                   </motion.div>
