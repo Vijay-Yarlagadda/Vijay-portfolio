@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const projects = [
   {
@@ -62,7 +62,6 @@ const Projects = () => {
             return (
               <motion.div
                 key={project.id}
-                layout
                 initial={false}
                 animate={{ 
                   flex: isActive ? (window.innerWidth > 768 ? 6 : 4) : (isHovered ? 1.5 : 1) 
@@ -75,55 +74,58 @@ const Projects = () => {
                   isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
                 }`}
               >
-                {/* INACTIVE STATE - CLIPPED NUMBER (All numbers on the right, slide left on hover) */}
-                {!isActive && (
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={smoothTransition}
-                    className="absolute top-8 right-0 bottom-0 flex items-start"
-                  >
-                    <motion.span 
-                      initial={false}
-                      animate={{ x: isHovered ? -20 : 30 }}
-                      transition={smoothTransition}
-                      className="block text-[80px] md:text-[120px] leading-none font-bold text-[#D5001C] opacity-90 select-none"
+                <AnimatePresence>
+                  {/* INACTIVE STATE - CLIPPED NUMBER (All numbers on the right, slide left on hover) */}
+                  {!isActive ? (
+                    <motion.div 
+                      key="inactive"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="absolute top-8 right-0 bottom-0 flex items-start pointer-events-none"
                     >
-                      {project.id}
-                    </motion.span>
-                  </motion.div>
-                )}
-
-                {/* ACTIVE STATE CONTENT */}
-                {isActive && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2, ...smoothTransition }}
-                    className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
-                        <span className="text-6xl md:text-8xl font-bold text-white leading-none">
-                          {project.id}
-                        </span>
-                        <h4 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tighter leading-tight max-w-xl">
-                          {project.title}
-                        </h4>
+                      <motion.span 
+                        initial={false}
+                        animate={{ x: isHovered ? -20 : 30 }}
+                        transition={smoothTransition}
+                        className="block text-[80px] md:text-[120px] leading-none font-bold text-[#D5001C] opacity-90 select-none"
+                      >
+                        {project.id}
+                      </motion.span>
+                    </motion.div>
+                  ) : (
+                    /* ACTIVE STATE CONTENT */
+                    <motion.div 
+                      key="active"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ delay: 0.1, duration: 0.4 }}
+                      className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
+                          <span className="text-6xl md:text-8xl font-bold text-white leading-none">
+                            {project.id}
+                          </span>
+                          <h4 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tighter leading-tight max-w-xl">
+                            {project.title}
+                          </h4>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div className="max-w-2xl">
-                      <p className="text-base md:text-lg text-[#888] font-light leading-relaxed border-l-2 border-[#D5001C] pl-6 mb-8">
-                        {project.description}
-                      </p>
-                      <a href={project.link} className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
-                        View Project
-                      </a>
-                    </div>
-                  </motion.div>
-                )}
+                      
+                      <div className="max-w-2xl">
+                        <p className="text-base md:text-lg text-[#888] font-light leading-relaxed border-l-2 border-[#D5001C] pl-6 mb-8">
+                          {project.description}
+                        </p>
+                        <a href={project.link} className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
+                          View Project
+                        </a>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}
