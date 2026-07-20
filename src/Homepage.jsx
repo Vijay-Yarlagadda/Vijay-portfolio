@@ -42,8 +42,12 @@ function Homepage() {
         <div className="flex items-center justify-between w-full">
           {/* Left: Logo */}
           <div className="flex-shrink-0 md:pr-6">
-            <div className="text-xl font-bold tracking-[0.2em] uppercase text-white cursor-pointer" onClick={() => scrollTo('home')}>
-              <span className="text-[#D5001C]">V</span>ijay.
+            <div 
+              className="text-4xl text-white cursor-pointer hover:text-[#D5001C] transition-colors duration-300" 
+              style={{ fontFamily: "'Alex Brush', cursive", transform: "translateY(-4px)" }}
+              onClick={() => scrollTo('home')}
+            >
+              VK
             </div>
           </div>
 

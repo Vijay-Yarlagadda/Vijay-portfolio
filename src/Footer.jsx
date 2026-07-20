@@ -10,8 +10,15 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 pt-8">
         
         <div className="flex flex-col items-center md:items-start gap-2">
-          <div className="text-xl font-bold tracking-[0.2em] uppercase text-white">
-            <span className="text-[#D5001C]">V</span>ijay.
+          <div 
+            className="text-4xl text-white cursor-pointer hover:text-[#D5001C] transition-colors duration-300"
+            style={{ fontFamily: "'Alex Brush', cursive", transform: "translateY(-4px)" }}
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            VK
           </div>
           <p className="text-[#666] font-mono text-xs uppercase tracking-widest">
             Performance & Precision Engineering
