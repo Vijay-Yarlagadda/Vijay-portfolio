@@ -29,7 +29,7 @@ function Homepage() {
         className="fixed top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center glass-panel border-t-0 border-l-0 border-r-0 rounded-none bg-black/20 backdrop-blur-md"
       >
         <div className="text-xl font-bold tracking-[0.2em] uppercase text-white">
-          <span className="text-[#00e5ff]">V</span>ijay.
+          <span className="text-[#D5001C]">V</span>ijay.
         </div>
         <ul className="hidden md:flex gap-10 text-sm font-medium tracking-[0.1em] text-[#888]">
           {['Home', 'About', 'Education', 'Skills', 'Contact'].map((item) => (
@@ -39,7 +39,7 @@ function Homepage() {
                 className="hover:text-white transition-colors duration-300 uppercase relative group cursor-pointer pointer-events-auto"
               >
                 {item}
-                <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-[#00e5ff] transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-[#D5001C] transition-all duration-300 group-hover:w-full" />
               </button>
             </li>
           ))}
@@ -56,8 +56,8 @@ function Homepage() {
           className="flex flex-col mt-[10vh]"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-[2px] bg-[#00e5ff]" />
-            <p className="text-[#00e5ff] font-semibold tracking-[0.3em] uppercase text-xs md:text-sm">Precision Engineering</p>
+            <div className="w-12 h-[2px] bg-[#D5001C]" />
+            <p className="text-[#D5001C] font-semibold tracking-[0.3em] uppercase text-xs md:text-sm">Precision Engineering</p>
           </div>
           
           <h1 className="text-[10vw] md:text-[6vw] leading-[0.9] font-bold text-white tracking-tighter uppercase">
@@ -77,7 +77,7 @@ function Homepage() {
           </motion.p>
           
           <motion.button 
-            className="mt-12 w-fit px-8 py-4 bg-black/40 backdrop-blur-md border border-[#333] hover:border-[#00e5ff] text-white tracking-[0.2em] uppercase text-sm font-medium transition-all duration-500 hover:bg-[#00e5ff]/20 hover:shadow-[0_0_20px_rgba(0,229,255,0.2)] pointer-events-auto"
+            className="mt-12 w-fit px-8 py-4 bg-black/40 backdrop-blur-md border border-[#333] hover:border-[#D5001C] text-white tracking-[0.2em] uppercase text-sm font-medium transition-all duration-500 hover:bg-[#D5001C]/20 hover:shadow-[0_0_20px_rgba(213,0,28,0.2)] pointer-events-auto"
             onClick={() => scrollTo('about')}
           >
             Explore Portfolio
@@ -97,7 +97,7 @@ function Homepage() {
           animate={{ y: [0, 10, 0] }} 
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ChevronDown className="w-5 h-5 text-[#00e5ff]" />
+          <ChevronDown className="w-5 h-5 text-[#D5001C]" />
         </motion.div>
       </motion.div>
     </div>

@@ -1,186 +1,109 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import { Code, MonitorSmartphone, Cpu, ScissorsSquareDashedBottom } from "lucide-react";
-
-const cardBg = '#14162C';
-const gray = '#c6c3c3';
-const neonOrange = '#FB983D';
 
 const skills = [
   {
-    icon: <Code color={neonOrange} size={38} strokeWidth={1.6} style={{ display: 'block', margin: '0 auto' }} />, // Frontend Development
+    icon: <Code size={32} strokeWidth={1.5} />,
     title: 'Frontend\nDevelopment',
-    desc: `I bring ideas to life by designing clean, functional layouts with smooth interactions.\nFor me, frontend is the space where creativity takes shape through structure and detail.`
+    desc: `I bring ideas to life by designing clean, functional layouts with smooth interactions. For me, frontend is the space where creativity takes shape through structure and detail.`
   },
   {
-    icon: <MonitorSmartphone color={neonOrange} size={38} strokeWidth={1.6} style={{ display: 'block', margin: '0 auto' }} />, // UI/UX Designing
-    title: 'UI/UX\nDESIGNING',
-    desc: `I find the most joy in crafting intuitive and visually engaging user experiences.\nUI/UX design lets me blend creativity with purpose to shape how people interact with digital products.`
+    icon: <MonitorSmartphone size={32} strokeWidth={1.5} />,
+    title: 'UI/UX\nDesigning',
+    desc: `I find the most joy in crafting intuitive and visually engaging user experiences. UI/UX design lets me blend creativity with purpose to shape how people interact with digital products.`
   },
   {
-    icon: <Cpu color={neonOrange} size={38} strokeWidth={1.6} style={{ display: 'block', margin: '0 auto' }} />, // Programming (changed icon)
-    title: 'PROGRAMMING',
-    desc: `I enjoy exploring the logic behind code and solving complex patterns with precision.\nLanguages like Java and Python help me turn challenges into structured, efficient solutions.`
+    icon: <Cpu size={32} strokeWidth={1.5} />,
+    title: 'Programming',
+    desc: `I enjoy exploring the logic behind code and solving complex patterns with precision. Languages like Java and Python help me turn challenges into structured, efficient solutions.`
   },
   {
-    icon: <ScissorsSquareDashedBottom color={neonOrange} size={38} strokeWidth={1.6} style={{ display: 'block', margin: '0 auto' }} />, // Editing
-    title: 'EDITING',
-    desc: `Editing is something I truly love — it lets me shape emotion, pace, and storytelling.\nI especially enjoy crafting title animations and enhancing the overall feel of a short film.`
+    icon: <ScissorsSquareDashedBottom size={32} strokeWidth={1.5} />,
+    title: 'Editing',
+    desc: `Editing is something I truly love — it lets me shape emotion, pace, and storytelling. I especially enjoy crafting title animations and enhancing the overall feel of a short film.`
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 50, opacity: 0, rotateX: -20 },
+  visible: {
+    y: 0, opacity: 1, rotateX: 0,
+    transition: { duration: 0.8, ease: "easeOut" }
+  }
+};
+
 export default function Skills() {
-  const [showHeading, setShowHeading] = useState(false);
-  const [showCards, setShowCards] = useState([false, false, false, false]);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    function onScroll() {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.7) {
-        setShowHeading(true);
-        setTimeout(() => setShowCards([true, false, false, false]), 120);
-        setTimeout(() => setShowCards([true, true, false, false]), 240);
-        setTimeout(() => setShowCards([true, true, true, false]), 360);
-        setTimeout(() => setShowCards([true, true, true, true]), 480);
-        window.removeEventListener('scroll', onScroll);
-      }
-    }
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
-    <section id="skills" ref={sectionRef} className="w-full min-h-screen flex flex-col items-center justify-start px-[5vw] pt-[4vh] pb-[8vh] bg-transparent">
-      {/* Heading */}
-      <h1
-        style={{
-          fontFamily: 'Mera Pro',
-          fontWeight: 400,
-          fontSize: '2rem',
-          background: 'linear-gradient(to bottom, #FFD700, #F5C542, #7A5B1F)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          color: 'transparent',
-          letterSpacing: '0.01em',
-          marginBottom: '0.1rem',
-          marginTop: '4.2rem',
-          textAlign: 'center',
-          width: '100%',
-          textTransform: 'uppercase',
-          opacity: showHeading ? 1 : 0,
-          transform: showHeading ? 'translateY(0)' : 'translateY(40px)',
-          transition: 'opacity 0.5s cubic-bezier(0.77,0,0.175,1), transform 0.5s cubic-bezier(0.77,0,0.175,1)'
-        }}
+    <section id="skills" className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 px-8 bg-transparent overflow-hidden" style={{ perspective: '1200px' }}>
+      
+      {/* Background accents */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#D5001C] rounded-full blur-[200px] opacity-[0.03] pointer-events-none" />
+
+      <motion.div 
+        initial={{ opacity: 0, y: -30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-full max-w-[1200px] flex flex-col items-center mb-16"
       >
-        MY <span style={{ fontWeight: 700, letterSpacing: '0.01em', fontFamily: 'Mera Pro' }}>SKILLSET</span>
-      </h1>
-      <div style={{
-        color: gray,
-        fontFamily: 'Space Grotesk, sans-serif',
-        fontSize: '0.9rem',
-        marginBottom: '4rem',
-        marginLeft: '4px',
-        textAlign: 'center',
-        fontWeight: 400,
-        width: '100%',
-        maxWidth: 700,
-        opacity: showHeading ? 1 : 0,
-        transform: showHeading ? 'translateY(0)' : 'translateY(40px)',
-        transition: 'opacity 0.5s 0.08s cubic-bezier(0.77,0,0.175,1), transform 0.5s 0.08s cubic-bezier(0.77,0,0.175,1)'
-      }}>
-        Turning imagination into real, responsive, and refined creations.
-      </div>
-      {/* Skill Card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 w-full max-w-[1200px]" style={{ marginTop: '1rem' }}>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-8 h-[2px] bg-[#D5001C]" />
+          <p className="text-[#D5001C] font-semibold tracking-[0.2em] uppercase text-xs">02 // Capabilities</p>
+          <div className="w-8 h-[2px] bg-[#D5001C]" />
+        </div>
+        <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight text-center">
+          Performance <span className="text-transparent stroke-text" style={{ WebkitTextStroke: "1px #555" }}>Specs</span>
+        </h2>
+        <p className="text-[#888] mt-6 max-w-2xl text-center text-lg font-light">
+          Turning imagination into real, responsive, and refined creations.
+        </p>
+      </motion.div>
+
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-[1200px] z-10"
+      >
         {skills.map((skill, i) => (
-          <div
+          <motion.div
             key={i}
-            className="flex flex-col items-center justify-between relative overflow-visible group skill-card-glow skill-card-hover"
-            style={{
-              background: cardBg,
-              borderRadius: '32px',
-              padding: '1.1rem 2.2rem 0.7rem 2.2rem',
-              boxShadow: '0 2px 16px 0 rgba(0,0,0,0.13)',
-              textAlign: 'center',
-              border: `2.5px solid ${neonOrange}`,
-              boxSizing: 'border-box',
-              minWidth: 270,
-              maxWidth: 320,
-              width: '100%',
-              height: 'auto',
-              minHeight: '210px',
-              opacity: showCards[i] ? 1 : 0,
-              transform: showCards[i] ? 'translateY(0)' : 'translateY(40px)',
-              transition: `opacity 0.85s ${0.18 + i * 0.13}s cubic-bezier(0.77,0,0.175,1), transform 0.85s ${0.18 + i * 0.13}s cubic-bezier(0.77,0,0.175,1)`,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            variants={itemVariants}
+            whileHover={{ y: -10, transition: { duration: 0.3 } }}
+            className="group relative flex flex-col items-start p-8 glass-panel rounded-xl overflow-hidden border border-[#222] hover:border-[#D5001C] transition-colors duration-500 bg-gradient-to-b from-[#111] to-[#0a0a0a]"
           >
-            {/* Animated border object */}
-            <span className="moving-dot-skill" />
-            <span style={{ marginBottom: 12, display: 'flex', justifyContent: 'center', width: '100%' }}>{skill.icon}</span>
-            <div style={{
-              fontFamily: 'LemonMilk, Space Grotesk, sans-serif',
-              fontWeight: 700,
-              fontSize: '1.18rem',
-              color: '#fff',
-              letterSpacing: '0.01em',
-              marginBottom: '0.5rem',
-              textAlign: 'center',
-              whiteSpace: 'pre-line',
-              textTransform: 'uppercase',
-            }}>{skill.title}</div>
-            <div style={{
-              fontFamily: 'Space Grotesk, sans-serif',
-              color: '#e2bdb3',
-              fontSize: '0.93rem',
-              fontWeight: 400,
-              marginTop: '0.05rem',
-              lineHeight: 1.45,
-              textAlign: 'center',
-              whiteSpace: 'pre-line',
-            }}>{skill.desc}</div>
-            <style>{`
-              .skill-card-hover {
-                transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1) !important;
-              }
-              .skill-card-hover:hover {
-                transform: scale(1.055) !important;
-                transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1) !important;
-              }
-              .skill-card-glow {
-                box-shadow: 0 0 0 2px #FB983D44, 0 0 18px 2px #FB983D55;
-                position: relative;
-              }
-              .skill-card-glow,
-              .skill-card-glow[style*='border'] {
-                border: 2.5px solid rgba(251, 152, 61, 0.18) !important;
-              }
-              .moving-dot-skill {
-                position: absolute;
-                width: 24px;
-                height: 2px;
-                border-radius: 6px;
-                background: #FB983D;
-                z-index: 10;
-                box-shadow: 0 0 8px 2px #FB983D99;
-                animation: move-dot-skill 5s linear infinite;
-                offset-path: inset(0 round 32px);
-                top: 0;
-                left: 0;
-              }
-              @keyframes move-dot-skill {
-                0%   { offset-distance: 0%; }
-                100% { offset-distance: 100%; }
-              }
-            `}</style>
-          </div>
+            {/* Animated Hover Line */}
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-[#D5001C] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+            
+            <div className="text-[#888] group-hover:text-[#D5001C] transition-colors duration-500 mb-6">
+              {skill.icon}
+            </div>
+            
+            <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-4 whitespace-pre-line group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#D5001C] transition-all duration-300">
+              {skill.title}
+            </h3>
+            
+            <p className="text-[#666] text-sm leading-relaxed font-light group-hover:text-[#aaa] transition-colors duration-300">
+              {skill.desc}
+            </p>
+
+            {/* Tech Decoration */}
+            <div className="absolute bottom-4 right-4 opacity-10 font-mono text-[10px] text-white">
+              {`// MOD_${(i+1).toString().padStart(2, '0')}`}
+            </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

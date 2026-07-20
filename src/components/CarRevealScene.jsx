@@ -13,8 +13,8 @@ function ParticleWave() {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     
-    const colorA = new THREE.Color('#00e5ff'); // Ice Blue
-    const colorB = new THREE.Color('#a07490'); // Deep Purple/Pink
+    const colorA = new THREE.Color('#D5001C'); // Porsche Red
+    const colorB = new THREE.Color('#4A000A'); // Dark Crimson
     const tempColor = new THREE.Color();
 
     let i = 0;
