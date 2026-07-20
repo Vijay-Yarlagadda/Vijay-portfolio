@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [rotation, setRotation] = useState(0);
+  const cursorRef = useRef(null);
+  const tireRef = useRef(null);
 
   useEffect(() => {
     let currentRotation = 0;
     
     const handleMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      // Direct DOM manipulation bypasses React state for buttery smooth 60fps
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+      }
       
       // Calculate movement to determine rotation
-      // Moving right/down spins clockwise, left/up spins counter-clockwise
       const distance = e.movementX + e.movementY;
-      currentRotation += distance * 1.5; // Multiplier for spin speed
+      currentRotation += distance * 1.5; 
       
-      setRotation(currentRotation);
+      if (tireRef.current) {
+        tireRef.current.style.transform = `rotate(${currentRotation}deg)`;
+      }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -27,11 +31,12 @@ const CustomCursor = () => {
 
   return (
     <div 
-      className="fixed top-0 left-0 pointer-events-none z-[99999]"
+      ref={cursorRef}
+      className="fixed top-0 left-0 pointer-events-none z-[99999] will-change-transform"
       style={{
-        transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
         width: '32px',
-        height: '32px'
+        height: '32px',
+        transform: 'translate(-100px, -100px)' // Start hidden offscreen
       }}
     >
       {/* Brake Caliper (Static Layer) */}
@@ -41,12 +46,9 @@ const CustomCursor = () => {
       
       {/* Tire, Rim, and Spokes (Rotating Layer) */}
       <svg 
-        className="absolute inset-0 w-full h-full" 
+        ref={tireRef}
+        className="absolute inset-0 w-full h-full will-change-transform" 
         viewBox='0 0 32 32'
-        style={{ 
-          transform: `rotate(${rotation}deg)`, 
-          transition: 'transform 0.05s linear' 
-        }}
       >
         {/* Outer Tire */}
         <circle cx='16' cy='16' r='15' fill='#0a0a0a' stroke='#222' strokeWidth='2'/>
