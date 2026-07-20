@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Send, Folder } from "lucide-react";
 
 function Homepage() {
   const [showNav, setShowNav] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setShowNav(true), 100);
     setTimeout(() => setShowContent(true), 700);
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollTo = (id) => {
@@ -26,24 +33,59 @@ function Homepage() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: showNav ? 1 : 0 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center glass-panel border-t-0 border-l-0 border-r-0 rounded-none bg-black/20 backdrop-blur-md"
+        className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-500 ease-in-out border border-[#333] backdrop-blur-md overflow-hidden ${
+          scrolled 
+            ? "top-6 w-[95%] max-w-[1000px] rounded-full py-3 px-8 bg-[#111]/95 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            : "top-0 w-full rounded-none py-6 px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
+        }`}
       >
-        <div className="text-xl font-bold tracking-[0.2em] uppercase text-white">
-          <span className="text-[#D5001C]">V</span>ijay.
+        <div className="flex items-center justify-between w-full">
+          {/* Left: Logo */}
+          <div className="flex-shrink-0 md:pr-6">
+            <div className="text-xl font-bold tracking-[0.2em] uppercase text-white cursor-pointer" onClick={() => scrollTo('home')}>
+              <span className="text-[#D5001C]">V</span>ijay.
+            </div>
+          </div>
+
+          {/* Separator 1 */}
+          <div className="hidden lg:block w-[1px] h-8 border-l border-dashed border-[#555] mx-4 transition-all duration-500"></div>
+
+          {/* Middle: Links */}
+          <ul className="hidden lg:flex flex-grow justify-center gap-8 text-sm font-medium tracking-[0.1em] text-[#888]">
+            {['Home', 'About', 'Education', 'Skills', 'Contact'].map((item) => (
+              <li key={item}>
+                <button 
+                  onClick={() => scrollTo(item.toLowerCase())}
+                  className="hover:text-white transition-colors duration-300 uppercase relative group cursor-pointer pointer-events-auto"
+                >
+                  {item}
+                  <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-[#D5001C] transition-all duration-300 group-hover:w-full" />
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          {/* Separator 2 */}
+          <div className="hidden lg:block w-[1px] h-8 border-l border-dashed border-[#555] mx-4 transition-all duration-500"></div>
+
+          {/* Right: Buttons */}
+          <div className="flex-shrink-0 md:pl-6 hidden md:flex items-center gap-4">
+            <button 
+              onClick={() => scrollTo('contact')}
+              className="px-5 py-2.5 border border-[#555] text-white font-medium tracking-[0.1em] uppercase text-[10px] rounded-full hover:border-white transition-colors duration-300 cursor-pointer pointer-events-auto flex items-center gap-2"
+            >
+              Message Me <Send className="w-3 h-3" />
+            </button>
+            <a 
+              href="https://drive.google.com/file/d/1XnEA7Q4qsgzvTCQU04GoA2YNvELIa8Eu/view?usp=drive_link" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 bg-white text-black font-bold tracking-[0.1em] uppercase text-[10px] rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300 cursor-pointer pointer-events-auto flex items-center gap-2 group"
+            >
+              Resume <Folder className="w-3 h-3 fill-current" />
+            </a>
+          </div>
         </div>
-        <ul className="hidden md:flex gap-10 text-sm font-medium tracking-[0.1em] text-[#888]">
-          {['Home', 'About', 'Education', 'Skills', 'Contact'].map((item) => (
-            <li key={item}>
-              <button 
-                onClick={() => scrollTo(item.toLowerCase())}
-                className="hover:text-white transition-colors duration-300 uppercase relative group cursor-pointer pointer-events-auto"
-              >
-                {item}
-                <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-[#D5001C] transition-all duration-300 group-hover:w-full" />
-              </button>
-            </li>
-          ))}
-        </ul>
       </motion.nav>
 
       {/* Hero Content Overlays */}
