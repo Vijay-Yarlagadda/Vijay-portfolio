@@ -101,26 +101,26 @@ const Projects = () => {
                   ) : (
                     /* ACTIVE STATE CONTENT */
                     <motion.div 
-                      key="active"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ delay: 0.1, duration: 0.4 }}
-                      className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between"
-                    >
-                      <div>
-                        <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
-                          <span className="text-6xl md:text-8xl font-bold text-white leading-none">
-                            {project.id}
-                          </span>
-                          <h4 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tighter leading-tight max-w-xl">
-                            {project.title}
-                          </h4>
-                        </div>
+                    key="active"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ delay: 0.1, duration: 0.4 }}
+                    className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
+                        <span className="text-6xl md:text-8xl font-bold text-white leading-none">
+                          {project.id}
+                        </span>
+                        <h4 className="text-3xl md:text-5xl font-bold text-white leading-tight max-w-xl">
+                          {project.title}
+                        </h4>
                       </div>
-                      
-                      <div className="max-w-2xl">
-                      <p className="text-base md:text-lg text-[#888] font-light leading-relaxed border-l-2 border-[#D5001C] pl-6 mb-8">
+                    </div>
+                    
+                    <div className="max-w-2xl mt-auto">
+                      <p className="text-lg md:text-xl text-[#aaa] font-medium leading-relaxed mb-8">
                         {project.description}
                       </p>
                       <div className="flex flex-wrap gap-4">
@@ -136,7 +136,7 @@ const Projects = () => {
                         )}
                       </div>
                     </div>
-                    </motion.div>
+                  </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
