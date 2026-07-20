@@ -39,7 +39,16 @@ const CustomCursor = () => {
         ref={tireRef}
         className="absolute inset-0 w-full h-full will-change-transform" 
         viewBox='0 0 32 32'
+        style={{ animation: 'spin-tire 3s linear infinite' }}
       >
+        <style>
+          {`
+            @keyframes spin-tire {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+          `}
+        </style>
         {/* Outer Tire */}
         <circle cx='16' cy='16' r='15' fill='#0a0a0a' stroke='#222' strokeWidth='2'/>
         {/* Rim Outer Edge */}
