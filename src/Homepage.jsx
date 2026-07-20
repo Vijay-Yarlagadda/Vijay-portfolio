@@ -151,12 +151,12 @@ function Homepage() {
       </AnimatePresence>
 
       {/* Background PORSCHE Watermark */}
-      <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none select-none z-0">
+      <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none select-none z-0 mt-12">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 0.03, scale: 1 }}
+          animate={{ opacity: 0.08, scale: 1 }}
           transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-          className="text-[20vw] font-bold text-white whitespace-nowrap"
+          className="text-[18vw] font-bold text-white whitespace-nowrap tracking-widest"
           style={{ fontFamily: "'Syncopate', sans-serif" }}
         >
           PORSCHE

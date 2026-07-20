@@ -26,7 +26,7 @@ const Intro = () => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative w-32 h-32 rounded-full border border-[#D5001C] flex items-center justify-center bg-[#111]"
+            className="relative w-40 h-40 rounded-full border border-[#D5001C] flex flex-col items-center justify-center bg-[#111]"
           >
             <motion.div 
               initial={{ opacity: 0 }}
@@ -34,8 +34,13 @@ const Intro = () => {
               transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut" }}
               className="absolute inset-0 rounded-full bg-[#D5001C] blur-lg"
             />
-            <div className="relative z-10 text-[#D5001C] font-mono text-sm tracking-[0.2em] uppercase font-bold text-center leading-tight">
-              Engine<br/>Start
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Porsche_logo.svg/200px-Porsche_logo.svg.png" 
+              alt="Porsche Logo" 
+              className="relative z-10 w-10 h-14 object-contain mb-2 opacity-90 drop-shadow-lg"
+            />
+            <div className="relative z-10 text-[#D5001C] font-mono text-[10px] tracking-[0.2em] uppercase font-bold text-center leading-tight">
+              Engine Start
             </div>
           </motion.div>
 
