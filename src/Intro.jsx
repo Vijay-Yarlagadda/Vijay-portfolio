@@ -30,9 +30,9 @@ const Intro = () => {
           >
             <motion.div 
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.3, 0.1, 0.3], scale: [1, 1.1, 1] }}
-              transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
-              className="absolute inset-0 rounded-full bg-[#D5001C] blur-xl"
+              animate={{ opacity: [0, 0.2, 0.05, 0.2], scale: [1, 1.1, 1] }}
+              transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0 rounded-full bg-[#D5001C] blur-lg"
             />
             <div className="relative z-10 text-[#D5001C] font-mono text-sm tracking-[0.2em] uppercase font-bold text-center leading-tight">
               Engine<br/>Start
