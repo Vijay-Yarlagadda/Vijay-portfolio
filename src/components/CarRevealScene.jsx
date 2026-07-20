@@ -1,87 +1,120 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Environment, Sparkles } from '@react-three/drei';
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import { Environment, Float, Sparkles } from '@react-three/drei';
+import { EffectComposer, Bloom, DepthOfField, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
-function LightTrails() {
-  const trailCount = 40;
-  
-  // Pre-generate trail data
-  const trails = useMemo(() => {
-    const data = [];
-    for (let i = 0; i < trailCount; i++) {
-      data.push({
-        x: Math.random() * 40 - 20, // Start randomly across the screen
-        y: (Math.random() - 0.5) * 4 + 1, // Vertical spread
-        z: (Math.random() - 0.5) * 6 - 2, // Depth spread
-        speed: Math.random() * 0.4 + 0.1, // High speed
-        length: Math.random() * 4 + 2, // Long streaks
-        thickness: Math.random() * 0.015 + 0.005, // Razor thin
-        color: Math.random() > 0.2 ? '#00e5ff' : '#ffffff', // Mostly ice blue, some white
-        intensity: Math.random() * 3 + 2
-      });
-    }
-    return data;
-  }, []);
+function ParticleWave() {
+  const count = 10000; // High density for a silky look
+  const meshRef = useRef();
 
-  const linesRef = useRef([]);
+  // Generate initial particle positions in a wide grid
+  const { positions, colors } = useMemo(() => {
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+    
+    const colorA = new THREE.Color('#00e5ff'); // Ice Blue
+    const colorB = new THREE.Color('#a07490'); // Deep Purple/Pink
+    const tempColor = new THREE.Color();
 
-  useFrame(() => {
-    linesRef.current.forEach((mesh, i) => {
-      const data = trails[i];
-      // Move left
-      mesh.position.x -= data.speed;
-      
-      // Aerodynamic dip (flyline simulation)
-      // As it passes the center (x=0), it dips and rises slightly
-      const distFromCenter = mesh.position.x;
-      const aerodynamicCurve = Math.sin(distFromCenter * 0.5) * 0.5 * Math.exp(-Math.abs(distFromCenter * 0.2));
-      mesh.position.y = data.y + aerodynamicCurve;
+    let i = 0;
+    for (let x = 0; x < 100; x++) {
+      for (let z = 0; z < 100; z++) {
+        // Center the grid (-50 to 50)
+        const posX = (x - 50) * 0.4;
+        const posZ = (z - 50) * 0.4;
+        
+        positions[i * 3] = posX;
+        positions[i * 3 + 1] = 0; // Y will be animated
+        positions[i * 3 + 2] = posZ;
 
-      // Reset when out of bounds
-      if (mesh.position.x < -20) {
-        mesh.position.x = 20;
+        // Mix colors based on position
+        const mixRatio = (posX + 20) / 40;
+        tempColor.copy(colorA).lerp(colorB, Math.max(0, Math.min(1, mixRatio)));
+        
+        colors[i * 3] = tempColor.r;
+        colors[i * 3 + 1] = tempColor.g;
+        colors[i * 3 + 2] = tempColor.b;
+        
+        i++;
       }
-    });
+    }
+    return { positions, colors };
+  }, [count]);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    const positions = meshRef.current.geometry.attributes.position.array;
+
+    let i = 0;
+    for (let x = 0; x < 100; x++) {
+      for (let z = 0; z < 100; z++) {
+        const posX = (x - 50) * 0.4;
+        const posZ = (z - 50) * 0.4;
+
+        // Complex organic wave math (combining multiple sine waves)
+        const wave1 = Math.sin(posX * 0.2 + time * 0.5) * 1.5;
+        const wave2 = Math.cos(posZ * 0.3 + time * 0.4) * 1.0;
+        const wave3 = Math.sin((posX + posZ) * 0.1 - time * 0.3) * 2.0;
+
+        // Apply a radial falloff so it looks like a concentrated energy field
+        const distance = Math.sqrt(posX * posX + posZ * posZ);
+        const falloff = Math.max(0, 1 - distance / 20);
+
+        positions[i * 3 + 1] = (wave1 + wave2 + wave3) * falloff - 2; // Keep it below text
+        i++;
+      }
+    }
+    meshRef.current.geometry.attributes.position.needsUpdate = true;
+    
+    // Slowly rotate the entire wave
+    meshRef.current.rotation.y = time * 0.05;
   });
 
   return (
-    <group>
-      {trails.map((data, i) => (
-        <mesh 
-          key={i} 
-          ref={el => linesRef.current[i] = el}
-          position={[data.x, data.y, data.z]}
-          rotation={[0, 0, Math.PI / 2]}
-        >
-          <cylinderGeometry args={[data.thickness, data.thickness, data.length, 8]} />
-          <meshBasicMaterial color={data.color} />
-        </mesh>
-      ))}
-    </group>
+    <points ref={meshRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          count={colors.length / 3}
+          array={colors}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.06}
+        vertexColors
+        transparent
+        opacity={0.8}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </points>
   );
 }
 
-function SmoothFlyline() {
-  // A single, elegant, glowing curve that perfectly mimics the 911 roofline (the "Flyline")
-  const flylineGeo = useMemo(() => {
-    const curve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(5, -0.5, -3),    // Front bumper
-      new THREE.Vector3(3, 0.5, -3),     // Hood nose
-      new THREE.Vector3(1, 1.2, -3),     // Windshield base
-      new THREE.Vector3(-0.5, 2.0, -3),  // Roof peak
-      new THREE.Vector3(-3, 1.2, -3),    // Rear slope (fastback)
-      new THREE.Vector3(-5, 0.5, -3),    // Rear deck
-      new THREE.Vector3(-5.5, -0.5, -3)  // Rear bumper
-    ]);
-    return new THREE.TubeGeometry(curve, 128, 0.02, 8, false);
-  }, []);
-
+function GlowingOrbs() {
   return (
-    <mesh geometry={flylineGeo}>
-      <meshBasicMaterial color="#ffffff" transparent opacity={0.15} />
-    </mesh>
+    <group>
+      <Float speed={2} rotationIntensity={1} floatIntensity={2}>
+        <mesh position={[-8, 2, -5]}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshBasicMaterial color="#00e5ff" transparent opacity={0.1} />
+        </mesh>
+      </Float>
+      <Float speed={1.5} rotationIntensity={2} floatIntensity={1.5}>
+        <mesh position={[8, -1, -8]}>
+          <sphereGeometry args={[1.5, 32, 32]} />
+          <meshBasicMaterial color="#a07490" transparent opacity={0.1} />
+        </mesh>
+      </Float>
+    </group>
   );
 }
 
@@ -91,52 +124,43 @@ export default function CarRevealScene({ scrollProgress }) {
   useFrame(() => {
     const progress = scrollProgress.get(); 
     
-    // Subtle camera drift on scroll
-    const targetZ = 8 - progress * 2; 
-    const targetY = 1.0 - progress * 1.0;
+    // Dramatic cinematic camera movement on scroll
+    const targetZ = 12 - progress * 4; 
+    const targetY = 2 + progress * 3;
+    const targetX = progress * 2;
     
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.05);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.05);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.03);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.03);
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, 0.03);
     camera.lookAt(0, 0, 0);
   });
 
   return (
     <>
-      <color attach="background" args={['#020202']} />
+      <color attach="background" args={['#010101']} />
+      <fog attach="fog" args={['#010101', 5, 25]} />
       
-      {/* Ambient lighting */}
-      <ambientLight intensity={0.1} />
-      <directionalLight position={[0, 10, 5]} intensity={0.5} color="#00e5ff" />
-      <Environment preset="night" environmentIntensity={0.2} />
+      <Environment preset="night" environmentIntensity={0.1} />
 
-      {/* Abstract Aerodynamic Elements */}
-      <LightTrails />
-      <SmoothFlyline />
+      {/* The Breathtaking Fluid Particle Wave */}
+      <ParticleWave />
+      
+      {/* Subtle floating background elements */}
+      <GlowingOrbs />
 
-      {/* Highly Reflective Studio Floor */}
-      <mesh position={[0, -2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[100, 100]} />
-        <meshPhysicalMaterial 
-          color="#000000" 
-          metalness={0.9} 
-          roughness={0.1} 
-          clearcoat={1.0}
-          clearcoatRoughness={0.05}
-        />
-      </mesh>
+      {/* Ambient dust */}
+      <Sparkles count={200} scale={25} size={2} speed={0.4} opacity={0.2} color="#ffffff" />
 
-      {/* Particle Dust simulating wind tunnel smoke */}
-      <Sparkles count={100} scale={20} size={1.5} speed={0.8} opacity={0.3} color="#00e5ff" />
-
-      {/* Post Processing for Cinematic Glow */}
+      {/* Cinematic Post Processing */}
       <EffectComposer disableNormalPass>
         <Bloom 
-          luminanceThreshold={0.1} 
+          luminanceThreshold={0.2} 
           mipmapBlur 
-          intensity={2.0} // High bloom for light trails
+          intensity={2.5} 
           radius={0.8}
         />
-        <Vignette eskil={false} offset={0.3} darkness={1.2} />
+        <DepthOfField focusDistance={0.05} focalLength={0.1} bokehScale={3} height={480} />
+        <Vignette eskil={false} offset={0.3} darkness={1.3} />
       </EffectComposer>
     </>
   );
