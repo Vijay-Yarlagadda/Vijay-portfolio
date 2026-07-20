@@ -43,11 +43,12 @@ function Homepage() {
           {/* Left: Logo */}
           <div className="flex-shrink-0 md:pr-6">
             <div 
-              className="text-4xl text-white cursor-pointer hover:text-[#D5001C] transition-colors duration-300" 
+              className="group text-4xl cursor-pointer" 
               style={{ fontFamily: "'Alex Brush', cursive", transform: "translateY(-4px)" }}
               onClick={() => scrollTo('home')}
             >
-              <span className="text-[#D5001C]">V</span>K
+              <span className="text-[#D5001C] group-hover:text-white transition-colors duration-300">V</span>
+              <span className="text-white group-hover:text-[#D5001C] transition-colors duration-300">K</span>
             </div>
           </div>
 
