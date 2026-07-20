@@ -1,97 +1,298 @@
+// Import Sen font from Google Fonts
+if (typeof document !== 'undefined' && !document.getElementById('sen-font')) {
+  const link = document.createElement('link');
+  link.id = 'sen-font';
+  link.rel = 'stylesheet';
+  link.href = 'https://fonts.googleapis.com/css2?family=Sen:wght@400&display=swap';
+  document.head.appendChild(link);
+}
 import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 
-const educationData = [
-  {
-    year: "2023 - 2027",
-    institution: "VISHNU INSTITUTE OF TECHNOLOGY",
-    degree: "B.TECH IN INFORMATION TECHNOLOGY",
-    description: "I’ve built a strong foundation in data structures, algorithms, and software development through consistent learning. With a strong academic record, I’ve maintained a CGPA of 9.2 so far."
-  },
-  {
-    year: "2021 - 2023",
-    institution: "CAREER POINT JR COLLEGE",
-    degree: "INTERMEDIATE (MPC)",
-    description: "Developed a strong foundation in Mathematics, Physics, and Chemistry through consistent academic effort. Maintained an academic score of 956, reflecting both subject mastery and disciplined learning."
-  },
-  {
-    year: "~2021",
-    institution: "BHASHYAM E.M SCHOOL",
-    degree: "SCHOOLING",
-    description: "My school journey was filled with joyful learning, balanced with discipline and dedication. I maintained a 100% academic record and scored a perfect 10/10 GPA."
-  }
-];
+// Import LemonMilk font from local fonts folder
+if (typeof document !== 'undefined' && !document.getElementById('lemonmilk-font')) {
+  const link = document.createElement('link');
+  link.id = 'lemonmilk-font';
+  link.rel = 'stylesheet';
+  link.href = '/fonts/LEMONMILK-Regular.woff2'; // Adjust path if needed
+  document.head.appendChild(link);
+}
+// Import Mera Pro font from local fonts folder
+if (typeof document !== 'undefined' && !document.getElementById('mera-pro-font')) {
+  const link = document.createElement('link');
+  link.id = 'mera-pro-font';
+  link.rel = 'stylesheet';
+  link.href = '/fonts/MeraPro-Regular.woff2'; // Adjust path if needed
+}
 
-export default function Education() {
-  const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+const cardBg = '#14162C';
+const gold = '#FFD700';
+const gray = '#c6c3c3';
+
+import { useEffect, useRef, useState } from "react";
+
+function Education() {
+  const [showHeading, setShowHeading] = useState(false);
+  const [showCards, setShowCards] = useState([false, false, false]);
+  const [stickyMode, setStickyMode] = useState('sticky'); // 'sticky' or 'absolute'
+  const sectionRef = useRef(null);
+  const cardRefs = [useRef(null), useRef(null), useRef(null)];
+  const stickyRef = useRef(null);
+
+  useEffect(() => {
+    function onScroll() {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.7) {
+        setShowHeading(true);
+      }
+      cardRefs.forEach((ref, idx) => {
+        if (!ref.current) return;
+        const cardRect = ref.current.getBoundingClientRect();
+        if (cardRect.top < window.innerHeight * 0.82) {
+          setShowCards(prev => prev[idx] ? prev : prev.map((v, i) => i === idx ? true : v));
+        }
+      });
+      // Sticky/absolute logic for left column
+      if (stickyRef.current && cardRefs[2].current && sectionRef.current) {
+        const stickyBox = stickyRef.current.getBoundingClientRect();
+        const lastCard = cardRefs[2].current.getBoundingClientRect();
+        const sectionRect = sectionRef.current.getBoundingClientRect();
+        // If sticky box would go below last card, pin to bottom of section (absolute)
+        if (stickyBox.top + stickyBox.height > lastCard.bottom) {
+          setStickyMode('absolute');
+        } else {
+          setStickyMode('sticky');
+        }
+      }
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <section id="education" className="relative w-full min-h-screen bg-[#050505] py-24 px-8 overflow-hidden">
-      
-      {/* Background Track Line */}
-      <div className="absolute top-0 left-[20%] md:left-1/2 w-[1px] h-full bg-gradient-to-b from-transparent via-[#333] to-transparent z-0" />
+    <section id="education" ref={sectionRef} className="w-full min-h-screen flex flex-row items-center justify-start px-[5vw] pt-[4vh] pb-[8vh] bg-transparent relative">
+      {/* Sticky Heading+Caption (side-by-side, vertically centered) */}
+      <div
+        ref={stickyRef}
+        style={{
+          position: stickyMode === 'sticky' ? 'sticky' : 'absolute',
+          top: stickyMode === 'sticky' ? '50%' : stickyMode === 'absolute' ? 'auto' : undefined,
+          bottom: stickyMode === 'absolute' ? 0 : undefined,
+          left: stickyMode === 'absolute' ? 0 : undefined,
+          transform: stickyMode === 'sticky' ? 'translateY(-50%)' : 'none',
+          alignSelf: 'flex-start',
+          minWidth: '270px',
+          maxWidth: '340px',
+          marginRight: '4vw',
+          marginLeft: '10vw',
+          zIndex: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.7rem',
+          height: 'fit-content',
+        }}
+      >
+        <h1
+          className="section-heading"
+          style={{
+            fontWeight: 400,
+            fontSize: '2rem',
+            background: 'linear-gradient(to bottom, #FFD700, #F5C542, #7A5B1F)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            color: 'transparent',
+            letterSpacing: '0.01em',
+            marginBottom: '0.1rem',
+            marginTop: '3.4rem',
+            textAlign: 'left',
+            opacity: showHeading ? 1 : 0,
+            transform: showHeading ? 'translateX(0)' : 'translateX(-60px)',
+            transition: 'opacity 0.5s cubic-bezier(0.77,0,0.175,1), transform 0.5s cubic-bezier(0.77,0,0.175,1)'
+          }}
+        >
+          MY EDUCATION
+        </h1>
+        <div style={{
+          color: gray,
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontSize: '0.6rem',
+          marginBottom: '2.1rem',
+          marginLeft: '4px',
+          textAlign: 'left',
+          fontWeight: 400,
+          opacity: showHeading ? 1 : 0,
+          transform: showHeading ? 'translateX(0)' : 'translateX(-60px)',
+          transition: 'opacity 0.5s 0.08s cubic-bezier(0.77,0,0.175,1), transform 0.5s 0.08s cubic-bezier(0.77,0,0.175,1)'
+        }}>
+          A glimpse into my educational path and the places that shaped my learning.
+        </div>
+      </div>
 
-      <div className="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row gap-16 md:gap-0">
-        
-        {/* Left Sticky Header */}
-        <div className="w-full md:w-1/2 md:pr-16 md:sticky md:top-1/3 h-fit z-10">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-8 h-[2px] bg-[#D5001C]" />
-              <p className="text-[#D5001C] font-semibold tracking-[0.2em] uppercase text-xs">03 // Background</p>
-            </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight leading-none mb-6">
-              My <span className="text-transparent stroke-text" style={{ WebkitTextStroke: "1px #555" }}>Track</span><br/> Record
-            </h2>
-            <p className="text-[#888] font-light max-w-sm">
-              A glimpse into my educational path and the places that shaped my learning and performance.
-            </p>
-          </motion.div>
+      {/* Education Cards */}
+      <div className="flex flex-col gap-10 w-[65%] ml-auto mr-0">
+        {/* Card 1 */}
+        <div ref={cardRefs[0]} className="w-full flex flex-col items-center relative overflow-visible group edu-card-glow edu-card-hover" style={{
+          background: cardBg,
+          borderRadius: '22px',
+          padding: '1.7rem 1.7rem 1.3rem 1.7rem',
+          boxShadow: '0 2px 16px 0 rgba(0,0,0,0.13)',
+          textAlign: 'center',
+          border: '2px solid #FB983D',
+          boxSizing: 'border-box',
+          opacity: showCards[0] ? 1 : 0,
+          transform: showCards[0] ? 'translateY(0)' : 'translateY(40px)',
+          transition: 'opacity 0.85s 0.18s cubic-bezier(0.77,0,0.175,1), transform 0.85s 0.18s cubic-bezier(0.77,0,0.175,1)'
+        }}>
+          {/* Animated border object */}
+          <span className="moving-dot" />
+          <style>{`
+            .edu-card-hover {
+              transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1) !important;
+            }
+            .edu-card-hover:hover {
+              transform: scale(1.055) !important;
+              transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1) !important;
+            }
+            .edu-card-glow {
+              box-shadow: 0 0 0 2px #FB983D44, 0 0 12px 2px #FB983D55;
+              position: relative;
+            }
+            .edu-card-glow,
+            .edu-card-glow[style*='border'] {
+              border: 2px solid rgba(251, 152, 61, 0.18) !important;
+            }
+            .moving-dot {
+              position: absolute;
+              width: 24px;
+              height: 1px;
+              border-radius: 6px;
+              background: #FB983D;
+              z-index: 10;
+              box-shadow: 0 0 8px 2px #FB983D99;
+              animation: move-dot 8s linear infinite;
+              /* The following makes the dot move along the border using percentages and border-radius */
+              offset-path: inset(0 round 22px);
+              top: 0;
+              left: 0;
+            }
+            @keyframes move-dot {
+              0%   { offset-distance: 0%; }
+              100% { offset-distance: 100%; }
+            }
+          `}</style>
+          <span style={{ position: 'absolute', top: '1.3rem', right: '1.7rem', color: gray, fontFamily: 'Space Grotesk, sans-serif', fontWeight: 400, fontSize: '0.92rem' }}>2023 - 2027</span>
+          <div style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontWeight: 700,
+            fontSize: '1.35rem',
+            color: '#F5C76A',
+            letterSpacing: '0.01em',
+            marginBottom: '0.18rem',
+            textAlign: 'left',
+            width: '100%'
+          }}>VISHNU INSTITUTE OF TECHNOLOGY</div>
+          <div style={{
+            fontFamily: 'Sen, sans-serif',
+            fontWeight: 400,
+            fontSize: '0.95rem',
+            color: '#FB983D',
+            marginBottom: '0.4rem',
+            letterSpacing: '0.01em',
+            textAlign: 'center',
+            width: '100%'
+          }}>B.TECH IN INFORMATION TECHNOLOGY</div>
+          <div style={{ fontFamily: 'Space Grotesk, sans-serif', color: gray, fontSize: '0.82rem', fontWeight: 400, marginTop: '0.05rem', lineHeight: 1.45, textAlign: 'center' }}>
+            I’ve built a strong foundation in data structures, algorithms, and software development through consistent learning.<br/>
+            With a strong academic record, I’ve maintained a CGPA of 9.2 so far.
+          </div>
         </div>
 
-        {/* Right Timeline Cards */}
-        <div className="w-full md:w-1/2 flex flex-col gap-12 pt-10">
-          {educationData.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 50, rotateX: 10 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: i * 0.15, ease: "easeOut" }}
-              style={{ perspective: '1000px' }}
-              className="relative group"
-            >
-              {/* Node indicator */}
-              <div className="absolute -left-10 md:-left-[calc(100%+3px)] top-8 w-4 h-4 rounded-full border-2 border-[#D5001C] bg-[#0a0a0a] z-10 group-hover:bg-[#D5001C] transition-colors duration-300 shadow-[0_0_10px_rgba(213,0,28,0.5)]" />
-              <div className="absolute -left-10 md:-left-[calc(100%+2px)] top-8 w-6 h-[1px] bg-[#333] z-0" />
-
-              <motion.div 
-                whileHover={{ x: 10, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="glass-panel p-8 md:p-10 rounded-r-2xl rounded-bl-2xl border-l-2 border-l-[#D5001C] bg-gradient-to-br from-[#111] to-[#0a0a0a]"
-              >
-                <div className="text-sm font-mono text-[#D5001C] mb-2">{item.year}</div>
-                <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wider mb-1">
-                  {item.institution}
-                </h3>
-                <h4 className="text-sm text-[#888] font-medium tracking-[0.1em] mb-4 uppercase">
-                  {item.degree}
-                </h4>
-                <p className="text-[#666] font-light text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            </motion.div>
-          ))}
+        {/* Card 2 */}
+        <div ref={cardRefs[1]} className="w-full flex flex-col items-center relative overflow-visible group edu-card-glow edu-card-hover" style={{
+          background: cardBg,
+          borderRadius: '22px',
+          padding: '1.7rem 1.7rem 1.3rem 1.7rem',
+          boxShadow: '0 2px 16px 0 rgba(0,0,0,0.13)',
+          textAlign: 'center',
+          border: '2px solid #FB983D',
+          boxSizing: 'border-box',
+          opacity: showCards[1] ? 1 : 0,
+          transform: showCards[1] ? 'translateY(0)' : 'translateY(40px)',
+          transition: 'opacity 0.85s 0.31s cubic-bezier(0.77,0,0.175,1), transform 0.85s 0.31s cubic-bezier(0.77,0,0.175,1)'
+        }}>
+          <span className="moving-dot" />
+          <span style={{ position: 'absolute', top: '1.3rem', right: '1.7rem', color: gray, fontFamily: 'Space Grotesk, sans-serif', fontWeight: 400, fontSize: '0.92rem' }}>2021 - 2023</span>
+          <div style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontWeight: 700,
+            fontSize: '1.35rem',
+            color: '#F5C76A',
+            letterSpacing: '0.01em',
+            marginBottom: '0.18rem',
+            textAlign: 'left',
+            width: '100%'
+          }}>CAREER POINT JR COLLEGE</div>
+          <div style={{
+            fontFamily: 'Sen, sans-serif',
+            fontWeight: 400,
+            fontSize: '0.95rem',
+            color: '#FB983D',
+            marginBottom: '0.4rem',
+            letterSpacing: '0.01em',
+            textAlign: 'center',
+            width: '100%'
+          }}>INTERMEDIATE (MPC)</div>
+          <div style={{ fontFamily: 'Space Grotesk, sans-serif', color: gray, fontSize: '0.82rem', fontWeight: 400, marginTop: '0.05rem', lineHeight: 1.45, textAlign: 'center' }}>
+            Developed a strong foundation in Mathematics, Physics, and Chemistry through consistent academic effort.<br/>
+            Maintained an academic score of 956, reflecting both subject mastery and disciplined learning.
+          </div>
         </div>
-        
+
+        {/* Card 3 */}
+        <div ref={cardRefs[2]} className="w-full flex flex-col items-center relative overflow-visible group edu-card-glow edu-card-hover" style={{
+          background: cardBg,
+          borderRadius: '22px',
+          padding: '1.7rem 1.7rem 1.3rem 1.7rem',
+          boxShadow: '0 2px 16px 0 rgba(0,0,0,0.13)',
+          textAlign: 'center',
+          border: '2px solid #FB983D',
+          boxSizing: 'border-box',
+          opacity: showCards[2] ? 1 : 0,
+          transform: showCards[2] ? 'translateY(0)' : 'translateY(40px)',
+          transition: 'opacity 0.85s 0.44s cubic-bezier(0.77,0,0.175,1), transform 0.85s 0.44s cubic-bezier(0.77,0,0.175,1)'
+        }}>
+          <span className="moving-dot" />
+          <span style={{ position: 'absolute', top: '1.3rem', right: '1.7rem', color: gray, fontFamily: 'Space Grotesk, sans-serif', fontWeight: 400, fontSize: '0.92rem' }}>~2021</span>
+          <div style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontWeight: 700,
+            fontSize: '1.35rem',
+            color: '#F5C76A',
+            letterSpacing: '0.01em',
+            marginBottom: '0.18rem',
+            textAlign: 'left',
+            width: '100%'
+          }}>BHASHYAM E.M SCHOOL</div>
+          <div style={{
+            fontFamily: 'Sen, sans-serif',
+            fontWeight: 400,
+            fontSize: '0.95rem',
+            color: '#FB983D',
+            marginBottom: '0.4rem',
+            letterSpacing: '0.01em',
+            textAlign: 'center',
+            width: '100%'
+          }}>SCHOOLING</div>
+          <div style={{ fontFamily: 'Space Grotesk, sans-serif', color: gray, fontSize: '0.82rem', fontWeight: 400, marginTop: '0.05rem', lineHeight: 1.45, textAlign: 'center' }}>
+            My school journey was filled with joyful learning, balanced with discipline and dedication.<br/>
+            I maintained a 100% academic record and scored a perfect 10/10 GPA.
+          </div>
+        </div>
       </div>
     </section>
   );
 }
+
+export default Education;

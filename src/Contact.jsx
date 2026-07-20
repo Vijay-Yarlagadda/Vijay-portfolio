@@ -1,129 +1,88 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { Linkedin, Github, Instagram, Mail } from "lucide-react";
+import { Linkedin, Github, Instagram, X } from "lucide-react";
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative w-full min-h-screen bg-[#0a0a0a] flex items-center justify-center py-24 px-8 overflow-hidden">
-      {/* Background accents */}
-      <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-[#D5001C] rounded-full blur-[250px] opacity-[0.05] pointer-events-none" />
-
-      <div className="max-w-7xl w-full flex flex-col md:flex-row gap-16 relative z-10">
-        
-        {/* Left: Contact Info & Form */}
-        <div className="w-full md:w-[60%] flex flex-col justify-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-8 h-[2px] bg-[#D5001C]" />
-              <p className="text-[#D5001C] font-semibold tracking-[0.2em] uppercase text-xs">04 // Connect</p>
-            </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight leading-[1.1] mb-8">
-              Let's build something <br/>
-              <span className="text-transparent stroke-text" style={{ WebkitTextStroke: "1px #555" }}>Extraordinary.</span>
-            </h2>
-          </motion.div>
-
-          <motion.form 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="flex flex-col gap-6 mt-4" 
-            action="https://formspree.io/f/mqalljon" 
-            method="POST"
-          >
+    <section className="w-full min-h-screen flex flex-col items-center justify-center px-[5vw] py-[6vh]" id="contact">
+      <div className="flex flex-col md:flex-row w-full max-w-[1100px] gap-8 md:gap-12 items-stretch">
+        {/* Left: Contact Form */}
+        <div className="flex-1 rounded-3xl border-2 border-[#444] p-8 md:p-12 flex flex-col justify-start shadow-lg min-w-[320px] max-w-[650px] bg-transparent">
+          <h2 className="font-[Space Grotesk,Montserrat,sans-serif] font-extrabold text-[2.6rem] text-white mb-[-0.2rem] leading-[1.1] tracking-[-1px]">
+            Let's create something <br />
+            <span className="text-[#F5C76A] font-[Pacifico,cursive] font-bold text-[2.2rem] inline-block mt-[0.2rem]">extraordinary together.</span>
+          </h2>
+          <form className="flex flex-col gap-5 mt-8" action="https://formspree.io/f/mqalljon" method="POST">
             <input type="hidden" name="_captcha" value="false" />
-            
-            <div className="flex flex-col sm:flex-row gap-6">
-              <div className="relative flex-1 group">
-                <input type="text" name="name" required placeholder="Your Name" className="w-full bg-[#111] rounded-none px-4 py-4 text-white font-mono placeholder-[#666] outline-none border border-[#333] focus:border-[#D5001C] transition-colors peer" />
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D5001C] scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 origin-left" />
-              </div>
-              <div className="relative flex-1 group">
-                <input type="email" name="email" required placeholder="Email Address" className="w-full bg-[#111] rounded-none px-4 py-4 text-white font-mono placeholder-[#666] outline-none border border-[#333] focus:border-[#D5001C] transition-colors peer" />
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#D5001C] scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 origin-left" />
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <input type="text" name="name" required placeholder="Your Name" className="flex-1 bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33]" />
+              <input type="email" name="email" required placeholder="Email Address" className="flex-1 bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33]" />
             </div>
-
-            <div className="relative group">
-              <textarea name="message" required placeholder="Ignition Sequence (Message)" rows={5} className="w-full bg-[#111] rounded-none px-4 py-4 text-white font-mono placeholder-[#666] outline-none border border-[#333] focus:border-[#D5001C] transition-colors resize-none peer" />
-              <div className="absolute bottom-1 left-0 w-full h-[2px] bg-[#D5001C] scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 origin-left" />
-            </div>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            <textarea name="message" required placeholder="Message" rows={6} className="bg-[#14162C] rounded-xl px-5 py-4 text-lg text-[#c6c3c3] font-semibold placeholder-[#aaa] outline-none border border-[1.7px] border-[#FB983D33] resize-none" />
+            <button
               type="submit"
-              className="mt-4 bg-[#D5001C] text-white font-bold tracking-[0.2em] uppercase text-sm py-5 px-8 w-fit hover:bg-white hover:text-[#0a0a0a] transition-colors duration-300 relative overflow-hidden group border border-[#D5001C]"
+              className="bg-[#FB4D19] hover:bg-[#ff6a36] transition-colors text-white font-bold text-lg rounded-xl py-3 shadow-md font-[Space Grotesk,sans-serif] cursor-pointer w-full flex items-center justify-center select-none border-none"
+              style={{ minHeight: '3.2rem', overflow: 'visible', marginTop: '0', boxSizing: 'border-box' }}
             >
-              <span className="relative z-10 flex items-center gap-4">
-                Deploy Message 
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="group-hover:translate-x-2 transition-transform">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </span>
-            </motion.button>
-          </motion.form>
+              Send Message
+            </button>
+          </form>
         </div>
-
-        {/* Right: Socials & Direct Contact */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="w-full md:w-[40%] flex flex-col gap-8"
-        >
-          <div className="glass-panel p-8 md:p-12 border-t-4 border-t-[#D5001C] bg-gradient-to-br from-[#111] to-[#0a0a0a]">
-            <h3 className="font-bold text-xl text-white uppercase tracking-wider mb-8">Telemetry (Socials)</h3>
-            <div className="flex flex-col gap-4">
-              {[
-                { name: 'GitHub', icon: <Github size={20} />, link: 'https://github.com/Vijay-Yarlagadda' },
-                { name: 'LinkedIn', icon: <Linkedin size={20} />, link: 'https://www.linkedin.com/in/yarlagaddavijay' },
-                { name: 'Instagram', icon: <Instagram size={20} />, link: 'https://www.instagram.com/vijay_yarlagadda_?igsh=ejIyaXNmbXlldHhq' },
-                { name: 'X / Twitter', icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4l16 16m0-16L4 20"/></svg>
-                ), link: 'https://x.com/YarlagaddaVija7' }
-              ].map((social) => (
-                <a 
-                  key={social.name}
-                  href={social.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center gap-4 group p-4 border border-[#333] hover:border-[#D5001C] transition-colors bg-[#0a0a0a]"
-                >
-                  <div className="text-[#666] group-hover:text-[#D5001C] transition-colors">
-                    {social.icon}
-                  </div>
-                  <span className="font-mono text-sm text-[#888] group-hover:text-white transition-colors uppercase tracking-widest">
-                    {social.name}
-                  </span>
-                  <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D5001C" strokeWidth="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="glass-panel p-8 border border-[#333] flex flex-col gap-4">
-            <h3 className="font-bold text-sm text-white uppercase tracking-wider">Direct Link</h3>
-            <a href="mailto:yarlagaddavijay859@gmail.com" className="flex items-center gap-4 group cursor-pointer">
-              <Mail className="text-[#D5001C]" size={24} />
-              <span className="font-mono text-sm text-[#888] group-hover:text-white transition-colors">
-                yarlagaddavijay859@gmail.com
+        {/* Right: Socials */}
+        <div className="flex flex-col rounded-xl border-2 border-[#444] p-7 md:p-8 w-full max-w-[340px] shadow-lg justify-start bg-transparent h-fit min-h-0">
+          <h3 className="font-[Space Grotesk,Montserrat,sans-serif] font-bold text-[1.45rem] text-white mb-[1.2rem]">My Socials</h3>
+          <div className="flex flex-col gap-5 w-full">
+            <style>{`
+              .contact-social-icon {
+                transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+                display: inline-flex;
+              }
+              .contact-social-link:hover .contact-social-icon {
+                transform: scale(1.18);
+              }
+            `}</style>
+            <a href="https://github.com/Vijay-Yarlagadda" target="_blank" rel="noopener noreferrer" className="contact-social-link flex items-center gap-4 rounded-xl px-5 py-3 font-semibold text-lg text-[#c6c3c3] border border-[1.7px] border-[#FB983D33]" style={{ background: '#14162C' }}>
+              <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#18191C] contact-social-icon">
+                <Github size={24} />
               </span>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/yarlagaddavijay" target="_blank" rel="noopener noreferrer" className="contact-social-link flex items-center gap-4 rounded-xl px-5 py-3 font-semibold text-lg text-[#c6c3c3] border border-[1.7px] border-[#FB983D33]" style={{ background: '#14162C' }}>
+              <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#18191C] contact-social-icon">
+                <Linkedin size={24} />
+              </span>
+              LinkedIn
+            </a>
+            <a href="https://www.instagram.com/vijay_yarlagadda_?igsh=ejIyaXNmbXlldHhq" target="_blank" rel="noopener noreferrer" className="contact-social-link flex items-center gap-4 rounded-xl px-5 py-3 font-semibold text-lg text-[#c6c3c3] border border-[1.7px] border-[#FB983D33]" style={{ background: '#14162C' }}>
+              <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#18191C] contact-social-icon">
+                <Instagram size={24} />
+              </span>
+              Instagram
+            </a>
+            <a href="https://x.com/YarlagaddaVija7?t=SogLof6sKKsi4cCAqYxJEg&s=09" target="_blank" rel="noopener noreferrer" className="contact-social-link flex items-center gap-4 rounded-xl px-5 py-3 font-semibold text-lg text-[#c6c3c3] border border-[1.7px] border-[#FB983D33]" style={{ background: '#14162C' }}>
+              <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#18191C] contact-social-icon">
+                {/* Twitter SVG icon with #c6c3c3 color */}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c6c3c3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0022.4.36a9.09 9.09 0 01-2.88 1.1A4.52 4.52 0 0016.11 0c-2.5 0-4.52 2.02-4.52 4.52 0 .35.04.7.11 1.03C7.69 5.4 4.07 3.7 1.64 1.15c-.38.65-.6 1.4-.6 2.2 0 1.52.77 2.86 1.94 3.65A4.48 4.48 0 01.96 6v.06c0 2.13 1.52 3.91 3.54 4.31-.37.1-.76.16-1.16.16-.28 0-.55-.03-.81-.08.55 1.72 2.16 2.97 4.07 3A9.05 9.05 0 010 21.54a12.8 12.8 0 006.92 2.03c8.3 0 12.85-6.88 12.85-12.85 0-.2 0-.39-.01-.58A9.22 9.22 0 0023 3z"/></svg>
+              </span>
+                Twitter
             </a>
           </div>
-
-        </motion.div>
-
-      </div> 
+        </div>
+      </div> {/* close socials/form flex row */}
+      {/* Contact Me Directly (top right, above the right socials rectangle) */}
+      <div className="w-full flex flex-row justify-end mt-[-5.5rem]">
+        <div className="flex flex-col items-end mr-[calc((100vw-1100px)/2)]">
+          <div className="font-[Space Grotesk,Montserrat,sans-serif] font-bold text-[1.32rem] text-white text-right mb-[0.7rem]">Contact Me Directly</div>
+          <a
+            href="mailto:yarlagaddavijay859@gmail.com"
+            className="flex items-center bg-[#14162C] border border-[1.7px] border-[#FB983D33] rounded-[12px] py-[0.85rem] px-[1.2rem] gap-[1.1rem] w-fit min-w-[320px] max-w-[480px] mr-[-5rem] no-underline"
+          >
+            <span className="flex items-center justify-center">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FB983D" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="m4 6 8 7 8-7"/></svg>
+            </span>
+            <span className="font-[Space Grotesk,Montserrat,sans-serif] font-bold text-[1.08rem] text-[#c6c3c3] tracking-[0.04em] block text-right">yarlagaddavijay859@gmail.com</span>
+          </a>
+        </div>
+      </div>
     </section>
   );
 }
