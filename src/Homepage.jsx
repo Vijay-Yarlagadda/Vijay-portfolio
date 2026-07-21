@@ -34,27 +34,12 @@ function Homepage() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: showNav ? 1 : 0 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] border border-[#333] backdrop-blur-md overflow-visible ${
+        className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] border border-[#333] backdrop-blur-md overflow-hidden ${
           scrolled 
             ? "top-6 w-[95%] max-w-[1000px] rounded-full py-3 px-6 md:px-8 bg-[#111]/95 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
         }`}
       >
-        {/* User's Exact Beige Porsche 911 GT3 RS with Baked Tyres driving along BOTTOM border track */}
-        <div className="absolute -bottom-[6px] left-0 w-full pointer-events-none z-30 overflow-visible">
-          <motion.div
-            animate={{ x: ["-10%", "105%"] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="relative flex items-center"
-          >
-            {/* Decreased car size for a sleek, elegant look */}
-            <img 
-              src="/porsche_final_complete.png" 
-              alt="Porsche 911 GT3 RS Beige with Fitted Tyres" 
-              className="w-14 sm:w-16 md:w-18 h-auto object-contain block drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]"
-            />
-          </motion.div>
-        </div>
         <div className="flex items-center justify-between w-full">
           {/* Left: Logo */}
           <div className="flex-shrink-0 md:pr-6">
