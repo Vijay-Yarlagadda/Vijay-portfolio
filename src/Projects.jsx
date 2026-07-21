@@ -136,6 +136,8 @@ const Projects = () => {
     return () => window.removeEventListener('scroll', calculateActiveIndex);
   }, [isMobile, calculateActiveIndex]);
 
+  const activeProject = projects.find((project) => project.id === active) || projects[0];
+
   return (
     <section ref={sectionRef} id="projects" className={`relative w-full bg-transparent py-24 px-8 overflow-hidden z-10 ${isMobile ? 'min-h-[380vh]' : 'min-h-screen'}`}>
       <div className="max-w-7xl mx-auto flex flex-col h-full justify-center">
@@ -160,13 +162,13 @@ const Projects = () => {
               <div className="sticky top-24 z-20 h-[calc(100vh-6rem)]">
                 <div className="relative h-full w-full overflow-visible">
                   <div className="relative h-full w-full">
-                    {[...projects.slice(active - 1), ...projects.slice(0, active - 1)].map((project, index) => {
-                      const depth = index;
-                      const offset = depth * 7;
-                      const scale = 1 - depth * 0.04;
-                      const opacity = depth === 0 ? 1 : 0.9 - depth * 0.1;
-                      const titleSize = depth === 0 ? 'text-4xl sm:text-5xl' : 'text-2xl sm:text-3xl';
-                      const isFront = depth === 0;
+                    {projects.map((project, index) => {
+                      const depth = project.id - activeProject.id;
+                      const isFront = project.id === activeProject.id;
+                      const visibleDepth = depth < 0 ? depth + projects.length : depth;
+                      const offset = visibleDepth * 6;
+                      const scale = isFront ? 1 : 1 - visibleDepth * 0.04;
+                      const opacity = isFront ? 1 : 0.88 - visibleDepth * 0.08;
 
                       return (
                         <motion.div
@@ -174,20 +176,20 @@ const Projects = () => {
                           initial={false}
                           animate={{
                             left: `${offset}%`,
-                            top: `${depth * 2.5}%`,
+                            top: `${visibleDepth * 2.2}%`,
                             scale,
                             opacity
                           }}
                           transition={smoothTransition}
-                          className={`absolute top-0 h-[90%] w-[calc(100%-${offset}%)] max-w-[90vw] rounded-[2rem] border border-[#222] bg-[#0c0c0c] ${isFront ? 'shadow-[0_35px_120px_rgba(0,0,0,0.6)]' : 'shadow-[0_18px_50px_rgba(0,0,0,0.35)]'} overflow-hidden cursor-pointer`}
+                          className={`absolute top-0 h-[88%] w-[calc(100%-${offset}%)] max-w-[90vw] rounded-[2rem] border border-[#222] bg-[#0c0c0c] ${isFront ? 'shadow-[0_35px_120px_rgba(0,0,0,0.6)]' : 'shadow-[0_18px_50px_rgba(0,0,0,0.35)]'} overflow-hidden cursor-pointer`}
                           onClick={() => setActive(project.id)}
-                          style={{ zIndex: 50 - depth }}
+                          style={{ zIndex: 50 - visibleDepth }}
                         >
                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(213,0,28,0.18),transparent_60%)] pointer-events-none" />
                           <div className="relative h-full flex flex-col justify-between p-6">
                             <div className="space-y-4">
                               <span className="text-xs uppercase tracking-[0.35em] text-[#777]">Project</span>
-                              <h4 className={`font-bold text-white leading-tight ${titleSize}`}>
+                              <h4 className={`font-bold text-white leading-tight ${isFront ? 'text-4xl sm:text-5xl' : 'text-2xl sm:text-3xl'}`}>
                                 {project.title}
                               </h4>
                               <p className="text-sm text-[#aaa] leading-relaxed">
