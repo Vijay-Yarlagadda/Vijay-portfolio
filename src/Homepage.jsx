@@ -40,24 +40,28 @@ function Homepage() {
             : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
         }`}
       >
-        {/* User's Exact Beige Porsche 911 GT3 RS Body Cutout with Tyres fitted inside wheel arches */}
-        <div className="absolute -bottom-[16px] left-0 w-full pointer-events-none z-30 overflow-visible">
+        {/* User's Exact Beige Porsche 911 GT3 RS Body Cutout with Tyres mathematically locked inside wheel arches */}
+        <div className="absolute -bottom-[8px] left-0 w-full pointer-events-none z-30 overflow-visible">
           <motion.div
-            animate={{ x: ["-15%", "108%"] }}
+            animate={{ x: ["-10%", "105%"] }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             className="relative flex items-center"
           >
-            <div className="relative inline-block w-28 sm:w-32 md:w-36 h-auto">
+            {/* Decreased car size for a sleek, elegant look */}
+            <div className="relative inline-block w-14 sm:w-16 md:w-20 h-auto">
               
               {/* User's Exact Beige Porsche Body Cutout (Facing Right) */}
               <img 
                 src="/porsche_user_body_beige.png" 
                 alt="Porsche 911 GT3 RS Beige Body" 
-                className="w-full h-auto object-contain relative z-10"
+                className="w-full h-auto block relative z-10"
               />
 
-              {/* Front Wheel (Tyre) fitted perfectly INSIDE Front Wheel Arch */}
-              <div className="absolute right-[7%] bottom-[1%] w-[23%] aspect-square z-0 flex items-center justify-center">
+              {/* Rear Wheel (Tyre) locked at center of Rear Wheel Arch (23.0% X, 68.0% Y) */}
+              <div 
+                className="absolute z-0 flex items-center justify-center pointer-events-none"
+                style={{ left: '23.0%', top: '68.0%', width: '13.5%', height: '39%', transform: 'translate(-50%, -50%)' }}
+              >
                 <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.35s' }}>
                   {/* Outer Rubber Tyre */}
                   <circle cx="50" cy="50" r="48" fill="#181818" stroke="#333" strokeWidth="5" />
@@ -71,8 +75,11 @@ function Homepage() {
                 </svg>
               </div>
 
-              {/* Rear Wheel (Tyre) fitted perfectly INSIDE Rear Wheel Arch */}
-              <div className="absolute left-[11%] bottom-[1%] w-[23%] aspect-square z-0 flex items-center justify-center">
+              {/* Front Wheel (Tyre) locked at center of Front Wheel Arch (80.7% X, 68.0% Y) */}
+              <div 
+                className="absolute z-0 flex items-center justify-center pointer-events-none"
+                style={{ left: '80.7%', top: '68.0%', width: '13.5%', height: '39%', transform: 'translate(-50%, -50%)' }}
+              >
                 <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.35s' }}>
                   {/* Outer Rubber Tyre */}
                   <circle cx="50" cy="50" r="48" fill="#181818" stroke="#333" strokeWidth="5" />
