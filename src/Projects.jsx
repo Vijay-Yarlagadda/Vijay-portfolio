@@ -140,77 +140,114 @@ const Projects = () => {
         </motion.div>
 
         <div className="w-full">
-          {/* Mobile View: Vertical Stack ('Down by Down') showing Project Names */}
-          <div className="flex flex-col gap-6 w-full lg:hidden">
-            {projects.map((project) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={smoothTransition}
-                className="w-full rounded-2xl border border-[#2a2a2a] bg-[#0d0d0d] p-5 sm:p-7 flex flex-col gap-5 shadow-[0_15px_40px_rgba(0,0,0,0.6)] relative overflow-hidden group"
-              >
-                <div className="absolute top-0 right-0 w-36 h-36 bg-[#D5001C]/10 rounded-full blur-2xl pointer-events-none" />
-                
-                {/* Mobile Header: Project Number + Project Name */}
-                <div className="flex items-center justify-between border-b border-[#222] pb-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl font-bold font-mono text-[#D5001C]">0{project.id}</span>
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#D5001C]" />
-                    <h4 className="text-2xl font-bold text-white uppercase tracking-tight">
-                      {project.title}
-                    </h4>
+          {/* Mobile View: Interactive Layer Accordion Deck */}
+          <div className="flex flex-col gap-3 w-full lg:hidden">
+            {projects.map((project) => {
+              const isOpen = active === project.id;
+              
+              return (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={smoothTransition}
+                  onClick={() => setActive(project.id)}
+                  className={`w-full rounded-2xl border transition-all duration-500 overflow-hidden cursor-pointer ${
+                    isOpen 
+                      ? "border-[#D5001C] bg-[#0c0c0c] shadow-[0_20px_50px_rgba(213,0,28,0.15)]" 
+                      : "border-[#222] bg-[#111]/80 hover:border-[#444] hover:bg-[#161616]"
+                  }`}
+                >
+                  {/* Layer Header Bar (Always visible with Project Name) */}
+                  <div className="flex items-center justify-between p-4 sm:p-5 select-none">
+                    <div className="flex items-center gap-3">
+                      <span className={`text-lg font-bold font-mono ${isOpen ? "text-[#D5001C]" : "text-[#777]"}`}>
+                        0{project.id}
+                      </span>
+                      <div className={`w-2 h-2 rounded-full ${isOpen ? "bg-[#D5001C] animate-pulse" : "bg-[#333]"}`} />
+                      <h4 className={`text-xl sm:text-2xl font-bold uppercase tracking-tight ${isOpen ? "text-white" : "text-[#ccc]"}`}>
+                        {project.title}
+                      </h4>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full border ${
+                        isOpen ? "border-[#D5001C]/50 text-[#D5001C] bg-[#D5001C]/10" : "border-[#333] text-[#666] bg-[#0a0a0a]"
+                      }`}>
+                        {isOpen ? "Active Layer" : "Tap to Open"}
+                      </span>
+                      <motion.div
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                        className={`text-sm ${isOpen ? "text-[#D5001C]" : "text-[#666]"}`}
+                      >
+                        ▼
+                      </motion.div>
+                    </div>
                   </div>
-                  <span className="text-[10px] font-mono text-[#888] uppercase tracking-widest border border-[#333] px-2.5 py-1 rounded-full bg-[#111]">
-                    GT Spec
-                  </span>
-                </div>
 
-                {/* Description */}
-                <p className="text-sm text-[#bbb] font-light leading-relaxed">
-                  {project.description}
-                </p>
+                  {/* Expanded Layer Content */}
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="px-4 pb-5 sm:px-6 sm:pb-6 pt-1 border-t border-[#222] flex flex-col gap-5"
+                      >
+                        {/* Description */}
+                        <p className="text-sm text-[#bbb] font-light leading-relaxed">
+                          {project.description}
+                        </p>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span key={t} className="px-3 py-1 bg-[#141414] border border-[#282828] text-[#aaa] text-xs font-mono uppercase tracking-wider rounded-md">
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                        {/* Tech Stack Badges */}
+                        <div className="flex flex-wrap gap-2">
+                          {project.tech.map((t) => (
+                            <span key={t} className="px-3 py-1 bg-[#161616] border border-[#2a2a2a] text-[#aaa] text-xs font-mono uppercase tracking-wider rounded-md">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
 
-                {/* Interactive Tilt Mockup */}
-                <div className="w-full my-1 rounded-xl overflow-hidden border border-[#222]">
-                  <TiltMockup project={project} className="w-full max-w-full" />
-                </div>
+                        {/* Interactive Tilt Mockup Frame */}
+                        <div className="w-full my-1 rounded-xl overflow-hidden border border-[#222]">
+                          <TiltMockup project={project} className="w-full max-w-full" />
+                        </div>
 
-                {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-3 pt-1">
-                  {project.website && (
-                    <a
-                      href={project.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center py-3 px-4 bg-[#D5001C] text-white font-bold uppercase tracking-wider text-xs rounded-lg hover:bg-white hover:text-black transition-colors text-center"
-                    >
-                      Live Demo
-                    </a>
-                  )}
-                  {project.repo && (
-                    <a
-                      href={project.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center py-3 px-4 bg-[#181818] border border-[#333] text-white font-bold uppercase tracking-wider text-xs rounded-lg hover:border-white transition-colors text-center"
-                    >
-                      GitHub
-                    </a>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                        {/* Action Buttons */}
+                        <div className="grid grid-cols-2 gap-3 pt-1">
+                          {project.website && (
+                            <a
+                              href={project.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center py-3 px-4 bg-[#D5001C] text-white font-bold uppercase tracking-wider text-xs rounded-lg hover:bg-white hover:text-black transition-colors text-center"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Live Demo
+                            </a>
+                          )}
+                          {project.repo && (
+                            <a
+                              href={project.repo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center py-3 px-4 bg-[#181818] border border-[#333] text-white font-bold uppercase tracking-wider text-xs rounded-lg hover:border-white transition-colors text-center"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              GitHub
+                            </a>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Desktop View: Side by Side Accordion Cards */}

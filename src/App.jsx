@@ -13,6 +13,7 @@ import Contact from './Contact.jsx';
 import Footer from './Footer.jsx';
 import CarRevealScene from './components/CarRevealScene.jsx';
 import CustomCursor from './CustomCursor.jsx';
+import SpidermanWidget from './components/SpidermanWidget.jsx';
 
 function App() {
   const { scrollYProgress } = useScroll();
@@ -20,6 +21,7 @@ function App() {
   return (
     <ReactLenis root>
       <CustomCursor />
+      <SpidermanWidget />
       <div className="relative w-full min-h-screen bg-[#010101]">
         
         {/* Global 3D Background - Fixed behind everything */}
