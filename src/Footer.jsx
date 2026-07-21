@@ -9,11 +9,11 @@ const Footer = () => {
       
       {/* Spider-Man holding Gwen Stacy Hanging Easter Egg (Exact Uploaded Artwork) */}
       <motion.div 
-        initial={{ y: -30, opacity: 0 }}
+        initial={{ y: -10, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="absolute top-0 right-4 md:right-16 z-20 origin-top pointer-events-auto cursor-pointer group"
+        className="absolute top-12 right-6 md:right-28 z-20 origin-top pointer-events-auto cursor-pointer group"
         title="The Amazing Spider-Man: Catching Gwen"
       >
         {/* Smooth Pendulum Sway */}
@@ -22,11 +22,11 @@ const Footer = () => {
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           className="origin-top flex flex-col items-center"
         >
-          {/* Top Web Thread connecting to ceiling */}
-          <div className="w-[1.5px] h-6 bg-gradient-to-b from-white via-white/50 to-transparent mx-auto" />
+          {/* Top Web Thread */}
+          <div className="w-[1.5px] h-8 bg-gradient-to-b from-[#D5001C] via-white/50 to-white/90 mx-auto" />
 
           {/* Sleek Framed Card displaying exact user artwork */}
-          <div className="relative w-28 md:w-36 rounded-xl border border-[#333] bg-[#0c0c0c]/90 p-2 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.8)] group-hover:border-[#D5001C] transition-colors overflow-hidden">
+          <div className="relative w-24 md:w-32 rounded-xl border border-[#333] bg-[#0c0c0c]/90 p-2 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.8)] group-hover:border-[#D5001C] transition-colors overflow-hidden">
             <img 
               src="/spidey_gwen.png" 
               alt="Spider-Man Catching Gwen Stacy Artwork" 
@@ -35,7 +35,7 @@ const Footer = () => {
           </div>
 
           {/* Interactive Tag */}
-          <span className="mt-2 bg-[#D5001C] text-white text-[8px] font-mono tracking-widest px-2.5 py-0.5 rounded-full uppercase shadow-md group-hover:bg-white group-hover:text-black transition-colors">
+          <span className="mt-1.5 bg-[#D5001C] text-white text-[8px] font-mono tracking-widest px-2 py-0.5 rounded-full uppercase shadow-md group-hover:bg-white group-hover:text-black transition-colors">
             Spidey & Gwen Artwork
           </span>
         </motion.div>
@@ -58,20 +58,6 @@ const Footer = () => {
           <p className="text-[#666] font-mono text-xs uppercase tracking-widest">
             Performance & Precision Engineering
           </p>
-        </div>
-
-        <div className="flex items-center gap-6">
-          <motion.a 
-            whileHover={{ y: -2 }}
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="text-[#888] hover:text-white font-mono text-sm tracking-widest uppercase transition-colors"
-          >
-            Back to Top
-          </motion.a>
         </div>
 
       </div>
