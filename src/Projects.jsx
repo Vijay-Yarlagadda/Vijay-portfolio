@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const projects = [
@@ -111,6 +111,16 @@ const Projects = () => {
   const [active, setActive] = useState(1);
   const [hovered, setHovered] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const sectionRef = useRef(null);
+
+  const calculateActiveIndex = useCallback(() => {
+    if (!sectionRef.current || !isMobile) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const scrollable = Math.max(rect.height - window.innerHeight, 1);
+    const progress = Math.min(Math.max(-rect.top / scrollable, 0), 1);
+    const nextIndex = Math.min(projects.length, Math.max(1, Math.floor(progress * projects.length) + 1));
+    setActive(nextIndex);
+  }, [isMobile]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -119,8 +129,15 @@ const Projects = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (!isMobile) return;
+    calculateActiveIndex();
+    window.addEventListener('scroll', calculateActiveIndex, { passive: true });
+    return () => window.removeEventListener('scroll', calculateActiveIndex);
+  }, [isMobile, calculateActiveIndex]);
+
   return (
-    <section id="projects" className="relative w-full min-h-screen bg-transparent py-24 px-8 overflow-hidden z-10">
+    <section ref={sectionRef} id="projects" className={`relative w-full bg-transparent py-24 px-8 overflow-hidden z-10 ${isMobile ? 'min-h-[380vh]' : 'min-h-screen'}`}>
       <div className="max-w-7xl mx-auto flex flex-col h-full justify-center">
         
         <motion.div 
@@ -139,60 +156,66 @@ const Projects = () => {
 
         <div className="w-full">
           {isMobile ? (
-            <div className="relative flex gap-3 overflow-hidden w-full h-[620px] sm:h-[560px]">
-              {projects.map((project) => {
-                const isActive = active === project.id;
-                const isHovered = hovered === project.id;
-                return (
-                  <motion.div
-                    key={project.id}
-                    initial={false}
-                    animate={{ flex: isActive ? 4 : 1 }}
-                    transition={smoothTransition}
-                    onMouseEnter={() => setHovered(project.id)}
-                    onMouseLeave={() => setHovered(null)}
-                    onClick={() => setActive(project.id)}
-                    className={`group relative min-w-[120px] overflow-hidden rounded-[2rem] border border-[#222] bg-[#080808]/95 shadow-[0_30px_80px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer ${isActive ? 'bg-[#0f0f0f]' : 'bg-[#090909]/90'}`}
-                  >
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(213,0,28,0.18),transparent_60%)] opacity-90 pointer-events-none" />
-                    <div className="relative h-full flex flex-col justify-between p-5 sm:p-6">
-                      <div className="space-y-3 z-10">
-                        <span className="text-xs uppercase tracking-[0.35em] text-[#777]">Project</span>
-                        <h4 className={`font-bold text-white leading-tight transition-all duration-300 ${isActive ? 'text-3xl sm:text-4xl' : 'text-xl sm:text-2xl'}`}>
-                          {project.title}
-                        </h4>
-                        {!isActive ? (
-                          <p className="text-sm text-[#aaa] leading-relaxed">{project.tech.join(' · ')}</p>
-                        ) : (
-                          <p className="text-sm text-[#ccc] leading-relaxed">{project.description}</p>
-                        )}
-                      </div>
+            <div className="relative w-full h-screen overflow-hidden">
+              <div className="sticky top-24 z-20 h-[calc(100vh-6rem)]">
+                <div className="relative flex gap-3 h-full overflow-hidden">
+                  {projects.map((project) => {
+                    const isActive = active === project.id;
+                    return (
+                      <motion.div
+                        key={project.id}
+                        initial={false}
+                        animate={{ flex: isActive ? 4 : 1 }}
+                        transition={smoothTransition}
+                        onClick={() => setActive(project.id)}
+                        className={`group relative min-w-[150px] sm:min-w-[180px] overflow-hidden rounded-[2rem] border border-[#222] transition-all duration-500 cursor-pointer ${isActive ? 'bg-[#0f0f0f] shadow-[0_35px_90px_rgba(0,0,0,0.55)]' : 'bg-[#090909]/95 shadow-[0_22px_55px_rgba(0,0,0,0.35)]'}`}
+                      >
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(213,0,28,0.16),transparent_60%)] opacity-90 pointer-events-none" />
+                        <div className="relative h-full flex flex-col justify-between p-5 sm:p-6">
+                          <div className="space-y-4 z-10">
+                            <span className="text-xs uppercase tracking-[0.35em] text-[#777]">Project</span>
+                            <h4 className={`font-bold text-white leading-tight transition-all duration-300 ${isActive ? 'text-3xl sm:text-4xl' : 'text-xl sm:text-2xl'}`}>
+                              {project.title}
+                            </h4>
+                            <p className="text-sm text-[#aaa] leading-relaxed">
+                              {project.tech.join(' · ')}
+                            </p>
+                          </div>
 
-                      {isActive ? (
-                        <div className="grid gap-3">
-                          {project.website && (
-                            <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[#D5001C] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#ff2a2a] focus:outline-none focus:ring-2 focus:ring-[#D5001C]/50">
-                              Live Demo
-                            </a>
+                          {isActive ? (
+                            <div className="space-y-4 z-10">
+                              <div className="rounded-[1.75rem] border border-[#222] bg-[#111]/80 p-4 shadow-[inset_0_0_18px_rgba(0,0,0,0.35)]">
+                                <TiltMockup project={project} className="w-full" />
+                              </div>
+                              <p className="text-sm text-[#ccc] leading-relaxed">{project.description}</p>
+                              <div className="grid gap-3">
+                                {project.website && (
+                                  <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[#D5001C] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#ff2a2a] focus:outline-none focus:ring-2 focus:ring-[#D5001C]/50">
+                                    Live Demo
+                                  </a>
+                                )}
+                                {project.repo && (
+                                  <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full border border-[#444] bg-[#111] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#D5001C]/30">
+                                    GitHub
+                                  </a>
+                                )}
+                                <button className="inline-flex w-full items-center justify-center rounded-full border border-[#333] bg-transparent px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-[#ccc] transition hover:border-[#D5001C] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D5001C]/20">
+                                  Case Study
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="mt-4 rounded-[1.5rem] border border-[#222] bg-[#101010]/50 p-4 text-sm text-[#bbb]">
+                              Tap to open
+                            </div>
                           )}
-                          {project.repo && (
-                            <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full border border-[#444] bg-[#111] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#D5001C]/30">
-                              GitHub
-                            </a>
-                          )}
-                          <button className="inline-flex w-full items-center justify-center rounded-full border border-[#333] bg-transparent px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-[#ccc] transition hover:border-[#D5001C] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D5001C]/20">
-                            Case Study
-                          </button>
                         </div>
-                      ) : (
-                        <div className="mt-4 rounded-[1.5rem] border border-[#222] bg-[#101010]/50 p-4 text-sm text-[#bbb]">
-                          Tap to reveal project details
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                );
-              })}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="h-[320vh]" />
             </div>
           ) : (
             <div className={`flex flex-col lg:flex-row gap-4 w-full h-[650px]`}>
