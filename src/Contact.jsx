@@ -3,27 +3,45 @@ import { motion } from "framer-motion";
 import { Linkedin, Github, Instagram, Mail } from "lucide-react";
 
 export default function Contact() {
+  const [message, setMessage] = React.useState("");
+  const [webShot, setWebShot] = React.useState(false);
+  const messageInputRef = React.useRef(null);
+
+  const handleSpideyClick = () => {
+    setWebShot(true);
+    setMessage("Hey Vijay! I just explored your projects. Let's collaborate on building a high-performance web project together!");
+    
+    if (messageInputRef.current) {
+      messageInputRef.current.focus();
+    }
+
+    setTimeout(() => {
+      setWebShot(false);
+    }, 1200);
+  };
+
   return (
     <section id="contact" className="relative w-full bg-transparent flex flex-col items-center justify-center py-12 md:py-16 px-8 overflow-hidden">
-      {/* Spider-Man Easter Egg */}
+      {/* Spider-Man Interactive Web Auto-Filler */}
       <motion.div 
         initial={{ y: -80, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="absolute top-0 right-8 md:right-16 z-20 pointer-events-auto cursor-pointer group"
-        title="Your Friendly Neighborhood Developer"
+        onClick={handleSpideyClick}
+        className="absolute top-0 right-8 md:right-16 z-20 pointer-events-auto cursor-pointer group flex flex-col items-center"
+        title="Tap Spidey to Auto-fill Message!"
       >
         {/* Web String */}
         <div className="w-[1.5px] h-20 md:h-28 bg-gradient-to-b from-white/90 via-white/40 to-white/80 mx-auto" />
         
         {/* Spidey hanging upside down */}
         <motion.div 
-          animate={{ rotate: [-4, 4, -4] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          animate={webShot ? { scale: [1, 1.4, 1], rotate: [0, -15, 15, 0] } : { rotate: [-4, 4, -4] }}
+          transition={{ duration: webShot ? 0.6 : 4, repeat: webShot ? 0 : Infinity, ease: "easeInOut" }}
           className="relative -mt-1 transform origin-top transition-transform duration-300 group-hover:scale-125"
         >
-          <svg width="40" height="52" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="44" height="56" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20 6C12 6 6 12 6 22C6 32 12 40 20 40C28 40 34 32 34 22C34 12 28 6 20 6Z" fill="#D5001C" stroke="#0a0a0a" strokeWidth="2"/>
             <path d="M10 22C10 30 14 36 20 36C26 36 30 30 30 22" fill="#0055FF" opacity="0.85"/>
             <path d="M20 6V40M6 22H34M9 14L31 30M9 30L31 14" stroke="#111" strokeWidth="1" opacity="0.6"/>
@@ -31,8 +49,14 @@ export default function Contact() {
             <path d="M28 20C30 14 25 10 22 16C24 20 26 21 28 20Z" fill="white" stroke="#0a0a0a" strokeWidth="2"/>
             <ellipse cx="20" cy="26" rx="2.5" ry="3.5" fill="#0a0a0a"/>
           </svg>
+
+          {/* Interactive Tag */}
+          <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#D5001C] text-white text-[9px] font-mono tracking-widest px-2 py-0.5 rounded-full uppercase shadow-lg group-hover:bg-white group-hover:text-black transition-colors">
+            Tap Spidey
+          </span>
         </motion.div>
       </motion.div>
+
       {/* Background accents */}
       <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-[#D5001C] rounded-full blur-[250px] opacity-[0.05] pointer-events-none" />
 
@@ -79,7 +103,16 @@ export default function Contact() {
             </div>
 
             <div className="relative group">
-              <textarea name="message" required placeholder="Ignition Sequence (Message)" rows={5} className="w-full bg-[#111] rounded-none px-4 py-4 text-white font-mono placeholder-[#666] outline-none border border-[#333] focus:border-[#D5001C] transition-colors resize-none peer" />
+              <textarea 
+                ref={messageInputRef}
+                name="message" 
+                required 
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Ignition Sequence (Message)" 
+                rows={5} 
+                className="w-full bg-[#111] rounded-none px-4 py-4 text-white font-mono placeholder-[#666] outline-none border border-[#333] focus:border-[#D5001C] transition-colors resize-none peer" 
+              />
               <div className="absolute bottom-1 left-0 w-full h-[2px] bg-[#D5001C] scale-x-0 peer-focus:scale-x-100 transition-transform duration-300 origin-left" />
             </div>
 
