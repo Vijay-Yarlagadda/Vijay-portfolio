@@ -47,20 +47,77 @@ function Homepage() {
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             className="relative flex items-center"
           >
-            <div className="relative flex items-center">
+            {/* High-Precision Colored White Porsche 911 GT3 RS Vector Artwork */}
+            <svg viewBox="0 0 160 55" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-16 sm:w-20 h-auto drop-shadow-[0_4px_12px_rgba(255,255,255,0.7)]">
               {/* Red Taillight Speed Trail */}
-              <div className="w-8 h-[2px] bg-gradient-to-r from-transparent to-[#D5001C] mr-0.5 shadow-[0_0_10px_#D5001C]" />
+              <path d="M0 34 H25" stroke="#D5001C" strokeWidth="3.5" strokeLinecap="round" opacity="0.9" />
+              <path d="M5 32 H20" stroke="#FF334B" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
 
-              {/* Exact White Porsche GT3 RS (Matching User Photo) */}
-              <img 
-                src="/porsche_gt3rs_nav.png" 
-                alt="White Porsche 911 GT3 RS" 
-                className="w-16 sm:w-20 h-auto object-contain drop-shadow-[0_4px_12px_rgba(255,255,255,0.6)]" 
-              />
+              {/* Front Headlight Beam */}
+              <path d="M142 36 L160 25 L160 45 Z" fill="url(#gt3rsHeadlight)" opacity="0.8" />
 
-              {/* Front Headlight Beam Glow */}
-              <div className="w-8 h-4 bg-gradient-to-r from-white/90 via-white/40 to-transparent -ml-2" />
-            </div>
+              {/* Porsche GT3 RS Main Body Shell (White) */}
+              <path d="M22 36 C24 30, 32 26, 48 20 C65 14, 85 14, 108 24 C122 26, 138 28, 145 34 C148 37, 142 41, 130 42 C110 43, 40 43, 20 42 C16 41, 16 38, 22 36 Z" fill="#FFFFFF" stroke="#000000" strokeWidth="1.5" />
+
+              {/* Black Aero Roof & Pillars */}
+              <path d="M50 20 C62 14, 82 14, 98 22 L105 27 H45 Z" fill="#151515" />
+              {/* Glass Windows */}
+              <path d="M53 21 C64 16, 80 16, 94 23 L100 27 H50 Z" fill="#2c2c2c" stroke="#555555" strokeWidth="0.8" />
+
+              {/* GT3 RS Fender Outlets & Intakes */}
+              <path d="M38 28 C42 26, 44 30, 42 34" stroke="#151515" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M96 28 C100 28, 102 34, 100 38" stroke="#151515" strokeWidth="3" strokeLinecap="round" />
+
+              {/* GT3 RS Black Side Decal Stripe */}
+              <path d="M48 37 H116" stroke="#151515" strokeWidth="4" />
+              <text x="82" y="39" font-family="'Arial Black', sans-serif" font-size="3.5" font-weight="900" fill="#FFFFFF" letter-spacing="0.5">GT3 RS</text>
+
+              {/* Front & Rear Black Aero Bumpers */}
+              <path d="M18 38 L25 43 H38" stroke="#151515" strokeWidth="3" strokeLinecap="round" />
+              <path d="M130 43 H146 L148 37" stroke="#151515" strokeWidth="3" strokeLinecap="round" />
+
+              {/* Swan-Neck GT3 RS Rear Wing */}
+              <path d="M22 28 L16 16 M28 28 L22 16" stroke="#151515" strokeWidth="2.5" />
+              <path d="M10 16 H32 C34 16, 34 13, 32 13 H8 C6 13, 6 16, 10 16 Z" fill="#181818" stroke="#000000" strokeWidth="1" />
+              <path d="M6 11 V18 H10 V11 Z" fill="#D5001C" />
+
+              {/* Headlight LED */}
+              <ellipse cx="140" cy="34" rx="2.5" ry="1.5" fill="#00F0FF" />
+              <ellipse cx="140" cy="34" rx="1.5" ry="1" fill="#FFFFFF" />
+
+              {/* Taillight LED Strip */}
+              <path d="M20 34 H25" stroke="#D5001C" strokeWidth="3" strokeLinecap="round" />
+
+              {/* REAR WHEEL (With Red Caliper & Silver Rim) */}
+              <g>
+                <circle cx="38" cy="41" r="9" fill="#0c0c0c" stroke="#333333" strokeWidth="1.5" />
+                <path d="M33 36 C35 34, 41 34, 43 36" stroke="#D5001C" strokeWidth="3.5" strokeLinecap="round" />
+                <g className="animate-spin" style={{ transformOrigin: '38px 41px', animationDuration: '0.4s' }}>
+                  <circle cx="38" cy="41" r="7.5" fill="none" stroke="#E0E0E0" strokeWidth="1.5" />
+                  <path d="M38 33.5 V48.5 M30.5 41 H45.5 M32.7 35.7 L43.3 46.3 M32.7 46.3 L43.3 35.7" stroke="#CCCCCC" strokeWidth="1" />
+                  <circle cx="38" cy="41" r="2.5" fill="#151515" stroke="#D5001C" strokeWidth="0.8" />
+                </g>
+              </g>
+
+              {/* FRONT WHEEL (With Red Caliper & Silver Rim) */}
+              <g>
+                <circle cx="120" cy="41" r="9" fill="#0c0c0c" stroke="#333333" strokeWidth="1.5" />
+                <path d="M115 36 C117 34, 123 34, 125 36" stroke="#D5001C" strokeWidth="3.5" strokeLinecap="round" />
+                <g className="animate-spin" style={{ transformOrigin: '120px 41px', animationDuration: '0.4s' }}>
+                  <circle cx="120" cy="41" r="7.5" fill="none" stroke="#E0E0E0" strokeWidth="1.5" />
+                  <path d="M120 33.5 V48.5 M112.5 41 H127.5 M114.7 35.7 L125.3 46.3 M114.7 46.3 L125.3 35.7" stroke="#CCCCCC" strokeWidth="1" />
+                  <circle cx="120" cy="41" r="2.5" fill="#151515" stroke="#D5001C" strokeWidth="0.8" />
+                </g>
+              </g>
+
+              <defs>
+                <linearGradient id="gt3rsHeadlight" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+                  <stop offset="60%" stop-color="#00ffff" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
           </motion.div>
         </div>
         <div className="flex items-center justify-between w-full">
