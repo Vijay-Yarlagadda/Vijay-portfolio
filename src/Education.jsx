@@ -27,7 +27,7 @@ export default function Education() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   return (
-    <section id="education" className="relative w-full min-h-screen bg-transparent py-24 px-8 overflow-hidden">
+    <section id="education" className="relative w-full bg-transparent py-12 md:py-16 px-8 overflow-hidden">
       
       {/* Background Track Line */}
       <div className="absolute top-0 left-[20%] md:left-1/2 w-[1px] h-full bg-gradient-to-b from-transparent via-[#333] to-transparent z-0" />

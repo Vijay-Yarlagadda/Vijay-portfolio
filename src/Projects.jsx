@@ -122,217 +122,194 @@ const Projects = () => {
   const activeProject = projects.find((project) => project.id === active) || projects[0];
 
   return (
-    <section id="projects" className="relative w-full bg-transparent py-24 px-8 overflow-hidden z-10 min-h-screen">
-      <div className="max-w-7xl mx-auto flex flex-col h-full justify-center">
+    <section id="projects" className="relative w-full bg-transparent py-12 md:py-16 px-4 md:px-8 overflow-hidden z-10">
+      <div className="max-w-7xl mx-auto flex flex-col justify-center">
         
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={smoothTransition}
-          className="mb-12"
+          className="mb-8 md:mb-12"
         >
-          <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-4 mb-3">
             <div className="w-12 h-[2px] bg-[#D5001C]" />
-            <h2 className="text-[#D5001C] font-semibold tracking-[0.3em] uppercase text-sm">Case Studies</h2>
+            <h2 className="text-[#D5001C] font-semibold tracking-[0.3em] uppercase text-xs md:text-sm">Case Studies</h2>
           </div>
-          <h3 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tighter">Featured Projects</h3>
+          <h3 className="text-3xl md:text-6xl font-bold text-white uppercase tracking-tighter">Featured Projects</h3>
         </motion.div>
 
         <div className="w-full">
-          {isMobile ? (
-            <div className="relative w-full overflow-visible pb-12">
-              <div className="relative mx-auto max-w-[90vw] h-[calc(100vh-12rem)]">
-                {projects.map((project, index) => {
-                  const stackOrder = [...projects.filter((p) => p.id !== active), projects.find((p) => p.id === active)];
-                  return null;
-                })}
-                {projects
-                  .slice()
-                  .sort((a, b) => {
-                    if (a.id === active) return -1;
-                    if (b.id === active) return 1;
-                    return a.id - b.id;
-                  })
-                  .map((project, index) => {
-                    const isFront = project.id === active;
-                    const positionIndex = isFront ? 0 : index;
-                    const offsetY = positionIndex * 14;
-                    const offsetX = positionIndex * 8;
-                    const scale = Math.max(0.88, 1 - positionIndex * 0.03);
-                    const opacity = isFront ? 1 : 0.88 - positionIndex * 0.06;
-
-                    return (
-                      <motion.div
-                        key={project.id}
-                        initial={false}
-                        animate={{
-                          top: `${offsetY}px`,
-                          left: `${offsetX}px`,
-                          scale,
-                          opacity
-                        }}
-                        transition={smoothTransition}
-                        className={`absolute w-[100%] rounded-[2rem] border border-[#222] bg-[#0c0c0c] ${isFront ? 'shadow-[0_35px_120px_rgba(0,0,0,0.6)]' : 'shadow-[0_18px_50px_rgba(0,0,0,0.35)]'} overflow-hidden cursor-pointer`}
-                        onClick={() => setActive(project.id)}
-                        style={{ zIndex: isFront ? 50 : 40 - positionIndex }}
-                      >
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(213,0,28,0.16),transparent_60%)] pointer-events-none" />
-                        <div className="relative h-full min-h-[360px] flex flex-col justify-between p-6">
-                          <div className="space-y-4">
-                            <span className="text-xs uppercase tracking-[0.35em] text-[#777]">Project</span>
-                            <h4 className={`font-bold text-white leading-tight ${isFront ? 'text-4xl sm:text-5xl' : 'text-2xl sm:text-3xl'}`}>
-                              {project.title}
-                            </h4>
-                            <p className="text-sm text-[#aaa] leading-relaxed line-clamp-2">
-                              {project.tech.join(' · ')}
-                            </p>
-                          </div>
-
-                          {isFront ? (
-                            <div className="space-y-5">
-                              <div className="rounded-[1.75rem] border border-[#222] bg-[#111]/80 p-4 shadow-[inset_0_0_22px_rgba(0,0,0,0.3)]">
-                                <TiltMockup project={project} className="w-full" />
-                              </div>
-                              <p className="text-sm text-[#ccc] leading-relaxed">{project.description}</p>
-                              <div className="grid gap-3">
-                                {project.website && (
-                                  <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[#D5001C] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#ff2a2a] focus:outline-none focus:ring-2 focus:ring-[#D5001C]/50">
-                                    Live Demo
-                                  </a>
-                                )}
-                                {project.repo && (
-                                  <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full border border-[#444] bg-[#111] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#D5001C]/30">
-                                    GitHub
-                                  </a>
-                                )}
-                                <button className="inline-flex w-full items-center justify-center rounded-full border border-[#333] bg-transparent px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-[#ccc] transition hover:border-[#D5001C] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D5001C]/20">
-                                  Case Study
-                                </button>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="mt-4 rounded-[1.5rem] border border-[#222] bg-[#101010]/50 p-4 text-sm text-[#bbb]">
-                              Tap to bring forward
-                            </div>
-                          )}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-              </div>
-              <div className="mt-40">
-                <div className="flex flex-wrap justify-center gap-3">
-                  {projects.map((project) => (
-                    <button
-                      key={`tab-${project.id}`}
-                      onClick={() => setActive(project.id)}
-                      className={`rounded-full border px-3 py-2 text-xs uppercase tracking-[0.2em] transition ${project.id === active ? 'border-[#D5001C] bg-[#D5001C]/10 text-white' : 'border-[#333] bg-[#111] text-[#aaa]'}`}
-                    >
+          {/* Mobile View: Vertical Stack ('Down by Down') showing Project Names */}
+          <div className="flex flex-col gap-6 w-full lg:hidden">
+            {projects.map((project) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={smoothTransition}
+                className="w-full rounded-2xl border border-[#2a2a2a] bg-[#0d0d0d] p-5 sm:p-7 flex flex-col gap-5 shadow-[0_15px_40px_rgba(0,0,0,0.6)] relative overflow-hidden group"
+              >
+                <div className="absolute top-0 right-0 w-36 h-36 bg-[#D5001C]/10 rounded-full blur-2xl pointer-events-none" />
+                
+                {/* Mobile Header: Project Number + Project Name */}
+                <div className="flex items-center justify-between border-b border-[#222] pb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl font-bold font-mono text-[#D5001C]">0{project.id}</span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#D5001C]" />
+                    <h4 className="text-2xl font-bold text-white uppercase tracking-tight">
                       {project.title}
-                    </button>
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-mono text-[#888] uppercase tracking-widest border border-[#333] px-2.5 py-1 rounded-full bg-[#111]">
+                    GT Spec
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="text-sm text-[#bbb] font-light leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((t) => (
+                    <span key={t} className="px-3 py-1 bg-[#141414] border border-[#282828] text-[#aaa] text-xs font-mono uppercase tracking-wider rounded-md">
+                      {t}
+                    </span>
                   ))}
                 </div>
-              </div>
-            </div>
-          ) : (
-            <div className={`flex flex-col lg:flex-row gap-4 w-full h-[650px]`}>
-              {projects.map((project) => {
-                const isActive = active === project.id;
-                const isHovered = hovered === project.id;
-                
-                return (
-                  <motion.div
-                    key={project.id}
-                    initial={false}
-                    animate={{ flex: isActive ? 7 : (isHovered ? 1.5 : 1) }}
-                    transition={smoothTransition}
-                    onMouseEnter={() => setHovered(project.id)}
-                    onMouseLeave={() => setHovered(null)}
-                    onClick={() => setActive(project.id)}
-                    className={`relative rounded-[2rem] overflow-hidden transition-colors duration-500 border border-[#333] ${
-                      isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
-                    } cursor-pointer`}
-                  >
-                    <AnimatePresence>
-                      {!isActive ? (
-                        <motion.div 
-                          key="inactive"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.4 }}
-                          className="absolute top-8 right-0 bottom-0 flex items-start pointer-events-none"
-                        >
-                          <motion.span 
-                            initial={false}
-                            animate={{ x: isHovered ? -20 : 30 }}
-                            transition={smoothTransition}
-                            className="block text-[80px] md:text-[120px] leading-none font-bold text-[#D5001C] opacity-90 select-none"
-                          >
-                            {project.id}
-                          </motion.span>
-                        </motion.div>
-                      ) : (
-                        <motion.div 
-                          key="active"
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.95 }}
-                          transition={{ delay: 0.1, duration: 0.4 }}
-                          className="absolute inset-0 p-8 md:p-12 flex flex-col lg:flex-row gap-12 justify-between"
-                        >
-                          <div className="flex-1 flex flex-col justify-between h-full">
-                            <div>
-                              <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
-                                <span className="text-6xl md:text-8xl font-bold text-[#D5001C] leading-none">
-                                  {project.id}
-                                </span>
-                                <div>
-                                   <h4 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
-                                     {project.title}
-                                   </h4>
-                                   <div className="flex flex-wrap gap-2">
-                                     {project.tech.map((t) => (
-                                       <span key={t} className="px-3 py-1 bg-[#111] border border-[#333] text-[#aaa] text-xs font-mono uppercase tracking-widest rounded-full">
-                                         {t}
-                                       </span>
-                                     ))}
-                                   </div>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <div className="max-w-xl mt-auto">
-                              <p className="text-lg md:text-xl text-[#aaa] font-medium leading-relaxed mb-8">
-                                {project.description}
-                              </p>
-                              <div className="flex flex-wrap gap-4">
-                                {project.website && (
-                                  <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
-                                    Live Site
-                                  </a>
-                                )}
-                                {project.repo && (
-                                  <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-[#555] text-white font-bold uppercase tracking-widest text-xs rounded-full hover:border-white hover:bg-white/10 transition-colors duration-300">
-                                    GitHub Repo
-                                  </a>
-                                )}
-                              </div>
-                            </div>
-                          </div>
 
-                          <div className="hidden lg:flex flex-1 items-center justify-center perspective-[1200px]">
-                             <TiltMockup project={project} />
+                {/* Interactive Tilt Mockup */}
+                <div className="w-full my-1 rounded-xl overflow-hidden border border-[#222]">
+                  <TiltMockup project={project} className="w-full max-w-full" />
+                </div>
+
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                  {project.website && (
+                    <a
+                      href={project.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center py-3 px-4 bg-[#D5001C] text-white font-bold uppercase tracking-wider text-xs rounded-lg hover:bg-white hover:text-black transition-colors text-center"
+                    >
+                      Live Demo
+                    </a>
+                  )}
+                  {project.repo && (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center py-3 px-4 bg-[#181818] border border-[#333] text-white font-bold uppercase tracking-wider text-xs rounded-lg hover:border-white transition-colors text-center"
+                    >
+                      GitHub
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Desktop View: Side by Side Accordion Cards */}
+          <div className="hidden lg:flex flex-row gap-4 w-full h-[650px]">
+            {projects.map((project) => {
+              const isActive = active === project.id;
+              const isHovered = hovered === project.id;
+              
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={false}
+                  animate={{ flex: isActive ? 7 : (isHovered ? 1.5 : 1) }}
+                  transition={smoothTransition}
+                  onMouseEnter={() => setHovered(project.id)}
+                  onMouseLeave={() => setHovered(null)}
+                  onClick={() => setActive(project.id)}
+                  className={`relative rounded-[2rem] overflow-hidden transition-colors duration-500 border border-[#333] ${
+                    isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
+                  } cursor-pointer`}
+                >
+                  <AnimatePresence>
+                    {!isActive ? (
+                      <motion.div 
+                        key="inactive"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="absolute top-8 right-0 bottom-0 flex items-start pointer-events-none"
+                      >
+                        <motion.span 
+                          initial={false}
+                          animate={{ x: isHovered ? -20 : 30 }}
+                          transition={smoothTransition}
+                          className="block text-[80px] md:text-[120px] leading-none font-bold text-[#D5001C] opacity-90 select-none"
+                        >
+                          {project.id}
+                        </motion.span>
+                      </motion.div>
+                    ) : (
+                      <motion.div 
+                        key="active"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ delay: 0.1, duration: 0.4 }}
+                        className="absolute inset-0 p-8 md:p-12 flex flex-col lg:flex-row gap-12 justify-between"
+                      >
+                        <div className="flex-1 flex flex-col justify-between h-full">
+                          <div>
+                            <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
+                              <span className="text-6xl md:text-8xl font-bold text-[#D5001C] leading-none">
+                                {project.id}
+                              </span>
+                              <div>
+                                 <h4 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
+                                   {project.title}
+                                 </h4>
+                                 <div className="flex flex-wrap gap-2">
+                                   {project.tech.map((t) => (
+                                     <span key={t} className="px-3 py-1 bg-[#111] border border-[#333] text-[#aaa] text-xs font-mono uppercase tracking-widest rounded-full">
+                                       {t}
+                                     </span>
+                                   ))}
+                                 </div>
+                              </div>
+                            </div>
                           </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                );
-              })}
-            </div>
-          )}
+                          
+                          <div className="max-w-xl mt-auto">
+                            <p className="text-lg md:text-xl text-[#aaa] font-medium leading-relaxed mb-8">
+                              {project.description}
+                            </p>
+                            <div className="flex flex-wrap gap-4">
+                              {project.website && (
+                                <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
+                                  Live Site
+                                </a>
+                              )}
+                              {project.repo && (
+                                <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-[#555] text-white font-bold uppercase tracking-widest text-xs rounded-full hover:border-white hover:bg-white/10 transition-colors duration-300">
+                                  GitHub Repo
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="hidden lg:flex flex-1 items-center justify-center perspective-[1200px]">
+                           <TiltMockup project={project} />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -4,7 +4,35 @@ import { Linkedin, Github, Instagram, Mail } from "lucide-react";
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative w-full min-h-screen bg-transparent flex flex-col items-center justify-center py-20 px-8 overflow-hidden">
+    <section id="contact" className="relative w-full bg-transparent flex flex-col items-center justify-center py-12 md:py-16 px-8 overflow-hidden">
+      {/* Spider-Man Easter Egg */}
+      <motion.div 
+        initial={{ y: -80, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="absolute top-0 right-8 md:right-16 z-20 pointer-events-auto cursor-pointer group"
+        title="Your Friendly Neighborhood Developer"
+      >
+        {/* Web String */}
+        <div className="w-[1.5px] h-20 md:h-28 bg-gradient-to-b from-white/90 via-white/40 to-white/80 mx-auto" />
+        
+        {/* Spidey hanging upside down */}
+        <motion.div 
+          animate={{ rotate: [-4, 4, -4] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="relative -mt-1 transform origin-top transition-transform duration-300 group-hover:scale-125"
+        >
+          <svg width="40" height="52" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 6C12 6 6 12 6 22C6 32 12 40 20 40C28 40 34 32 34 22C34 12 28 6 20 6Z" fill="#D5001C" stroke="#0a0a0a" strokeWidth="2"/>
+            <path d="M10 22C10 30 14 36 20 36C26 36 30 30 30 22" fill="#0055FF" opacity="0.85"/>
+            <path d="M20 6V40M6 22H34M9 14L31 30M9 30L31 14" stroke="#111" strokeWidth="1" opacity="0.6"/>
+            <path d="M12 20C10 14 15 10 18 16C16 20 14 21 12 20Z" fill="white" stroke="#0a0a0a" strokeWidth="2"/>
+            <path d="M28 20C30 14 25 10 22 16C24 20 26 21 28 20Z" fill="white" stroke="#0a0a0a" strokeWidth="2"/>
+            <ellipse cx="20" cy="26" rx="2.5" ry="3.5" fill="#0a0a0a"/>
+          </svg>
+        </motion.div>
+      </motion.div>
       {/* Background accents */}
       <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-[#D5001C] rounded-full blur-[250px] opacity-[0.05] pointer-events-none" />
 

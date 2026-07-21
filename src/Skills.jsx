@@ -43,7 +43,7 @@ const itemVariants = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 px-8 bg-transparent overflow-hidden" style={{ perspective: '1200px' }}>
+    <section id="skills" className="relative w-full flex flex-col items-center justify-center py-12 md:py-16 px-8 bg-transparent overflow-hidden" style={{ perspective: '1200px' }}>
       
       {/* Background accents */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#D5001C] rounded-full blur-[200px] opacity-[0.03] pointer-events-none" />

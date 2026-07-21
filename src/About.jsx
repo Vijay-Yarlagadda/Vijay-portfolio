@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 function About() {
   return (
-    <section id="about" className="relative w-full min-h-screen bg-transparent flex items-center justify-center py-20 px-8 overflow-hidden">
+    <section id="about" className="relative w-full bg-transparent flex items-center justify-center py-12 md:py-16 px-8 overflow-hidden">
       {/* Background accents */}
       <div className="absolute top-0 right-0 w-[30vw] h-full bg-gradient-to-l from-[#1a1a1a] to-transparent skew-x-[-15deg] transform origin-bottom" />
       <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#333] to-transparent" />
