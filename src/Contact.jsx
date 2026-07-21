@@ -29,31 +29,38 @@ export default function Contact() {
         viewport={{ once: true }}
         transition={{ duration: 1, ease: "easeOut" }}
         onClick={handleSpideyClick}
-        className="absolute top-0 right-8 md:right-16 z-20 pointer-events-auto cursor-pointer group flex flex-col items-center"
+        className="absolute top-0 right-8 md:right-16 z-20 pointer-events-auto cursor-pointer group flex flex-col items-center origin-top"
         title="Tap Spidey to Auto-fill Message!"
       >
-        {/* Web String */}
-        <div className="w-[1.5px] h-20 md:h-28 bg-gradient-to-b from-white/90 via-white/40 to-white/80 mx-auto" />
-        
-        {/* Spidey hanging upside down */}
-        <motion.div 
-          animate={webShot ? { scale: [1, 1.4, 1], rotate: [0, -15, 15, 0] } : { rotate: [-4, 4, -4] }}
-          transition={{ duration: webShot ? 0.6 : 4, repeat: webShot ? 0 : Infinity, ease: "easeInOut" }}
-          className="relative -mt-1 transform origin-top transition-transform duration-300 group-hover:scale-125"
+        {/* Smooth Pendulum Swinging Wrapper (Web + Spidey together from top ceiling anchor) */}
+        <motion.div
+          animate={webShot ? { scale: [1, 1.3, 1], rotate: [0, -15, 15, 0] } : { rotate: [-7, 7, -7] }}
+          transition={{
+            duration: webShot ? 0.6 : 5,
+            repeat: webShot ? 0 : Infinity,
+            ease: "easeInOut"
+          }}
+          className="origin-top flex flex-col items-center"
         >
-          <svg width="44" height="56" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 6C12 6 6 12 6 22C6 32 12 40 20 40C28 40 34 32 34 22C34 12 28 6 20 6Z" fill="#D5001C" stroke="#0a0a0a" strokeWidth="2"/>
-            <path d="M10 22C10 30 14 36 20 36C26 36 30 30 30 22" fill="#0055FF" opacity="0.85"/>
-            <path d="M20 6V40M6 22H34M9 14L31 30M9 30L31 14" stroke="#111" strokeWidth="1" opacity="0.6"/>
-            <path d="M12 20C10 14 15 10 18 16C16 20 14 21 12 20Z" fill="white" stroke="#0a0a0a" strokeWidth="2"/>
-            <path d="M28 20C30 14 25 10 22 16C24 20 26 21 28 20Z" fill="white" stroke="#0a0a0a" strokeWidth="2"/>
-            <ellipse cx="20" cy="26" rx="2.5" ry="3.5" fill="#0a0a0a"/>
-          </svg>
+          {/* Web String */}
+          <div className="w-[1.5px] h-20 md:h-28 bg-gradient-to-b from-white/90 via-white/40 to-white/80 mx-auto" />
+          
+          {/* Spidey hanging upside down */}
+          <div className="relative -mt-1 transform transition-transform duration-300 group-hover:scale-125">
+            <svg width="44" height="56" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6C12 6 6 12 6 22C6 32 12 40 20 40C28 40 34 32 34 22C34 12 28 6 20 6Z" fill="#D5001C" stroke="#0a0a0a" strokeWidth="2"/>
+              <path d="M10 22C10 30 14 36 20 36C26 36 30 30 30 22" fill="#0055FF" opacity="0.85"/>
+              <path d="M20 6V40M6 22H34M9 14L31 30M9 30L31 14" stroke="#111" strokeWidth="1" opacity="0.6"/>
+              <path d="M12 20C10 14 15 10 18 16C16 20 14 21 12 20Z" fill="white" stroke="#0a0a0a" strokeWidth="2"/>
+              <path d="M28 20C30 14 25 10 22 16C24 20 26 21 28 20Z" fill="white" stroke="#0a0a0a" strokeWidth="2"/>
+              <ellipse cx="20" cy="26" rx="2.5" ry="3.5" fill="#0a0a0a"/>
+            </svg>
 
-          {/* Interactive Tag */}
-          <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#D5001C] text-white text-[9px] font-mono tracking-widest px-2 py-0.5 rounded-full uppercase shadow-lg group-hover:bg-white group-hover:text-black transition-colors">
-            Tap Spidey
-          </span>
+            {/* Interactive Tag */}
+            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#D5001C] text-white text-[9px] font-mono tracking-widest px-2 py-0.5 rounded-full uppercase shadow-lg group-hover:bg-white group-hover:text-black transition-colors">
+              Tap Spidey
+            </span>
+          </div>
         </motion.div>
       </motion.div>
 
