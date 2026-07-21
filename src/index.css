@@ -47,6 +47,12 @@
   background: var(--accent-color);
 }
 
+@media (min-width: 768px) {
+  body, a, button, [class*="cursor-pointer"], [role="button"], input, textarea, select {
+    cursor: none !important;
+  }
+}
+
 .glass-panel {
   background: rgba(10, 10, 10, 0.4);
   backdrop-filter: blur(12px);
@@ -57,11 +63,12 @@
 
 .text-gradient {
   background: linear-gradient(90deg, #FFFFFF, #888888);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Hide default cursors entirely to use React CustomCursor */
+/* Hide default cursors entirely on desktop sizes to preserve the custom wheel cursor */
 body, a, button, [class*="cursor-pointer"], [role="button"], input, textarea, select {
   cursor: none !important;
 }

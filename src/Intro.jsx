@@ -28,20 +28,44 @@ const Intro = () => {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="relative w-32 h-32 rounded-full border border-[#D5001C] flex items-center justify-center bg-[#111]"
           >
-            <motion.div 
+            <motion.div
+              animate={{
+                boxShadow: [
+                  '0 0 10px rgba(213,0,28,0.25), inset 0 0 12px rgba(255,255,255,0.06)',
+                  '0 0 24px rgba(213,0,28,0.7), inset 0 0 22px rgba(255,255,255,0.08)',
+                  '0 0 12px rgba(213,0,28,0.35), inset 0 0 14px rgba(255,255,255,0.05)'
+                ],
+                scale: [1, 1.02, 0.98, 1],
+                opacity: [0.85, 0.95, 0.9, 0.95]
+              }}
+              transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+              className="absolute inset-0 rounded-full bg-[#D5001C]/10"
+            />
+            <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.2, 0.05, 0.2], scale: [1, 1.1, 1] }}
-              transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut" }}
-              className="absolute inset-0 rounded-full bg-[#D5001C] blur-lg"
+              animate={{ opacity: [0, 0.24, 0.12, 0.28, 0.16] }}
+              transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut", delay: 0.1 }}
+              className="absolute inset-0 rounded-full border border-[#D5001C]/40"
             />
             <img 
               src="/porsche.png" 
               alt="Porsche Logo" 
-              className="absolute -top-6 z-10 w-48 h-40 object-contain opacity-100 drop-shadow-[0_0_20px_rgba(213,0,28,0.6)] pointer-events-none"
+              className="absolute -top-6 z-10 w-48 h-40 object-contain opacity-100 drop-shadow-[0_0_30px_rgba(213,0,28,0.75)] pointer-events-none"
             />
-            <div className="absolute bottom-5 z-10 text-[#D5001C] font-mono text-[9px] tracking-[0.2em] uppercase font-bold text-center leading-tight">
+            <motion.div
+              animate={{
+                opacity: [0.8, 0.4, 0.9, 0.45, 0.85],
+                textShadow: [
+                  '0 0 6px rgba(213,0,28,0.4)',
+                  '0 0 20px rgba(213,0,28,0.8)',
+                  '0 0 8px rgba(213,0,28,0.5)'
+                ]
+              }}
+              transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut", delay: 0.2 }}
+              className="absolute bottom-5 z-10 text-[#D5001C] font-mono text-[9px] tracking-[0.2em] uppercase font-bold text-center leading-tight"
+            >
               Engine Start
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div 

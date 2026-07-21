@@ -1,9 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const CustomCursor = () => {
   const cursorRef = useRef(null);
+  const [showCursor, setShowCursor] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(pointer:fine) and (min-width: 768px)');
+    const updateShowCursor = () => setShowCursor(mediaQuery.matches);
+
+    updateShowCursor();
+    mediaQuery.addEventListener('change', updateShowCursor);
+    return () => mediaQuery.removeEventListener('change', updateShowCursor);
+  }, []);
+
+  useEffect(() => {
+    if (!showCursor) return;
+
     let mouseX = -100;
     let mouseY = -100;
     let currentX = -100;
@@ -35,7 +47,11 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(requestRef);
     };
-  }, []);
+  }, [showCursor]);
+
+  if (!showCursor) {
+    return null;
+  }
 
   return (
     <div 
