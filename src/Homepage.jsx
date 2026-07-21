@@ -151,7 +151,7 @@ function Homepage() {
       </AnimatePresence>
 
       {/* Background PORSCHE Watermark */}
-      <div className="absolute inset-0 overflow-hidden flex items-start pt-20 md:items-center md:pt-0 pointer-events-none select-none z-0 w-full">
+      <div className="absolute inset-0 overflow-hidden flex items-start pt-[16vh] md:items-center md:pt-0 pointer-events-none select-none z-0 w-full">
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.08 }}
