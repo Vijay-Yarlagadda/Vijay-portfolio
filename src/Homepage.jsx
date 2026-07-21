@@ -40,86 +40,49 @@ function Homepage() {
             : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
         }`}
       >
-        {/* 100% Transparent White Porsche 911 GT3 RS Edge Runner driving along the BOTTOM border line of Navbar */}
-        <div className="absolute -bottom-3 left-0 w-full pointer-events-none z-30 overflow-visible">
+        {/* User's Exact Porsche 911 GT3 RS Body Cutout Edge Runner driving along BOTTOM border track */}
+        <div className="absolute -bottom-[14px] left-0 w-full pointer-events-none z-30 overflow-visible">
           <motion.div
             animate={{ x: ["-15%", "108%"] }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="relative flex items-center w-full"
+            className="relative flex items-center"
           >
-            {/* Transparent Colored Porsche GT3 RS Vector Sprite */}
-            <svg viewBox="0 0 200 65" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 sm:w-24 md:w-28 h-auto drop-shadow-[0_4px_12px_rgba(213,0,28,0.4)]">
+            <div className="relative flex items-center w-24 sm:w-28 md:w-32 h-auto">
               {/* Red Taillight Speed Trail */}
-              <path d="M0 40 H30" stroke="#D5001C" strokeWidth="4" strokeLinecap="round" opacity="0.9" />
-              <path d="M8 37 H25" stroke="#FF4D63" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 -ml-8 w-8 h-[2px] bg-gradient-to-r from-transparent to-[#D5001C] shadow-[0_0_10px_#D5001C]" />
 
-              {/* Front Headlight Beam */}
-              <path d="M175 42 L200 30 L200 50 Z" fill="url(#porscheGt3Beam)" opacity="0.85" />
+              {/* User's Exact Porsche Body Cutout (Clean, Inverted, Facing Right) */}
+              <img 
+                src="/porsche_user_body_clean.png" 
+                alt="Porsche 911 GT3 RS Body" 
+                className="w-full h-auto object-contain filter drop-shadow-[0_4px_10px_rgba(255,255,255,0.7)]"
+              />
 
-              {/* PORSCHE 911 GT3 RS BODY (WHITE) */}
-              <path d="M28 42 C30 35, 40 30, 60 23 C82 16, 108 16, 136 27 C152 30, 172 32, 180 39 C184 43, 178 48, 162 49 C138 50, 50 50, 26 49 C21 48, 21 44, 28 42 Z" fill="#FFFFFF" stroke="#111111" strokeWidth="2" />
-              
-              {/* Hood & Fender Cutout Lines */}
-              <path d="M142 33 C155 35, 170 38, 176 42" stroke="#CCCCCC" strokeWidth="1.2" />
+              {/* Front Wheel (Tyre) fitted in Front Wheel Arch */}
+              <div className="absolute right-[17%] bottom-[5%] w-[21%] aspect-square flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.3s' }}>
+                  <circle cx="50" cy="50" r="48" fill="#111" stroke="#333" strokeWidth="4" />
+                  <path d="M 25 35 A 35 35 0 0 1 75 35" fill="none" stroke="#D5001C" strokeWidth="12" strokeLinecap="round" />
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#E5E5E5" strokeWidth="6" />
+                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="5" />
+                  <circle cx="50" cy="50" r="14" fill="#151515" stroke="#D5001C" strokeWidth="4" />
+                </svg>
+              </div>
 
-              {/* Black Aero Roof & Glass Windows */}
-              <path d="M62 23 C76 16, 100 16, 122 26 L131 32 H56 Z" fill="#151515" />
-              <path d="M66 24 C78 18, 98 18, 116 27 L124 32 H62 Z" fill="#2d2d2d" stroke="#555555" strokeWidth="1" />
+              {/* Rear Wheel (Tyre) fitted in Rear Wheel Arch */}
+              <div className="absolute left-[18%] bottom-[5%] w-[21%] aspect-square flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.3s' }}>
+                  <circle cx="50" cy="50" r="48" fill="#111" stroke="#333" strokeWidth="4" />
+                  <path d="M 25 35 A 35 35 0 0 1 75 35" fill="none" stroke="#D5001C" strokeWidth="12" strokeLinecap="round" />
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#E5E5E5" strokeWidth="6" />
+                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="5" />
+                  <circle cx="50" cy="50" r="14" fill="#151515" stroke="#D5001C" strokeWidth="4" />
+                </svg>
+              </div>
 
-              {/* Front & Rear Fender Vents */}
-              <path d="M48 33 C53 30, 55 35, 53 40" stroke="#151515" strokeWidth="3" strokeLinecap="round" />
-              <path d="M120 33 C125 33, 127 40, 124 44" stroke="#151515" strokeWidth="3.5" strokeLinecap="round" />
-
-              {/* Lower GT3 RS Black Side Stripe Decal */}
-              <path d="M60 44 H145" stroke="#151515" strokeWidth="5" />
-              <text x="102" y="46.5" font-family="'Arial Black', 'Helvetica', sans-serif" font-size="4.5" font-weight="900" fill="#FFFFFF" letter-spacing="0.5">GT3 RS</text>
-
-              {/* Front Bumper & Rear Diffuser */}
-              <path d="M22 45 L30 50 H48" stroke="#151515" strokeWidth="3.5" strokeLinecap="round" />
-              <path d="M162 50 H182 L184 43" stroke="#151515" strokeWidth="3.5" strokeLinecap="round" />
-
-              {/* Swan-Neck GT3 RS Rear Wing */}
-              <path d="M28 33 L20 18 M36 33 L28 18" stroke="#151515" strokeWidth="3" />
-              <path d="M12 18 H40 C42 18, 42 14, 40 14 H10 C8 14, 8 18, 12 18 Z" fill="#151515" stroke="#000000" strokeWidth="1.2" />
-              <path d="M8 12 V20 H12 V12 Z" fill="#D5001C" />
-
-              {/* Front LED Headlights */}
-              <ellipse cx="172" cy="39" rx="3.5" ry="2" fill="#00F0FF" />
-              <ellipse cx="172" cy="39" rx="2" ry="1.2" fill="#FFFFFF" />
-
-              {/* Rear Red LED Light Strip */}
-              <path d="M24 39 H32" stroke="#D5001C" strokeWidth="3.5" strokeLinecap="round" />
-
-              {/* REAR WHEEL (With Red Caliper & Silver Rim) */}
-              <g>
-                <circle cx="48" cy="48" r="11" fill="#0c0c0c" stroke="#333333" strokeWidth="2" />
-                <path d="M42 42 C44 39, 52 39, 54 42" stroke="#D5001C" strokeWidth="4" strokeLinecap="round" />
-                <g className="animate-spin" style={{ transformOrigin: '48px 48px', animationDuration: '0.35s' }}>
-                  <circle cx="48" cy="48" r="9" fill="none" stroke="#E5E5E5" strokeWidth="2" />
-                  <path d="M48 39 V57 M39 48 H57 M41.6 41.6 L54.4 54.4 M41.6 54.4 L54.4 41.6" stroke="#DDDDDD" strokeWidth="1.2" />
-                  <circle cx="48" cy="48" r="3" fill="#151515" stroke="#D5001C" strokeWidth="1" />
-                </g>
-              </g>
-
-              {/* FRONT WHEEL (With Red Caliper & Silver Rim) */}
-              <g>
-                <circle cx="150" cy="48" r="11" fill="#0c0c0c" stroke="#333333" strokeWidth="2" />
-                <path d="M144 42 C146 39, 154 39, 156 42" stroke="#D5001C" strokeWidth="4" strokeLinecap="round" />
-                <g className="animate-spin" style={{ transformOrigin: '150px 48px', animationDuration: '0.35s' }}>
-                  <circle cx="150" cy="48" r="9" fill="none" stroke="#E5E5E5" strokeWidth="2" />
-                  <path d="M150 39 V57 M141 48 H159 M143.6 41.6 L156.4 54.4 M143.6 54.4 L156.4 41.6" stroke="#DDDDDD" strokeWidth="1.2" />
-                  <circle cx="150" cy="48" r="3" fill="#151515" stroke="#D5001C" strokeWidth="1" />
-                </g>
-              </g>
-
-              <defs>
-                <linearGradient id="porscheGt3Beam" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
-                  <stop offset="60%" stop-color="#00f0ff" stop-opacity="0.4"/>
-                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-            </svg>
+              {/* LED Headlight Beam */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 -mr-6 w-8 h-4 bg-gradient-to-r from-white/90 via-cyan-300/40 to-transparent pointer-events-none" />
+            </div>
           </motion.div>
         </div>
         <div className="flex items-center justify-between w-full">
