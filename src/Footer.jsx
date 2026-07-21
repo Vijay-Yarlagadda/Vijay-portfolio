@@ -13,50 +13,72 @@ const Footer = () => {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="absolute top-0 right-10 md:right-24 z-20 origin-top pointer-events-auto cursor-pointer group"
-        title="Spider-Man & Gwen Stacy"
+        className="absolute top-0 right-6 md:right-20 z-20 origin-top pointer-events-auto cursor-pointer group"
+        title="The Amazing Spider-Man: Catching Gwen"
       >
         {/* Smooth Pendulum Sway */}
         <motion.div
-          animate={{ rotate: [-6, 6, -6] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ rotate: [-4, 4, -4] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           className="origin-top flex flex-col items-center"
         >
-          {/* Colorful SVG Illustration: Spidey holding Gwen */}
-          <svg width="84" height="105" viewBox="0 0 84 105" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_10px_20px_rgba(213,0,28,0.3)]">
-            {/* Web Strand */}
-            <line x1="42" y1="0" x2="42" y2="30" stroke="white" strokeWidth="2" strokeDasharray="4 2" opacity="0.9" />
+          {/* Exact Artwork SVG: Spidey hanging up top, web shooting down catching falling arched Gwen */}
+          <svg width="110" height="235" viewBox="0 0 110 235" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_10px_25px_rgba(213,0,28,0.4)]">
+            {/* Top Web Strand going up */}
+            <line x1="50" y1="0" x2="48" y2="22" stroke="white" strokeWidth="2.5" />
+            <path d="M48 22 Q46 12 50 0" stroke="white" strokeWidth="1.5" opacity="0.7" />
 
-            {/* Spider-Man upside down head */}
-            <ellipse cx="42" cy="42" rx="14" ry="16" fill="#D5001C" stroke="#080808" strokeWidth="2" />
-            <path d="M42 26V58M28 42H56M32 32L52 52M32 52L52 32" stroke="#080808" strokeWidth="1" opacity="0.5"/>
-            {/* Spidey White Eyes */}
-            <path d="M34 40C31 35 37 32 40 38C38 41 36 43 34 40Z" fill="white" stroke="#080808" strokeWidth="1.8"/>
-            <path d="M50 40C53 35 47 32 44 38C46 41 48 43 50 40Z" fill="white" stroke="#080808" strokeWidth="1.8"/>
+            {/* SPIDER-MAN (UPPER POSITION) */}
+            {/* Extended Arm holding top web */}
+            <path d="M48 22 L42 42" stroke="#D5001C" strokeWidth="5.5" strokeLinecap="round" />
+            <path d="M48 22 L42 42" stroke="#0055FF" strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
 
-            {/* Spidey Torso & Blue Arms holding Gwen */}
-            <path d="M30 54C22 60 20 74 30 82C42 86 54 82 56 70C56 60 46 54 38 54Z" fill="#D5001C" stroke="#080808" strokeWidth="1.5"/>
-            <path d="M24 62C18 68 16 76 24 80" stroke="#0055FF" strokeWidth="4.5" strokeLinecap="round" />
-            <path d="M58 62C64 68 66 76 58 80" stroke="#0055FF" strokeWidth="4.5" strokeLinecap="round" />
+            {/* Spidey Head */}
+            <ellipse cx="44" cy="46" rx="9" ry="11" fill="#D5001C" stroke="#080808" strokeWidth="1.5" />
+            {/* White Spidey Eyes */}
+            <path d="M41 45 C38 41 43 39 45 44 C43 47 42 48 41 45 Z" fill="white" stroke="#080808" strokeWidth="1.2" />
 
-            {/* Gwen Stacy (Held safely in Spidey's arms) */}
-            {/* Gwen's Blonde Hair */}
-            <path d="M30 68C24 64 18 68 16 76C14 84 20 92 28 94C30 86 28 78 30 68Z" fill="#FFE555" stroke="#080808" strokeWidth="1.2" />
-            {/* Gwen's Face */}
-            <ellipse cx="38" cy="74" rx="8" ry="9" fill="#FFE0BD" stroke="#080808" strokeWidth="1.2"/>
-            {/* Eyes & Smile */}
-            <circle cx="35" cy="73" r="1.2" fill="#080808" />
-            <circle cx="41" cy="73" r="1.2" fill="#080808" />
-            <path d="M35 77C37 79 40 79 41 77" stroke="#D5001C" strokeWidth="1.2" strokeLinecap="round" />
+            {/* Torso & Bent Athletic Body */}
+            <path d="M38 48 C32 54 36 70 48 72 C60 74 68 64 64 54 C60 48 44 46 38 48 Z" fill="#D5001C" stroke="#080808" strokeWidth="1.5" />
+            {/* Blue Suit Accents */}
+            <path d="M42 54 C36 60 40 68 46 68 C52 68 56 60 52 54 Z" fill="#0055FF" opacity="0.9" />
+            {/* Bent Legs */}
+            <path d="M52 64 C62 62 70 52 74 58 C78 64 68 76 60 74" fill="#0055FF" stroke="#080808" strokeWidth="1.2" />
+            <path d="M46 68 C50 78 56 92 60 98" stroke="#D5001C" strokeWidth="5" strokeLinecap="round" />
+            <path d="M46 68 C50 78 56 92 60 98" stroke="#0055FF" strokeWidth="2.5" strokeLinecap="round" />
 
-            {/* Spider-Gwen Hood & Outfit (White, Pink & Teal Accents) */}
-            <path d="M26 78C20 84 22 98 36 98C48 98 50 86 44 78Z" fill="#FFFFFF" stroke="#080808" strokeWidth="1.8"/>
-            <path d="M30 82C27 88 30 92 36 93C42 92 45 88 42 82" fill="#FF66B2" opacity="0.9" />
-            <path d="M32 90C30 94 40 94 38 90" stroke="#00E5FF" strokeWidth="2.5" strokeLinecap="round" />
+            {/* Lower Arm shooting web straight down */}
+            <path d="M42 54 L46 82" stroke="#D5001C" strokeWidth="5" strokeLinecap="round" />
+
+            {/* MIDDLE LONG WEB LINE SHOOTING DOWN */}
+            <line x1="46" y1="82" x2="48" y2="155" stroke="white" strokeWidth="2.5" />
+            <path d="M44 86 L48 155 M48 82 L46 155" stroke="white" strokeWidth="1" opacity="0.6" />
+            {/* Web Splatters along line */}
+            <path d="M43 100 L49 105 M48 120 L44 125 M45 140 L50 144" stroke="white" strokeWidth="1.2" />
+
+            {/* WEB CATCHING HAND / MESH AT BOTTOM */}
+            <path d="M48 155 C38 160 30 168 25 174 M48 155 C58 160 66 168 72 174 M48 155 L48 175 M42 165 L54 165" stroke="white" strokeWidth="1.8" />
+
+            {/* GWEN STACY (BOTTOM POSITION - FALLING ARCHED BACKWARDS) */}
+            {/* Arched Body */}
+            <path d="M25 174 C30 162 48 160 65 168 C76 174 85 186 78 200 C72 212 55 210 45 204 C35 198 22 188 25 174 Z" fill="#FFE0BD" stroke="#080808" strokeWidth="1.5" />
+            {/* Gwen's Jacket / Outfit (Yellow & Green) */}
+            <path d="M30 170 C40 164 56 164 68 172 C74 178 72 192 64 196 C54 200 38 194 30 186 Z" fill="#FFDF00" stroke="#080808" strokeWidth="1.5" />
+            <path d="M42 176 C48 174 58 178 60 188 C52 192 40 188 38 182 Z" fill="#10B981" />
+
+            {/* Gwen's Head & Long Flowing Blonde Hair falling downwards */}
+            <ellipse cx="28" cy="184" rx="7" ry="8" fill="#FFE0BD" stroke="#080808" strokeWidth="1" />
+            {/* Flowing Hair strands falling down */}
+            <path d="M26 186 C22 192 18 204 15 215 C14 220 20 224 24 216 C26 208 28 198 30 190 Z" fill="#FFE555" stroke="#080808" strokeWidth="1" />
+            <path d="M22 188 C18 198 12 210 10 220 C18 215 22 205 25 194 Z" fill="#FFD700" opacity="0.9" />
+
+            {/* Gwen's Legs & Arms */}
+            <path d="M68 184 C76 192 84 204 88 214 M60 190 C66 198 72 208 76 218" stroke="#080808" strokeWidth="3" strokeLinecap="round" />
+            <path d="M68 184 C76 192 84 204 88 214 M60 190 C66 198 72 208 76 218" stroke="#FFE0BD" strokeWidth="1.8" strokeLinecap="round" />
           </svg>
 
           {/* Interactive Tag */}
-          <span className="bg-[#D5001C] text-white text-[8px] font-mono tracking-widest px-2 py-0.5 rounded-full uppercase shadow-md group-hover:bg-white group-hover:text-black transition-colors -mt-1">
+          <span className="bg-[#D5001C] text-white text-[8px] font-mono tracking-widest px-2 py-0.5 rounded-full uppercase shadow-md group-hover:bg-white group-hover:text-black transition-colors -mt-2">
             Spidey & Gwen
           </span>
         </motion.div>
