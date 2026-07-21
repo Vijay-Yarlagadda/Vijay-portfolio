@@ -40,60 +40,19 @@ function Homepage() {
             : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
         }`}
       >
-        {/* User's Exact Beige Porsche 911 GT3 RS Body Cutout with Tyres mathematically locked inside wheel arches */}
-        <div className="absolute -bottom-[8px] left-0 w-full pointer-events-none z-30 overflow-visible">
+        {/* User's Exact Beige Porsche 911 GT3 RS with Baked Tyres driving along BOTTOM border track */}
+        <div className="absolute -bottom-[6px] left-0 w-full pointer-events-none z-30 overflow-visible">
           <motion.div
             animate={{ x: ["-10%", "105%"] }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             className="relative flex items-center"
           >
             {/* Decreased car size for a sleek, elegant look */}
-            <div className="relative inline-block w-14 sm:w-16 md:w-20 h-auto">
-              
-              {/* User's Exact Beige Porsche Body Cutout (Facing Right) */}
-              <img 
-                src="/porsche_user_body_beige.png" 
-                alt="Porsche 911 GT3 RS Beige Body" 
-                className="w-full h-auto block relative z-10"
-              />
-
-              {/* Rear Wheel (Tyre) locked at center of Rear Wheel Arch (23.0% X, 68.0% Y) */}
-              <div 
-                className="absolute z-0 flex items-center justify-center pointer-events-none"
-                style={{ left: '23.0%', top: '68.0%', width: '13.5%', height: '39%', transform: 'translate(-50%, -50%)' }}
-              >
-                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.35s' }}>
-                  {/* Outer Rubber Tyre */}
-                  <circle cx="50" cy="50" r="48" fill="#181818" stroke="#333" strokeWidth="5" />
-                  {/* Silver GT3 RS Rim Spokes */}
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#D0D0D0" strokeWidth="5" />
-                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="4.5" />
-                  {/* Red Caliper */}
-                  <path d="M 30 38 A 30 30 0 0 1 70 38" fill="none" stroke="#D5001C" strokeWidth="10" strokeLinecap="round" />
-                  {/* Center Cap */}
-                  <circle cx="50" cy="50" r="14" fill="#111" stroke="#D5001C" strokeWidth="3" />
-                </svg>
-              </div>
-
-              {/* Front Wheel (Tyre) locked at center of Front Wheel Arch (80.7% X, 68.0% Y) */}
-              <div 
-                className="absolute z-0 flex items-center justify-center pointer-events-none"
-                style={{ left: '80.7%', top: '68.0%', width: '13.5%', height: '39%', transform: 'translate(-50%, -50%)' }}
-              >
-                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.35s' }}>
-                  {/* Outer Rubber Tyre */}
-                  <circle cx="50" cy="50" r="48" fill="#181818" stroke="#333" strokeWidth="5" />
-                  {/* Silver GT3 RS Rim Spokes */}
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#D0D0D0" strokeWidth="5" />
-                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="4.5" />
-                  {/* Red Caliper */}
-                  <path d="M 30 38 A 30 30 0 0 1 70 38" fill="none" stroke="#D5001C" strokeWidth="10" strokeLinecap="round" />
-                  {/* Center Cap */}
-                  <circle cx="50" cy="50" r="14" fill="#111" stroke="#D5001C" strokeWidth="3" />
-                </svg>
-              </div>
-
-            </div>
+            <img 
+              src="/porsche_final_complete.png" 
+              alt="Porsche 911 GT3 RS Beige with Fitted Tyres" 
+              className="w-14 sm:w-16 md:w-18 h-auto object-contain block drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]"
+            />
           </motion.div>
         </div>
         <div className="flex items-center justify-between w-full">
