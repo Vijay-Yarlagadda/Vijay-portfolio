@@ -39,7 +39,7 @@ const projects = [
 // Smooth cubic-bezier transition for a premium, non-glitchy feel
 const smoothTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
 
-const TiltMockup = ({ project }) => {
+const TiltMockup = ({ project, className = '' }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -73,7 +73,7 @@ const TiltMockup = ({ project }) => {
         y.set(0);
       }}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="relative w-full max-w-[500px] aspect-[4/3] rounded-2xl border border-[#333] bg-[#111]/80 backdrop-blur-xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col cursor-crosshair group"
+      className={`relative w-full ${className} aspect-[4/3] max-w-[500px] rounded-2xl border border-[#333] bg-[#111]/80 backdrop-blur-xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col cursor-crosshair group`}
     >
       {/* Browser Bar */}
       <div className="h-10 border-b border-[#333] flex items-center px-4 gap-2 bg-[#0a0a0a]" style={{ transform: "translateZ(10px)" }}>
@@ -137,111 +137,157 @@ const Projects = () => {
           <h3 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tighter">Featured Projects</h3>
         </motion.div>
 
-        {/* Horizontal Accordion (Desktop) / Vertical Stack (Mobile) */}
-        <div className={`flex flex-col lg:flex-row gap-4 w-full ${isMobile ? 'h-auto' : 'h-[650px]'}`}>
-          {projects.map((project) => {
-            const isActive = isMobile ? true : active === project.id;
-            const isHovered = hovered === project.id;
-            
-            return (
-              <motion.div
-                key={project.id}
-                initial={false}
-                animate={
-                  isMobile 
-                    ? { height: "auto" } 
-                    : { flex: isActive ? 7 : (isHovered ? 1.5 : 1) }
-                }
-                transition={smoothTransition}
-                onMouseEnter={() => setHovered(project.id)}
-                onMouseLeave={() => setHovered(null)}
-                onClick={() => !isMobile && setActive(project.id)}
-                className={`relative rounded-[2rem] overflow-hidden transition-colors duration-500 border border-[#333] ${
-                  isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
-                } ${!isMobile ? "cursor-pointer" : ""}`}
-              >
-                <AnimatePresence>
-                  {/* INACTIVE STATE - CLIPPED NUMBER */}
-                  {!isActive ? (
-                    <motion.div 
-                      key="inactive"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute top-8 right-0 bottom-0 flex items-start pointer-events-none"
-                    >
-                      <motion.span 
-                        initial={false}
-                        animate={{ x: isHovered ? -20 : 30 }}
-                        transition={smoothTransition}
-                        className="block text-[80px] md:text-[120px] leading-none font-bold text-[#D5001C] opacity-90 select-none"
-                      >
-                        {project.id}
-                      </motion.span>
-                    </motion.div>
-                  ) : (
-                    /* ACTIVE STATE CONTENT */
-                    <motion.div 
-                      key="active"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ delay: 0.1, duration: 0.4 }}
-                      className={`${isMobile ? 'relative' : 'absolute inset-0'} p-8 md:p-12 flex flex-col lg:flex-row gap-12 justify-between`}
-                    >
-                      {/* Left Side: Info */}
-                      <div className="flex-1 flex flex-col justify-between h-full">
-                        <div>
-                          <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
-                            <span className="text-6xl md:text-8xl font-bold text-[#D5001C] leading-none">
-                              {project.id}
-                            </span>
-                            <div>
-                               <h4 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
-                                 {project.title}
-                               </h4>
-                               {/* Tech Stack Badges */}
-                               <div className="flex flex-wrap gap-2">
-                                 {project.tech.map((t) => (
-                                   <span key={t} className="px-3 py-1 bg-[#111] border border-[#333] text-[#aaa] text-xs font-mono uppercase tracking-widest rounded-full">
-                                     {t}
-                                   </span>
-                                 ))}
-                               </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="max-w-xl mt-auto">
-                          <p className="text-lg md:text-xl text-[#aaa] font-medium leading-relaxed mb-8">
-                            {project.description}
-                          </p>
-                          <div className="flex flex-wrap gap-4">
-                            {project.website && (
-                              <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
-                                Live Site
-                              </a>
-                            )}
-                            {project.repo && (
-                              <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-[#555] text-white font-bold uppercase tracking-widest text-xs rounded-full hover:border-white hover:bg-white/10 transition-colors duration-300">
-                                GitHub Repo
-                              </a>
-                            )}
-                          </div>
-                        </div>
+        <div className="w-full">
+          {isMobile ? (
+            <div className="flex flex-col gap-8">
+              {projects.map((project) => (
+                <motion.article
+                  key={project.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={smoothTransition}
+                  className="relative overflow-hidden rounded-[2rem] border border-[#222] bg-[#080808]/95 shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
+                >
+                  <div className="bg-gradient-to-br from-[#111] via-[#080808] to-[#090909] p-6 sm:p-8">
+                    <div className="mb-6 rounded-[2rem] border border-[#333] bg-[#090909]/70 p-4 shadow-[inset_0_0_30px_rgba(0,0,0,0.35)]">
+                      <TiltMockup project={project} className="w-full max-w-full" />
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex items-end justify-between gap-4">
+                        <span className="text-5xl font-bold text-[#D5001C] leading-none">{project.id}</span>
+                        <h4 className="text-3xl font-bold text-white tracking-tight leading-tight">{project.title}</h4>
                       </div>
 
-                      {/* Right Side: 3D Mockup */}
-                      <div className="hidden lg:flex flex-1 items-center justify-center perspective-[1200px]">
-                         <TiltMockup project={project} />
+                      <p className="text-base text-[#ccc] leading-relaxed">{project.description}</p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map((t) => (
+                          <span key={t} className="rounded-full border border-[#333] bg-[#111]/90 px-3 py-1 text-xs uppercase tracking-[0.24em] text-[#ddd]">
+                            {t}
+                          </span>
+                        ))}
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
+
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        {project.website && (
+                          <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[#D5001C] px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#ff2a2a] focus:outline-none focus:ring-2 focus:ring-[#D5001C]/50">
+                            Live Demo
+                          </a>
+                        )}
+                        {project.repo && (
+                          <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full border border-[#444] bg-[#111] px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#D5001C]/30">
+                            GitHub
+                          </a>
+                        )}
+                        <button className="inline-flex w-full items-center justify-center rounded-full border border-[#333] bg-transparent px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-[#ccc] transition hover:border-[#D5001C] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D5001C]/20">
+                          Case Study
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          ) : (
+            <div className={`flex flex-col lg:flex-row gap-4 w-full h-[650px]`}>
+              {projects.map((project) => {
+                const isActive = active === project.id;
+                const isHovered = hovered === project.id;
+                
+                return (
+                  <motion.div
+                    key={project.id}
+                    initial={false}
+                    animate={{ flex: isActive ? 7 : (isHovered ? 1.5 : 1) }}
+                    transition={smoothTransition}
+                    onMouseEnter={() => setHovered(project.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    onClick={() => setActive(project.id)}
+                    className={`relative rounded-[2rem] overflow-hidden transition-colors duration-500 border border-[#333] ${
+                      isActive ? "bg-[#080808]" : "bg-black/40 backdrop-blur-md hover:bg-black/50"
+                    } cursor-pointer`}
+                  >
+                    <AnimatePresence>
+                      {!isActive ? (
+                        <motion.div 
+                          key="inactive"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.4 }}
+                          className="absolute top-8 right-0 bottom-0 flex items-start pointer-events-none"
+                        >
+                          <motion.span 
+                            initial={false}
+                            animate={{ x: isHovered ? -20 : 30 }}
+                            transition={smoothTransition}
+                            className="block text-[80px] md:text-[120px] leading-none font-bold text-[#D5001C] opacity-90 select-none"
+                          >
+                            {project.id}
+                          </motion.span>
+                        </motion.div>
+                      ) : (
+                        <motion.div 
+                          key="active"
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          transition={{ delay: 0.1, duration: 0.4 }}
+                          className="absolute inset-0 p-8 md:p-12 flex flex-col lg:flex-row gap-12 justify-between"
+                        >
+                          <div className="flex-1 flex flex-col justify-between h-full">
+                            <div>
+                              <div className="flex items-start md:items-center gap-6 mb-8 flex-col md:flex-row">
+                                <span className="text-6xl md:text-8xl font-bold text-[#D5001C] leading-none">
+                                  {project.id}
+                                </span>
+                                <div>
+                                   <h4 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
+                                     {project.title}
+                                   </h4>
+                                   <div className="flex flex-wrap gap-2">
+                                     {project.tech.map((t) => (
+                                       <span key={t} className="px-3 py-1 bg-[#111] border border-[#333] text-[#aaa] text-xs font-mono uppercase tracking-widest rounded-full">
+                                         {t}
+                                       </span>
+                                     ))}
+                                   </div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="max-w-xl mt-auto">
+                              <p className="text-lg md:text-xl text-[#aaa] font-medium leading-relaxed mb-8">
+                                {project.description}
+                              </p>
+                              <div className="flex flex-wrap gap-4">
+                                {project.website && (
+                                  <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-full hover:bg-[#D5001C] hover:text-white transition-colors duration-300">
+                                    Live Site
+                                  </a>
+                                )}
+                                {project.repo && (
+                                  <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-[#555] text-white font-bold uppercase tracking-widest text-xs rounded-full hover:border-white hover:bg-white/10 transition-colors duration-300">
+                                    GitHub Repo
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="hidden lg:flex flex-1 items-center justify-center perspective-[1200px]">
+                             <TiltMockup project={project} />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </section>
