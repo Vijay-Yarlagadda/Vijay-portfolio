@@ -34,12 +34,51 @@ function Homepage() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: showNav ? 1 : 0 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] border border-[#333] backdrop-blur-md overflow-hidden ${
+        className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] border border-[#333] backdrop-blur-md overflow-visible ${
           scrolled 
             ? "top-6 w-[95%] max-w-[1000px] rounded-full py-3 px-6 md:px-8 bg-[#111]/95 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
         }`}
       >
+        {/* Porsche GT3 RS Edge Runner Car driving along the top border line of Navbar */}
+        <div className="absolute -top-[14px] left-0 w-full h-6 pointer-events-none overflow-hidden rounded-t-full">
+          <motion.div
+            animate={{ x: ["-10%", "105%"] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="relative flex items-center"
+          >
+            {/* Mini Porsche 911 GT3 RS SVG */}
+            <svg viewBox="0 0 120 45" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-5 drop-shadow-[0_0_8px_#D5001C]">
+              {/* Headlight Beam Glow */}
+              <path d="M100 28 L120 20 L120 36 Z" fill="url(#navHeadlightBeam)" opacity="0.7" />
+              {/* Taillight Red Speed Trail */}
+              <path d="M0 26 L15 26" stroke="#D5001C" strokeWidth="3" strokeLinecap="round" opacity="0.9" />
+              {/* Porsche GT3 RS Shell */}
+              <path d="M10 30 C12 25, 20 22, 35 18 C50 14, 65 14, 82 22 C92 24, 102 26, 106 30 C108 32, 104 35, 96 36 C80 37, 30 37, 10 36 C6 35, 6 32, 10 30 Z" fill="#141414" stroke="#D5001C" strokeWidth="1.5" />
+              <path d="M36 18 C46 12, 62 12, 74 19 Z" fill="#2a2a2a" stroke="#444" strokeWidth="1" />
+              {/* GT Wing */}
+              <path d="M12 18 L6 14 M6 14 H16" stroke="#D5001C" strokeWidth="2" strokeLinecap="round" />
+              {/* LED Lights */}
+              <circle cx="102" cy="28" r="2" fill="#FFFFFF" />
+              <path d="M12 27 H16" stroke="#D5001C" strokeWidth="2.5" />
+              {/* Spinning Wheels */}
+              <g className="animate-spin" style={{ transformOrigin: '28px 34px', animationDuration: '0.3s' }}>
+                <circle cx="28" cy="34" r="5.5" fill="#0a0a0a" stroke="#666" strokeWidth="1.5" />
+                <circle cx="28" cy="34" r="2.5" fill="#D5001C" />
+              </g>
+              <g className="animate-spin" style={{ transformOrigin: '84px 34px', animationDuration: '0.3s' }}>
+                <circle cx="84" cy="34" r="5.5" fill="#0a0a0a" stroke="#666" strokeWidth="1.5" />
+                <circle cx="84" cy="34" r="2.5" fill="#D5001C" />
+              </g>
+              <defs>
+                <linearGradient id="navHeadlightBeam" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </motion.div>
+        </div>
         <div className="flex items-center justify-between w-full">
           {/* Left: Logo */}
           <div className="flex-shrink-0 md:pr-6">
