@@ -40,48 +40,52 @@ function Homepage() {
             : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
         }`}
       >
-        {/* User's Exact Porsche 911 GT3 RS Body Cutout Edge Runner driving along BOTTOM border track */}
-        <div className="absolute -bottom-[14px] left-0 w-full pointer-events-none z-30 overflow-visible">
+        {/* User's Exact Beige Porsche 911 GT3 RS Body Cutout with Tyres fitted inside wheel arches */}
+        <div className="absolute -bottom-[16px] left-0 w-full pointer-events-none z-30 overflow-visible">
           <motion.div
             animate={{ x: ["-15%", "108%"] }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             className="relative flex items-center"
           >
-            <div className="relative flex items-center w-24 sm:w-28 md:w-32 h-auto">
-              {/* Red Taillight Speed Trail */}
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 -ml-8 w-8 h-[2px] bg-gradient-to-r from-transparent to-[#D5001C] shadow-[0_0_10px_#D5001C]" />
-
-              {/* User's Exact Porsche Body Cutout (Clean, Inverted, Facing Right) */}
+            <div className="relative inline-block w-28 sm:w-32 md:w-36 h-auto">
+              
+              {/* User's Exact Beige Porsche Body Cutout (Facing Right) */}
               <img 
-                src="/porsche_user_body_clean.png" 
-                alt="Porsche 911 GT3 RS Body" 
-                className="w-full h-auto object-contain filter drop-shadow-[0_4px_10px_rgba(255,255,255,0.7)]"
+                src="/porsche_user_body_beige.png" 
+                alt="Porsche 911 GT3 RS Beige Body" 
+                className="w-full h-auto object-contain relative z-10"
               />
 
-              {/* Front Wheel (Tyre) fitted in Front Wheel Arch */}
-              <div className="absolute right-[17%] bottom-[5%] w-[21%] aspect-square flex items-center justify-center">
-                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.3s' }}>
-                  <circle cx="50" cy="50" r="48" fill="#111" stroke="#333" strokeWidth="4" />
-                  <path d="M 25 35 A 35 35 0 0 1 75 35" fill="none" stroke="#D5001C" strokeWidth="12" strokeLinecap="round" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#E5E5E5" strokeWidth="6" />
-                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="5" />
-                  <circle cx="50" cy="50" r="14" fill="#151515" stroke="#D5001C" strokeWidth="4" />
+              {/* Front Wheel (Tyre) fitted perfectly INSIDE Front Wheel Arch */}
+              <div className="absolute right-[7%] bottom-[1%] w-[23%] aspect-square z-0 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.35s' }}>
+                  {/* Outer Rubber Tyre */}
+                  <circle cx="50" cy="50" r="48" fill="#181818" stroke="#333" strokeWidth="5" />
+                  {/* Silver GT3 RS Rim Spokes */}
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#D0D0D0" strokeWidth="5" />
+                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="4.5" />
+                  {/* Red Caliper */}
+                  <path d="M 30 38 A 30 30 0 0 1 70 38" fill="none" stroke="#D5001C" strokeWidth="10" strokeLinecap="round" />
+                  {/* Center Cap */}
+                  <circle cx="50" cy="50" r="14" fill="#111" stroke="#D5001C" strokeWidth="3" />
                 </svg>
               </div>
 
-              {/* Rear Wheel (Tyre) fitted in Rear Wheel Arch */}
-              <div className="absolute left-[18%] bottom-[5%] w-[21%] aspect-square flex items-center justify-center">
-                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.3s' }}>
-                  <circle cx="50" cy="50" r="48" fill="#111" stroke="#333" strokeWidth="4" />
-                  <path d="M 25 35 A 35 35 0 0 1 75 35" fill="none" stroke="#D5001C" strokeWidth="12" strokeLinecap="round" />
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#E5E5E5" strokeWidth="6" />
-                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="5" />
-                  <circle cx="50" cy="50" r="14" fill="#151515" stroke="#D5001C" strokeWidth="4" />
+              {/* Rear Wheel (Tyre) fitted perfectly INSIDE Rear Wheel Arch */}
+              <div className="absolute left-[11%] bottom-[1%] w-[23%] aspect-square z-0 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full animate-spin" style={{ animationDuration: '0.35s' }}>
+                  {/* Outer Rubber Tyre */}
+                  <circle cx="50" cy="50" r="48" fill="#181818" stroke="#333" strokeWidth="5" />
+                  {/* Silver GT3 RS Rim Spokes */}
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#D0D0D0" strokeWidth="5" />
+                  <path d="M 50 10 V 90 M 10 50 H 90 M 21.7 21.7 L 78.3 78.3 M 21.7 78.3 L 78.3 21.7" stroke="#CCCCCC" strokeWidth="4.5" />
+                  {/* Red Caliper */}
+                  <path d="M 30 38 A 30 30 0 0 1 70 38" fill="none" stroke="#D5001C" strokeWidth="10" strokeLinecap="round" />
+                  {/* Center Cap */}
+                  <circle cx="50" cy="50" r="14" fill="#111" stroke="#D5001C" strokeWidth="3" />
                 </svg>
               </div>
 
-              {/* LED Headlight Beam */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 -mr-6 w-8 h-4 bg-gradient-to-r from-white/90 via-cyan-300/40 to-transparent pointer-events-none" />
             </div>
           </motion.div>
         </div>
