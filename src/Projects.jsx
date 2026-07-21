@@ -139,56 +139,60 @@ const Projects = () => {
 
         <div className="w-full">
           {isMobile ? (
-            <div className="flex flex-col gap-8">
-              {projects.map((project) => (
-                <motion.article
-                  key={project.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={smoothTransition}
-                  className="relative overflow-hidden rounded-[2rem] border border-[#222] bg-[#080808]/95 shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
-                >
-                  <div className="bg-gradient-to-br from-[#111] via-[#080808] to-[#090909] p-6 sm:p-8">
-                    <div className="mb-6 rounded-[2rem] border border-[#333] bg-[#090909]/70 p-4 shadow-[inset_0_0_30px_rgba(0,0,0,0.35)]">
-                      <TiltMockup project={project} className="w-full max-w-full" />
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="flex items-end justify-between gap-4">
-                        <span className="text-5xl font-bold text-[#D5001C] leading-none">{project.id}</span>
-                        <h4 className="text-3xl font-bold text-white tracking-tight leading-tight">{project.title}</h4>
-                      </div>
-
-                      <p className="text-base text-[#ccc] leading-relaxed">{project.description}</p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map((t) => (
-                          <span key={t} className="rounded-full border border-[#333] bg-[#111]/90 px-3 py-1 text-xs uppercase tracking-[0.24em] text-[#ddd]">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="grid gap-3 sm:grid-cols-3">
-                        {project.website && (
-                          <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[#D5001C] px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#ff2a2a] focus:outline-none focus:ring-2 focus:ring-[#D5001C]/50">
-                            Live Demo
-                          </a>
+            <div className="relative flex gap-3 overflow-hidden w-full h-[620px] sm:h-[560px]">
+              {projects.map((project) => {
+                const isActive = active === project.id;
+                const isHovered = hovered === project.id;
+                return (
+                  <motion.div
+                    key={project.id}
+                    initial={false}
+                    animate={{ flex: isActive ? 4 : 1 }}
+                    transition={smoothTransition}
+                    onMouseEnter={() => setHovered(project.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    onClick={() => setActive(project.id)}
+                    className={`group relative min-w-[120px] overflow-hidden rounded-[2rem] border border-[#222] bg-[#080808]/95 shadow-[0_30px_80px_rgba(0,0,0,0.5)] transition-all duration-500 cursor-pointer ${isActive ? 'bg-[#0f0f0f]' : 'bg-[#090909]/90'}`}
+                  >
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(213,0,28,0.18),transparent_60%)] opacity-90 pointer-events-none" />
+                    <div className="relative h-full flex flex-col justify-between p-5 sm:p-6">
+                      <div className="space-y-3 z-10">
+                        <span className="text-xs uppercase tracking-[0.35em] text-[#777]">Project</span>
+                        <h4 className={`font-bold text-white leading-tight transition-all duration-300 ${isActive ? 'text-3xl sm:text-4xl' : 'text-xl sm:text-2xl'}`}>
+                          {project.title}
+                        </h4>
+                        {!isActive ? (
+                          <p className="text-sm text-[#aaa] leading-relaxed">{project.tech.join(' · ')}</p>
+                        ) : (
+                          <p className="text-sm text-[#ccc] leading-relaxed">{project.description}</p>
                         )}
-                        {project.repo && (
-                          <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full border border-[#444] bg-[#111] px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#D5001C]/30">
-                            GitHub
-                          </a>
-                        )}
-                        <button className="inline-flex w-full items-center justify-center rounded-full border border-[#333] bg-transparent px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-[#ccc] transition hover:border-[#D5001C] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D5001C]/20">
-                          Case Study
-                        </button>
                       </div>
+
+                      {isActive ? (
+                        <div className="grid gap-3">
+                          {project.website && (
+                            <a href={project.website} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-[#D5001C] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#ff2a2a] focus:outline-none focus:ring-2 focus:ring-[#D5001C]/50">
+                              Live Demo
+                            </a>
+                          )}
+                          {project.repo && (
+                            <a href={project.repo} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center rounded-full border border-[#444] bg-[#111] px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#D5001C]/30">
+                              GitHub
+                            </a>
+                          )}
+                          <button className="inline-flex w-full items-center justify-center rounded-full border border-[#333] bg-transparent px-5 py-3 text-center text-sm font-semibold uppercase tracking-[0.2em] text-[#ccc] transition hover:border-[#D5001C] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#D5001C]/20">
+                            Case Study
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="mt-4 rounded-[1.5rem] border border-[#222] bg-[#101010]/50 p-4 text-sm text-[#bbb]">
+                          Tap to reveal project details
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </motion.article>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           ) : (
             <div className={`flex flex-col lg:flex-row gap-4 w-full h-[650px]`}>
