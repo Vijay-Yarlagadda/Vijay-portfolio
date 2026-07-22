@@ -2,6 +2,6 @@
   <!-- Full White Circle Background -->
   <circle cx="256" cy="256" r="256" fill="#FFFFFF"/>
   
-  <!-- Symmetrical Red Heart matching the VK Red (#D5001C) -->
-  <path d="M256,420 C180,360 80,260 80,180 C80,120 130,70 190,70 C226,70 244,90 256,110 C268,90 286,70 322,70 C382,70 432,120 432,180 C432,260 332,360 256,420 Z" fill="#D5001C" />
+  <!-- Symmetrical Red Heart matching the VK Red (#D5001C) scaled down to 70% -->
+  <path transform="translate(256, 256) scale(0.7) translate(-256, -256)" d="M256,420 C180,360 80,260 80,180 C80,120 130,70 190,70 C226,70 244,90 256,110 C268,90 286,70 322,70 C382,70 432,120 432,180 C432,260 332,360 256,420 Z" fill="#D5001C" />
 </svg>
