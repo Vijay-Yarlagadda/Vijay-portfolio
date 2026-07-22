@@ -1,34 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <defs>
-    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#1c0508"/>
-      <stop offset="100%" stop-color="#050505"/>
-    </radialGradient>
-    <linearGradient id="porscheRed" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF1A35"/>
-      <stop offset="100%" stop-color="#D5001C"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFE066"/>
-      <stop offset="50%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#AA7C11"/>
-    </linearGradient>
-  </defs>
-
-  <!-- Outer Ring Shield -->
-  <circle cx="256" cy="256" r="240" fill="url(#bgGlow)" stroke="url(#porscheRed)" stroke-width="16"/>
-  <circle cx="256" cy="256" r="216" fill="none" stroke="url(#gold)" stroke-width="4" opacity="0.8"/>
-
-  <!-- Porsche Crest Contour Shield -->
-  <path d="M 256 90 C 330 90, 370 110, 370 170 C 370 290, 300 370, 256 415 C 212 370, 142 290, 142 170 C 142 110, 182 90, 256 90 Z" fill="#0d0d0d" stroke="url(#gold)" stroke-width="10" />
-
-  <!-- Red Racing Stripes -->
-  <path d="M 170 170 H 342 M 180 220 H 332 M 195 270 H 317" stroke="url(#porscheRed)" stroke-width="14" stroke-linecap="round" opacity="0.85" />
-
-  <!-- Monogram VK -->
-  <text x="230" y="270" font-family="'Syncopate', 'Arial Black', sans-serif" font-size="120" font-weight="900" text-anchor="middle" fill="#FFFFFF" letter-spacing="-6">V</text>
-  <text x="290" y="270" font-family="'Syncopate', 'Arial Black', sans-serif" font-size="120" font-weight="900" text-anchor="middle" fill="url(#porscheRed)" letter-spacing="-6">K</text>
-
-  <!-- Gold Emblem Accent -->
-  <circle cx="256" cy="345" r="14" fill="url(#gold)"/>
+  <!-- Full White Background -->
+  <rect width="512" height="512" fill="#FFFFFF"/>
+  
+  <!-- Symmetrical Red Heart matching the VK Red (#D5001C) -->
+  <path d="M256,420 C180,360 80,260 80,180 C80,120 130,70 190,70 C226,70 244,90 256,110 C268,90 286,70 322,70 C382,70 432,120 432,180 C432,260 332,360 256,420 Z" fill="#D5001C" />
 </svg>
