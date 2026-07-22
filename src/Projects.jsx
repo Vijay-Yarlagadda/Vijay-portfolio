@@ -16,7 +16,7 @@ const projects = [
     description: "An AI-powered fitness platform that generates personalized diet plans and workout guidance based on users' goals, body metrics, and preferences.",
     website: "https://dflex.vercel.app/",
     repo: "https://github.com/Vijay-Yarlagadda/DFlex.git",
-    tech: ["React", "Gemini AI", "Node.js", "MongoDB", "Express.js"]
+    tech: ["React", "Gemini AI", "Node.js", "MongoDB", "Vercel"]
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const projects = [
     description: "A secure healthcare platform that enables hospitals, doctors, and patients to manage appointments and medical records with role-based access control.",
     website: "https://mydocease.vercel.app/",
     repo: "https://github.com/Vijay-Yarlagadda/DocEase.git",
-    tech: ["React", "Azure", "Node.js", "MongoDB", "Cloudinary"]
+    tech: ["React", "MongoDB", "Firebase Auth", "Cloudinary", "Vercel"]
   },
   {
     id: 4,
@@ -32,7 +32,7 @@ const projects = [
     description: "A campus-based cash exchange platform that helps students quickly find others to exchange small currency denominations within their college.",
     website: "https://d-swap.vercel.app/",
     repo: "https://github.com/Vijay-Yarlagadda/DSwap.git",
-    tech: ["React", "Firestore", "Firebase Auth", "Node.js", "Express.js"]
+    tech: ["React", "Firestore", "Firebase Auth", "Node.js", "Vercel"]
   }
 ];
 
