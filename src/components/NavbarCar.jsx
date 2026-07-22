@@ -47,7 +47,7 @@ export default function NavbarCar({ scrolled }) {
     "--boost-start": boostStartLeft,
     animation: isBoosted 
       ? "boost-across 1.8s cubic-bezier(0.15, 0.85, 0.35, 1) forwards"
-      : "drive-across 20s linear infinite"
+      : "drive-across 14s linear infinite"
   };
 
   const rumbleStyle = {
@@ -131,11 +131,11 @@ export default function NavbarCar({ scrolled }) {
           0% {
             left: -80px;
           }
-          /* Drives across the screen in 14s (70% of 20s) */
-          70% {
+          /* Drives across the screen in 12.6s (90% of 14s) */
+          90% {
             left: 100%;
           }
-          /* Pauses off-screen for 6s (30% of 20s) */
+          /* Pauses off-screen for 1.4s (10% of 14s) */
           100% {
             left: 100%;
           }
