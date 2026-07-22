@@ -74,17 +74,6 @@ export default function NavbarCar({ scrolled }) {
         >
           {/* Car Image and Wrapper with Engine Rumble */}
           <div className="relative w-full h-full" style={rumbleStyle}>
-            {/* Headlight beam */}
-            <div 
-              className="absolute right-[-24px] top-[3px] md:top-[4px] w-[26px] md:w-[32px] h-[8px] md:h-[10px] pointer-events-none transition-all duration-300 origin-left"
-              style={{
-                background: "linear-gradient(90deg, rgba(255,245,200,0.85) 0%, rgba(255,245,200,0.2) 60%, rgba(255,245,200,0) 100%)",
-                clipPath: "polygon(0 30%, 100% 0, 100% 100%, 0 70%)",
-                filter: "blur(0.5px)",
-                transform: isHovered ? "scaleY(1.3) scaleX(1.2)" : "scaleY(1) scaleX(1)"
-              }}
-            />
-
             {/* Taillight glow */}
             <div 
               className="absolute left-[0px] top-[4px] md:top-[5px] w-[3px] h-[2px] bg-[#D5001C] rounded-full transition-transform duration-300"
