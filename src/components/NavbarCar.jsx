@@ -60,13 +60,13 @@ export default function NavbarCar({ scrolled }) {
     <>
       {/* 1. CLIPPED CONTAINER (For the car body, underglow, lights) */}
       <div 
-        className={`absolute left-0 right-0 top-0 bottom-[-15px] md:bottom-[-18px] overflow-hidden pointer-events-none z-10 ${
-          scrolled ? "rounded-[9999px]" : "rounded-none"
+        className={`absolute inset-0 overflow-hidden pointer-events-none z-10 ${
+          scrolled ? "rounded-full" : "rounded-none"
         }`}
       >
         <div
           ref={carRef}
-          className="absolute bottom-0 h-[15px] md:h-[18px] w-[55px] md:w-[66px] pointer-events-auto cursor-pointer group"
+          className="absolute bottom-[-1px] md:bottom-[-2px] h-[15px] md:h-[18px] w-[55px] md:w-[66px] pointer-events-auto cursor-pointer group"
           onClick={handleCarClick}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -102,9 +102,9 @@ export default function NavbarCar({ scrolled }) {
       </div>
 
       {/* 2. UNCLIPPED CONTAINER (For the speech bubble/honk text) */}
-      <div className="absolute left-0 right-0 top-0 bottom-[-15px] md:bottom-[-18px] overflow-visible pointer-events-none z-20">
+      <div className="absolute inset-0 overflow-visible pointer-events-none z-20">
         <div
-          className="absolute bottom-0 h-[15px] md:h-[18px] w-[55px] md:w-[66px]"
+          className="absolute bottom-[-1px] md:bottom-[-2px] h-[15px] md:h-[18px] w-[55px] md:w-[66px]"
           style={animStyle}
         >
           {/* Synchronized movement wrapper */}
