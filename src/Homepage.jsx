@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Send, Folder, MoreHorizontal, X } from "lucide-react";
+import NavbarCar from "./components/NavbarCar.jsx";
 
 function Homepage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -34,7 +35,7 @@ function Homepage() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: showNav ? 1 : 0 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] border border-[#333] backdrop-blur-md overflow-hidden ${
+        className={`fixed z-50 left-1/2 -translate-x-1/2 flex items-center transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] border border-[#333] backdrop-blur-md ${
           scrolled 
             ? "top-6 w-[95%] max-w-[1000px] rounded-full py-3 px-6 md:px-8 bg-[#111]/95 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
             : "top-0 w-full rounded-none py-6 px-6 md:px-8 bg-black/20 border-t-0 border-l-0 border-r-0"
@@ -102,6 +103,7 @@ function Homepage() {
              </button>
           </div>
         </div>
+        <NavbarCar scrolled={scrolled} />
       </motion.nav>
 
       {/* Mobile Menu Overlay */}
