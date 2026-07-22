@@ -1,28 +1,30 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, Sparkles } from '@react-three/drei';
 import { EffectComposer, Bloom, DepthOfField, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
-function ParticleWave() {
-  const count = 10000; // High density for a silky look
+function ParticleWave({ isMobile }) {
+  const gridSize = isMobile ? 40 : 100;
+  const count = gridSize * gridSize;
   const meshRef = useRef();
 
-  // Generate initial particle positions in a wide grid
-  const { positions, colors } = useMemo(() => {
+  // Generate initial particle positions in a wide grid and pre-calculate static values
+  const { positions, colors, meta } = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
+    const meta = [];
     
     const colorA = new THREE.Color('#D5001C'); // Porsche Red
     const colorB = new THREE.Color('#4A000A'); // Dark Crimson
     const tempColor = new THREE.Color();
 
     let i = 0;
-    for (let x = 0; x < 100; x++) {
-      for (let z = 0; z < 100; z++) {
-        // Center the grid (-50 to 50)
-        const posX = (x - 50) * 0.4;
-        const posZ = (z - 50) * 0.4;
+    for (let x = 0; x < gridSize; x++) {
+      for (let z = 0; z < gridSize; z++) {
+        // Center the grid (-gridSize/2 to gridSize/2)
+        const posX = (x - gridSize / 2) * (isMobile ? 0.6 : 0.4);
+        const posZ = (z - gridSize / 2) * (isMobile ? 0.6 : 0.4);
         
         positions[i * 3] = posX;
         positions[i * 3 + 1] = 0; // Y will be animated
@@ -35,35 +37,35 @@ function ParticleWave() {
         colors[i * 3] = tempColor.r;
         colors[i * 3 + 1] = tempColor.g;
         colors[i * 3 + 2] = tempColor.b;
+
+        // Pre-calculate distance and falloff to avoid costly CPU math inside the render loop
+        const distance = Math.sqrt(posX * posX + posZ * posZ);
+        const falloff = Math.max(0, 1 - distance / (isMobile ? 12 : 20));
+
+        meta.push({ posX, posZ, falloff });
         
         i++;
       }
     }
-    return { positions, colors };
-  }, [count]);
+    return { positions, colors, meta };
+  }, [count, gridSize, isMobile]);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
+    if (!meshRef.current) return;
     const positions = meshRef.current.geometry.attributes.position.array;
 
-    let i = 0;
-    for (let x = 0; x < 100; x++) {
-      for (let z = 0; z < 100; z++) {
-        const posX = (x - 50) * 0.4;
-        const posZ = (z - 50) * 0.4;
+    for (let i = 0; i < count; i++) {
+      const m = meta[i];
+      if (!m) continue;
+      const { posX, posZ, falloff } = m;
 
-        // Complex organic wave math (combining multiple sine waves)
-        const wave1 = Math.sin(posX * 0.2 + time * 0.5) * 1.5;
-        const wave2 = Math.cos(posZ * 0.3 + time * 0.4) * 1.0;
-        const wave3 = Math.sin((posX + posZ) * 0.1 - time * 0.3) * 2.0;
+      // Complex organic wave math (combining multiple sine waves)
+      const wave1 = Math.sin(posX * 0.2 + time * 0.5) * 1.5;
+      const wave2 = Math.cos(posZ * 0.3 + time * 0.4) * 1.0;
+      const wave3 = Math.sin((posX + posZ) * 0.1 - time * 0.3) * 2.0;
 
-        // Apply a radial falloff so it looks like a concentrated energy field
-        const distance = Math.sqrt(posX * posX + posZ * posZ);
-        const falloff = Math.max(0, 1 - distance / 20);
-
-        positions[i * 3 + 1] = (wave1 + wave2 + wave3) * falloff - 2; // Keep it below text
-        i++;
-      }
+      positions[i * 3 + 1] = (wave1 + wave2 + wave3) * falloff - 2; // Keep it below text
     }
     meshRef.current.geometry.attributes.position.needsUpdate = true;
     
@@ -88,7 +90,7 @@ function ParticleWave() {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.06}
+        size={isMobile ? 0.08 : 0.06}
         vertexColors
         transparent
         opacity={0.8}
@@ -120,6 +122,16 @@ function GlowingOrbs() {
 
 export default function CarRevealScene({ scrollProgress }) {
   const { camera } = useThree();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useFrame(() => {
     const progress = scrollProgress.get(); 
@@ -143,25 +155,27 @@ export default function CarRevealScene({ scrollProgress }) {
       <Environment preset="night" environmentIntensity={0.1} />
 
       {/* The Breathtaking Fluid Particle Wave */}
-      <ParticleWave />
+      <ParticleWave isMobile={isMobile} />
       
       {/* Subtle floating background elements */}
       <GlowingOrbs />
 
-      {/* Ambient dust */}
-      <Sparkles count={200} scale={25} size={2} speed={0.4} opacity={0.2} color="#ffffff" />
+      {/* Ambient dust - reduced count on mobile */}
+      <Sparkles count={isMobile ? 55 : 200} scale={25} size={2} speed={0.4} opacity={0.2} color="#ffffff" />
 
-      {/* Cinematic Post Processing */}
-      <EffectComposer disableNormalPass>
-        <Bloom 
-          luminanceThreshold={0.2} 
-          mipmapBlur 
-          intensity={2.5} 
-          radius={0.8}
-        />
-        <DepthOfField focusDistance={0.05} focalLength={0.1} bokehScale={3} height={480} />
-        <Vignette eskil={false} offset={0.3} darkness={1.3} />
-      </EffectComposer>
+      {/* Cinematic Post Processing - bypassed on mobile for dramatic scroll/render speedups */}
+      {!isMobile && (
+        <EffectComposer disableNormalPass>
+          <Bloom 
+            luminanceThreshold={0.2} 
+            mipmapBlur 
+            intensity={2.5} 
+            radius={0.8}
+          />
+          <DepthOfField focusDistance={0.05} focalLength={0.1} bokehScale={3} height={480} />
+          <Vignette eskil={false} offset={0.3} darkness={1.3} />
+        </EffectComposer>
+      )}
     </>
   );
 }

@@ -148,13 +148,12 @@ const Projects = () => {
               return (
                 <motion.div
                   key={project.id}
-                  layout
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={smoothTransition}
                   onClick={() => setActive(project.id)}
-                  className={`w-full rounded-2xl border transition-all duration-500 overflow-hidden cursor-pointer ${
+                  className={`w-full rounded-2xl border transition-[background-color,border-color,box-shadow] duration-300 overflow-hidden cursor-pointer ${
                     isOpen 
                       ? "border-[#D5001C] bg-[#0c0c0c] shadow-[0_20px_50px_rgba(213,0,28,0.15)]" 
                       : "border-[#222] bg-[#111]/80 hover:border-[#444] hover:bg-[#161616]"
