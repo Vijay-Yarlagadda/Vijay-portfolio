@@ -44,7 +44,7 @@ export default function Education() {
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-[2px] bg-[#D5001C]" />
-              <p className="text-[#D5001C] font-semibold tracking-[0.2em] uppercase text-xs">03 // Background</p>
+              <p className="text-[#D5001C] font-semibold tracking-[0.2em] uppercase text-xs">02 // Background</p>
             </div>
             <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight leading-none mb-6">
               My <span className="text-transparent stroke-text" style={{ WebkitTextStroke: "1px #555" }}>Track</span><br/> Record

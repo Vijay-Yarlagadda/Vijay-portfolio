@@ -57,7 +57,7 @@ export default function Skills() {
       >
         <div className="flex items-center gap-4 mb-4">
           <div className="w-8 h-[2px] bg-[#D5001C]" />
-          <p className="text-[#D5001C] font-semibold tracking-[0.2em] uppercase text-xs">02 // Capabilities</p>
+          <p className="text-[#D5001C] font-semibold tracking-[0.2em] uppercase text-xs">03 // Capabilities</p>
           <div className="w-8 h-[2px] bg-[#D5001C]" />
         </div>
         <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight text-center">

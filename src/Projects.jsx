@@ -134,7 +134,7 @@ const Projects = () => {
         >
           <div className="flex items-center gap-4 mb-3">
             <div className="w-12 h-[2px] bg-[#D5001C]" />
-            <h2 className="text-[#D5001C] font-semibold tracking-[0.3em] uppercase text-xs md:text-sm">Case Studies</h2>
+            <h2 className="text-[#D5001C] font-semibold tracking-[0.3em] uppercase text-xs md:text-sm">04 // Case Studies</h2>
           </div>
           <h3 className="text-3xl md:text-6xl font-bold text-white uppercase tracking-tighter">Featured Projects</h3>
         </motion.div>
