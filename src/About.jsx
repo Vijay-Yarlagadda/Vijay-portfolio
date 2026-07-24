@@ -48,7 +48,7 @@ function About() {
             className="mt-4"
           >
             <a
-              href="https://drive.google.com/file/d/1XnEA7Q4qsgzvTCQU04GoA2YNvELIa8Eu/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1PT-kkFGA7Y9PfQUfJ8c40PfCeM6A3soI/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-10 py-4 bg-[#D5001C] text-white font-bold tracking-[0.2em] uppercase text-sm hover:bg-white hover:text-[#0a0a0a] transition-colors duration-300 relative overflow-hidden group pointer-events-auto"
