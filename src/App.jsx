@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { ReactLenis } from 'lenis/react';
 import { Canvas } from '@react-three/fiber';
 import { useScroll } from 'framer-motion';
@@ -27,7 +27,9 @@ function App() {
         {/* Global 3D Background - Fixed behind everything */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <Canvas shadows gl={{ antialias: false }}>
-            <CarRevealScene scrollProgress={scrollYProgress} />
+            <Suspense fallback={null}>
+              <CarRevealScene scrollProgress={scrollYProgress} />
+            </Suspense>
           </Canvas>
         </div>
 

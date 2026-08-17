@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Environment, Float, Sparkles } from '@react-three/drei';
+import { Float, Sparkles } from '@react-three/drei';
 import { EffectComposer, Bloom, DepthOfField, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
@@ -51,7 +51,7 @@ function ParticleWave({ isMobile }) {
   }, [count, gridSize, isMobile]);
 
   useFrame((state) => {
-    const time = state.clock.getElapsedTime();
+    const time = state.clock.elapsedTime;
     if (!meshRef.current) return;
     const positions = meshRef.current.geometry.attributes.position.array;
 
@@ -152,7 +152,9 @@ export default function CarRevealScene({ scrollProgress }) {
       <color attach="background" args={['#010101']} />
       <fog attach="fog" args={['#010101', 5, 25]} />
       
-      <Environment preset="night" environmentIntensity={0.1} />
+      <ambientLight intensity={0.15} />
+      <directionalLight position={[10, 10, 5]} intensity={0.2} color="#ffffff" />
+      <pointLight position={[-10, -10, -10]} intensity={0.1} color="#d5001c" />
 
       {/* The Breathtaking Fluid Particle Wave */}
       <ParticleWave isMobile={isMobile} />
